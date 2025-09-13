@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebienald Carpio - Contact</title>
+    <!-- Add EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .dark-mode .header {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .dark-mode .logo {
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .nav-links a {
+            color: #e0e0e0;
+        }
+
+        .nav-links a:hover {
+            color: #2980b9;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dark-mode .theme-toggle {
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 3rem;
+        }
+
+        .dark-mode .hero {
+            border-bottom-color: #333;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .dark-mode .hero h1 {
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Content */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info {
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .dark-mode .contact-info {
+            border-color: #333;
+            background: #2a2a2a;
+        }
+
+        .contact-info h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+        }
+
+        .dark-mode .contact-info h2 {
+            color: #fff;
+        }
+
+        .contact-details {
+            list-style: none;
+        }
+
+        .contact-details li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 6px;
+            background: #f8f9fa;
+            transition: background 0.3s;
+        }
+
+        .contact-details li:hover {
+            background: #e9ecef;
+        }
+
+        .dark-mode .contact-details li {
+            background: #333;
+        }
+
+        .dark-mode .contact-details li:hover {
+            background: #444;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .facebook-icon {
+            background: #3b5998;
+        }
+
+        .discord-icon {
+            background: #5865F2;
+        }
+
+        .github-icon {
+            background: #333;
+        }
+
+        .dark-mode .github-icon {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .phone-icon {
+            background: #25D366;
+        }
+
+        .email-icon {
+            background: #D44638;
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+
+        .dark-mode .contact-text h3 {
+            color: #fff;
+        }
+
+        .contact-text p, .contact-text a {
+            color: #7f8c8d;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-text a:hover {
+            color: #2980b9;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .dark-mode .contact-form {
+            border-color: #333;
+            background: #2a2a2a;
+        }
+
+        .contact-form h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+        }
+
+        .dark-mode .contact-form h2 {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .dark-mode .form-group label {
+            color: #e0e0e0;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .dark-mode .form-group input,
+        .dark-mode .form-group textarea {
+            border-color: #555;
+            background: #333;
+            color: #e0e0e0;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2980b9;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #3498db;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Status messages */
+        .status-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .dark-mode .success {
+            background-color: #155724;
+            color: #d4edda;
+            border-color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .dark-mode .error {
+            background-color: #721c24;
+            color: #f8d7da;
+            border-color: #721c24;
+        }
+
+        /* Map Section */
+        .map-section {
+            margin-bottom: 3rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dark-mode .map-section {
+            border-color: #333;
+        }
+
+        .map-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            padding: 1.5rem 1.5rem 0;
+        }
+
+        .dark-mode .map-section h2 {
+            color: #fff;
+        }
+
+        .map-placeholder {
+            height: 300px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .dark-mode .map-placeholder {
+            background: #333;
+            color: #ccc;
+        }
+
+        /* Back to Home */
+        .back-home {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .dark-mode .back-link {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .back-link:hover {
+            background: #e9ecef;
+        }
+
+        .dark-mode .back-link:hover {
+            background: #333;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        .dark-mode .footer {
+            border-top-color: #333;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Rebienald Carpio</div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#education">Education</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="Certifications.html">Certifications</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Get In Touch</h1>
+            <p>Feel free to reach out for collaborations, opportunities, or just to say hello!</p>
+        </section>
+
+        <!-- Contact Content -->
+        <div class="contact-content">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <ul class="contact-details">
+                    <li>
+                        <div class="contact-icon facebook-icon">f</div>
+                        <div class="contact-text">
+                            <h3>Facebook</h3>
+                            <a href="https://www.facebook.com/rebienald.carpio" target="_blank">Rebienald Khei</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-icon discord-icon">D</div>
+                        <div class="contact-text">
+                            <h3>Discord</h3>
+                            <p>rebkhei</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-icon github-icon">G</div>
+                        <div class="contact-text">
+                            <h3>GitHub</h3>
+                            <a href="https://github.com/rebienalddev" target="_blank">rebienalddev</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-icon phone-icon">P</div>
+                        <div class="contact-text">
+                            <h3>Phone</h3>
+                            <a href="tel:+639628489009">+63 962 848 9009</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-icon email-icon">@</div>
+                        <div class="contact-text">
+                            <h3>Email</h3>
+                            <a href="mailto:Rebienaldev@gmail.com">Rebienaldev@gmail.com</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2>Send a Message</h2>
+                <div id="formStatus"></div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+    
+
+        <!-- Back to Home -->
+        <div class="back-home">
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Rebienald Carpio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize EmailJS with your User ID
+        // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+        (function() {
+            emailjs.init("8inSlZVSMoS_6fyYw");
+        })();
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Check for saved theme preference
+        if (sessionStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                sessionStorage.setItem('darkMode', 'enabled');
+                themeToggle.textContent = '☀️';
+            } else {
+                sessionStorage.setItem('darkMode', 'disabled');
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // Form submission handling
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+        
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+            submitBtn.disabled = true;
+            formStatus.innerHTML = '';
+            
+            // Get form values
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            try {
+                // Send email using EmailJS
+                // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+                const response = await emailjs.send(
+                    'service_oghycln', 
+                    'template_1iwdl0m', 
+                    {
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        subject: formData.subject,
+                        message: formData.message,
+                        to_email: "rebienaldev@gmail.com"
+                    }
+                );
+                
+                // Show success message
+                formStatus.innerHTML = '<div class="status-message success">Message sent successfully! I\'ll get back to you soon.</div>';
+                contactForm.reset();
+            } catch (error) {
+                console.error('Failed to send message:', error);
+                formStatus.innerHTML = '<div class="status-message error">Sorry, there was an error sending your message. Please try again later or contact me directly at Rebienaldev@gmail.com</div>';
+            } finally {
+                // Reset button state
+                submitBtn.innerHTML = 'Send Message';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

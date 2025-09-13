@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebienald Carpio - Software Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .dark-mode .header {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .dark-mode .logo {
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .nav-links a {
+            color: #e0e0e0;
+        }
+
+        .nav-links a:hover {
+            color: #2980b9;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dark-mode .theme-toggle {
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 3rem;
+        }
+
+        .dark-mode .hero {
+            border-bottom-color: #333;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .dark-mode .hero h1 {
+            color: #fff;
+        }
+
+        .hero .title {
+            font-size: 1.3rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+
+        .hero .summary {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .dark-mode .hero .summary {
+            color: #ccc;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .dark-mode .section h2 {
+            color: #fff;
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dark-mode .education-item {
+            border-bottom-color: #333;
+        }
+
+        .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .education-item h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark-mode .education-item h3 {
+            color: #fff;
+        }
+
+        .education-meta {
+            color: #7f8c8d;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .education-details {
+            color: #555;
+        }
+
+        .dark-mode .education-details {
+            color: #ccc;
+        }
+
+        .education-details strong {
+            color: #2c3e50;
+        }
+
+        .dark-mode .education-details strong {
+            color: #fff;
+        }
+
+        /* Achievements */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            border: 1px solid #e0e0e0;
+            padding: 2rem;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .dark-mode .achievement-card {
+            border-color: #333;
+            background: #2a2a2a;
+        }
+
+        .achievement-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark-mode .achievement-card h3 {
+            color: #fff;
+        }
+
+        .achievement-meta {
+            color: #7f8c8d;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-description {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .dark-mode .achievement-description {
+            color: #ccc;
+        }
+
+        /* Certifications */
+        .certification-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .dark-mode .cert-item {
+            border-color: #333;
+            background: #2a2a2a;
+        }
+
+        .cert-info {
+            flex: 1;
+        }
+
+        .cert-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark-mode .cert-title {
+            color: #fff;
+        }
+
+        .cert-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: #7f8c8d;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cert-description {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .dark-mode .cert-description {
+            color: #ccc;
+        }
+
+        /* Technical Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .dark-mode .skill-category {
+            border-color: #333;
+            background: #2a2a2a;
+        }
+
+        .skill-category h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .dark-mode .skill-category h3 {
+            color: #fff;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: #555;
+        }
+
+        .dark-mode .skill-list li {
+            color: #ccc;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        .dark-mode .footer {
+            border-top-color: #333;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .title {
+                font-size: 1.2rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cert-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cert-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Rebienald Carpio</div>
+            <nav class="nav-links">
+                <a href="#education">Education</a>
+                <a href="Certifications.html">Certifications</a>
+                <a href="#skills">Skills</a>
+                <a href="Contact.html">Contact</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Rebienald Carpio</h1>
+            <p class="title">Website Developer & ICT Student</p>
+            <p class="summary">
+                Dedicated ICT tudent at Systems Technology Institute with demonstrated expertise in full-stack web development and mobile application development. Proven track record of academic excellence and competitive programming achievements. Specialized in JavaScript, Java, HTML, CSS, and Android development with strong problem-solving capabilities.
+            </p>
+            <div class="contact-info">
+                <a href="https://www.linkedin.com/in/rebienald-khei-carpio-58a760306/" class="contact-item">LinkedIn Profile</a>
+                <a href="https://rebienald.github.io/Contacts/" class="contact-item">Contact Information</a>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="section" id="education">
+            <h2>Education</h2>
+            
+            <div class="education-item">
+                <h3>Systems Technology Institute (STI)</h3>
+                <div class="education-meta">2024 – Present | Grade 11, ICT under TVL track</div>
+                <div class="education-details">
+                    <p><strong>Specialization:</strong> Mobile Applications and Web Development</p>
+                    <p><strong>Academic Standing:</strong> Consistent Honor Student</p>
+                    <p>Currently pursuing advanced studies in information and communications technology with emphasis on practical application development, modern web technologies, and mobile platform development.</p>
+                </div>
+            </div>
+
+            <div class="education-item">
+                <h3>Binakayan National High School</h3>
+                <div class="education-meta">2020 – 2024 | Kawit, Cavite</div>
+                <div class="education-details">
+                    <p><strong>Credential:</strong> Junior High School Graduate</p>
+                    <p><strong>Academic Standing:</strong> Consistent Honor Student (Grades 7–10)</p>
+                    <p><strong>Technical Specializations:</strong></p>
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                        <li>Computer System Servicing (Grade 10)</li>
+                        <li>Hospitality Management (Grade 9)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Achievements -->
+        <section class="section" id="achievements">
+            <h2>Recent Achievements</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <h3>Web Design Competition</h3>
+                    <div class="achievement-meta">April 24, 2025 | Technologies: HTML, CSS</div>
+                    <p class="achievement-description">
+                        Participated in an intensive 8-hour web design competition at Systems Technology Institute, competing against college-level students. Demonstrated advanced proficiency in HTML5, CSS3, responsive design principles, and modern web development practices under time constraints.
+                    </p>
+                </div>
+
+                <div class="achievement-card">
+                    <h3>Mobile Application Development Competition</h3>
+                    <div class="achievement-meta">February 27, 2025 | Technologies: Java, XML, Android Studio</div>
+                    <p class="achievement-description">
+                        Completed a 6-hour mobile application development hackathon focused on Android platform development. Enhanced practical skills in Java programming, XML layout design, Android SDK implementation, and mobile UI/UX design principles.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <!-- Technical Skills -->
+        <section class="section" id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <ul class="skill-list">
+                        <li>JavaScript</li>
+                        <li>Java</li>
+                        <li>HTML5</li>
+                        <li>CSS3</li>
+                        <li>PHP</li>
+                         <li>C#</li>
+
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <ul class="skill-list">
+                        <li>Responsive Web Design</li>
+                        <li>CSS Grid & Flexbox</li>
+                        <li>Cross-Browser Compatibility</li>
+                        <li>Front-End Development</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Mobile Development</h3>
+                    <ul class="skill-list">
+                        <li>Android Studio</li>
+                        <li>Android SDK</li>
+                        <li>Mobile UI/UX Design</li>
+                        <li>Java for Android</li>
+                        <li>XML Layouts</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Development Tools</h3>
+                    <ul class="skill-list">
+                        <li>Version Control (Git)</li>
+                        <li>Code Editors (VS Code)</li>
+                        <li>Browser Developer Tools</li>
+                        <li>Testing & Debugging</li>
+                        <li>Performance Optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Rebienald Carpio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Check for saved theme preference
+        if (sessionStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                sessionStorage.setItem('darkMode', 'enabled');
+                themeToggle.textContent = '☀️';
+            } else {
+                sessionStorage.setItem('darkMode', 'disabled');
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

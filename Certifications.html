@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebienald Carpio - Certifications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .dark-mode .header {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .dark-mode .logo {
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .dark-mode .nav-links a {
+            color: #e0e0e0;
+        }
+
+        .nav-links a:hover {
+            color: #2980b9;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dark-mode .theme-toggle {
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 3rem;
+        }
+
+        .dark-mode .hero {
+            border-bottom-color: #333;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .dark-mode .hero h1 {
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Certifications Grid */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .certification-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .certification-card {
+            border-color: #333;
+            background: #2a2a2a;
+        }
+
+        .dark-mode .certification-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cert-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cert-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .certification-card:hover .cert-img {
+            transform: scale(1.05);
+        }
+
+        .cert-content {
+            padding: 1.5rem;
+        }
+
+        .cert-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+        }
+
+        .dark-mode .cert-title {
+            color: #fff;
+        }
+
+        .cert-issuer {
+            color: #7f8c8d;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cert-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .cert-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .dark-mode .cert-description {
+            color: #ccc;
+        }
+
+        .cert-link {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: #2980b9;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .cert-link:hover {
+            background: #3498db;
+        }
+
+        /* Modal for certificate images */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+
+        .modal-content {
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+
+        /* Back to Home */
+        .back-home {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .dark-mode .back-link {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .back-link:hover {
+            background: #e9ecef;
+        }
+
+        .dark-mode .back-link:hover {
+            background: #333;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        .dark-mode .footer {
+            border-top-color: #333;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .certifications-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+            }
+            
+            .close {
+                top: 10px;
+                right: 20px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Rebienald Carpio</div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#education">Education</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#achievements">Achievements</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>My Certifications</h1>
+            <p>Professional credentials and completed courses that demonstrate my expertise in web and software development</p>
+        </section>
+
+        <!-- Certifications Grid -->
+        <section class="certifications-grid">
+            <!-- Web Design Competition -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="web design.jpg" alt="Web Design Competition Certificate" class="cert-img" onclick="openModal('web design.jpg')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Web Design Competition 2025</h3>
+                    <div class="cert-issuer">STI College Bacoor</div>
+                    <div class="cert-date">April 24, 2025</div>
+                    <p class="cert-description">Actively participated in the Web Design Competition 2025 held during the College Week 2025 celebration at STI College Bacoor.</p>
+                </div>
+            </div>
+
+            <!-- Web Development (Simplilearn) -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="Web Development.png" alt="Web Development Certificate" class="cert-img" onclick="openModal('Web Development.png')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Web Development</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 15, 2024</div>
+                    <p class="cert-description">Successfully completed the online Web Development course, demonstrating initiative and commitment to deepening skills.</p>
+                </div>
+            </div>
+
+            <!-- Front End Development - CSS (Great Learning) -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="CSS Front-End.jpg" alt="Front End Development - CSS Certificate" class="cert-img" onclick="openModal('CSS Front-End.jpg')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Front End Development - CSS</h3>
+                    <div class="cert-issuer">Great Learning</div>
+                    <div class="cert-date">Completed</div>
+                    <p class="cert-description">Successfully completed a free online course on Front End Development with focus on CSS.</p>
+                </div>
+            </div>
+
+            <!-- Front End Development - HTML -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="HTML Front-End.png" alt="Front End Development - HTML Certificate" class="cert-img" onclick="openModal('HTML Front-End.png')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Front End Development - HTML</h3>
+                    <div class="cert-issuer">Great Learning</div>
+                    <div class="cert-date">Completed</div>
+                    <p class="cert-description">Successfully completed a free online course on Front End Development with focus on HTML.</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Algorithms and Data Structures -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="Data.png" alt="JavaScript Algorithms and Data Structures Certificate" class="cert-img" onclick="openModal('Data.png')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">JavaScript Algorithms and Data Structures</h3>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">June 29, 2025</div>
+                    <p class="cert-description">Successfully completed the JavaScript Algorithms and Data Structures Developer Certification representing approximately 300 hours of work.</p>
+                </div>
+            </div>
+
+            <!-- Responsive Web Design -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="Responsive Web Design.jpg" alt="Responsive Web Design Certificate" class="cert-img" onclick="openModal('Responsive Web Design.jpg')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Responsive Web Design</h3>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">April 29, 2024</div>
+                    <p class="cert-description">Successfully completed the Responsive Web Design Developer Certification representing approximately 300 hours of work.</p>
+                </div>
+            </div>
+
+            <!-- Java Programming -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="Java Certificate_.jpg" alt="Java Programming Certificate" class="cert-img" onclick="openModal('Java Certificate_.jpg')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Java Programming</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 13, 2024</div>
+                    <p class="cert-description">Successfully completed the online Java Programming course, demonstrating initiative and commitment to advancing skills.</p>
+                </div>
+            </div>
+
+            <!-- Introduction to CSS -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="CSS Certificate_.png" alt="Introduction to CSS Certificate" class="cert-img" onclick="openModal('CSS Certificate_.png')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Introduction to CSS</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 7, 2024</div>
+                    <p class="cert-description">Successfully completed the online Introduction to CSS course, demonstrating initiative and commitment to deepening skills.</p>
+                </div>
+            </div>
+
+            <!-- Web Development (Duplicate) -->
+            <div class="certification-card">
+                <div class="cert-img-container">
+                    <img src="Web Development (1).png" alt="Web Development Certificate" class="cert-img" onclick="openModal('Web Development (1).png')">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Web Development</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 15, 2024</div>
+                    <p class="cert-description">Successfully completed the online Web Development course, demonstrating initiative and commitment to deepening skills.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Modal -->
+        <div id="certModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImg">
+        </div>
+
+        <!-- Back to Home -->
+        <div class="back-home">
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Rebienald Carpio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Check for saved theme preference
+        if (sessionStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                sessionStorage.setItem('darkMode', 'enabled');
+                themeToggle.textContent = '☀️';
+            } else {
+                sessionStorage.setItem('darkMode', 'disabled');
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // Modal functionality for certificate images
+        const modal = document.getElementById("certModal");
+        const modalImg = document.getElementById("modalImg");
+
+        function openModal(imageSrc) {
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
