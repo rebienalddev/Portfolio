@@ -21,24 +21,26 @@
         }
 
         .dark-mode {
-            background: #1a1a1a;
-            color: #e0e0e0;
+            background: #0a0a0a;
+            color: #f0f0f0;
         }
 
         /* Header */
         .header {
             background: #fff;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e8e8e8;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .header {
-            background: #1a1a1a;
-            border-bottom: 1px solid #333;
+            background: #0a0a0a;
+            border-bottom: 1px solid #222;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .nav-container {
@@ -52,8 +54,9 @@
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.5px;
         }
 
         .dark-mode .logo {
@@ -63,7 +66,8 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
+            transition: all 0.3s ease;
         }
 
         .nav-links a {
@@ -71,27 +75,96 @@
             color: #333;
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #000;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .dark-mode .nav-links a {
-            color: #e0e0e0;
+            color: #f0f0f0;
         }
 
-        .nav-links a:hover {
-            color: #2980b9;
+        .dark-mode .nav-links a::after {
+            background: #fff;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .theme-toggle {
             background: none;
             border: 1px solid #ddd;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem;
             cursor: pointer;
-            border-radius: 4px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
 
         .dark-mode .theme-toggle {
-            border-color: #555;
-            color: #e0e0e0;
+            border-color: #444;
+            color: #f0f0f0;
+        }
+
+        .theme-toggle:hover {
+            background: #f5f5f5;
+        }
+
+        .dark-mode .theme-toggle:hover {
+            background: #222;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #333;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .hamburger span {
+            background: #f0f0f0;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         /* Main Content */
@@ -107,19 +180,19 @@
         .hero {
             text-align: center;
             padding: 2rem 0 3rem;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e8e8e8;
             margin-bottom: 3rem;
         }
 
         .dark-mode .hero {
-            border-bottom-color: #333;
+            border-bottom-color: #222;
         }
 
         .hero h1 {
             font-size: 2.5rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: #2c3e50;
+            color: #000;
         }
 
         .dark-mode .hero h1 {
@@ -128,9 +201,13 @@
 
         .hero p {
             font-size: 1.1rem;
-            color: #7f8c8d;
+            color: #666;
             max-width: 800px;
             margin: 0 auto;
+        }
+
+        .dark-mode .hero p {
+            color: #ccc;
         }
 
         /* Contact Content */
@@ -149,28 +226,41 @@
 
         .contact-info {
             padding: 2rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #e8e8e8;
             background: #fff;
         }
 
         .dark-mode .contact-info {
-            border-color: #333;
-            background: #2a2a2a;
+            border-color: #222;
+            background: #1a1a1a;
         }
 
         .contact-info h2 {
             font-size: 1.8rem;
             font-weight: 600;
-            color: #2c3e50;
+            color: #000;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.75rem;
             display: inline-block;
+            position: relative;
+        }
+
+        .contact-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: #000;
         }
 
         .dark-mode .contact-info h2 {
             color: #fff;
+        }
+
+        .dark-mode .contact-info h2::after {
+            background: #fff;
         }
 
         .contact-details {
@@ -182,7 +272,6 @@
             align-items: center;
             margin-bottom: 1.5rem;
             padding: 1rem;
-            border-radius: 6px;
             background: #f8f9fa;
             transition: background 0.3s;
         }
@@ -192,11 +281,11 @@
         }
 
         .dark-mode .contact-details li {
-            background: #333;
+            background: #222;
         }
 
         .dark-mode .contact-details li:hover {
-            background: #444;
+            background: #333;
         }
 
         .contact-icon {
@@ -205,7 +294,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
             margin-right: 1rem;
             font-size: 1.5rem;
             color: white;
@@ -220,12 +308,12 @@
         }
 
         .github-icon {
-            background: #333;
+            background: #000;
         }
 
         .dark-mode .github-icon {
             background: #f5f5f5;
-            color: #333;
+            color: #000;
         }
 
         .phone-icon {
@@ -243,7 +331,7 @@
         .contact-text h3 {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #2c3e50;
+            color: #000;
             margin-bottom: 0.3rem;
         }
 
@@ -252,7 +340,7 @@
         }
 
         .contact-text p, .contact-text a {
-            color: #7f8c8d;
+            color: #666;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -261,31 +349,49 @@
             color: #2980b9;
         }
 
+        .dark-mode .contact-text p, 
+        .dark-mode .contact-text a {
+            color: #ccc;
+        }
+
         /* Contact Form */
         .contact-form {
             padding: 2rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #e8e8e8;
             background: #fff;
         }
 
         .dark-mode .contact-form {
-            border-color: #333;
-            background: #2a2a2a;
+            border-color: #222;
+            background: #1a1a1a;
         }
 
         .contact-form h2 {
             font-size: 1.8rem;
             font-weight: 600;
-            color: #2c3e50;
+            color: #000;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.75rem;
             display: inline-block;
+            position: relative;
+        }
+
+        .contact-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: #000;
         }
 
         .dark-mode .contact-form h2 {
             color: #fff;
+        }
+
+        .dark-mode .contact-form h2::after {
+            background: #fff;
         }
 
         .form-group {
@@ -296,11 +402,11 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #2c3e50;
+            color: #000;
         }
 
         .dark-mode .form-group label {
-            color: #e0e0e0;
+            color: #f0f0f0;
         }
 
         .form-group input,
@@ -308,7 +414,6 @@
             width: 100%;
             padding: 0.8rem 1rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
             font-family: inherit;
             font-size: 1rem;
             transition: border-color 0.3s;
@@ -316,9 +421,9 @@
 
         .dark-mode .form-group input,
         .dark-mode .form-group textarea {
-            border-color: #555;
-            background: #333;
-            color: #e0e0e0;
+            border-color: #444;
+            background: #222;
+            color: #f0f0f0;
         }
 
         .form-group input:focus,
@@ -335,10 +440,9 @@
         .submit-btn {
             display: inline-block;
             padding: 0.8rem 2rem;
-            background: #2980b9;
+            background: #000;
             color: white;
             border: none;
-            border-radius: 4px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
@@ -346,7 +450,16 @@
         }
 
         .submit-btn:hover {
-            background: #3498db;
+            background: #333;
+        }
+
+        .dark-mode .submit-btn {
+            background: #fff;
+            color: #000;
+        }
+
+        .dark-mode .submit-btn:hover {
+            background: #ccc;
         }
 
         /* Loading spinner */
@@ -355,11 +468,15 @@
             width: 20px;
             height: 20px;
             border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
             margin-right: 10px;
             vertical-align: middle;
+        }
+
+        .dark-mode .spinner {
+            border: 3px solid rgba(0,0,0,.3);
+            border-top-color: #000;
         }
 
         @keyframes spin {
@@ -370,71 +487,31 @@
         .status-message {
             padding: 10px;
             margin: 10px 0;
-            border-radius: 5px;
             text-align: center;
         }
 
         .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background-color: #f0f9f0;
+            color: #0f5132;
+            border: 1px solid #badbcc;
         }
 
         .dark-mode .success {
-            background-color: #155724;
-            color: #d4edda;
-            border-color: #155724;
+            background-color: #0f5132;
+            color: #d1e7dd;
+            border-color: #0f5132;
         }
 
         .error {
             background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            color: #842029;
+            border: 1px solid #f5c2c7;
         }
 
         .dark-mode .error {
-            background-color: #721c24;
+            background-color: #842029;
             color: #f8d7da;
-            border-color: #721c24;
-        }
-
-        /* Map Section */
-        .map-section {
-            margin-bottom: 3rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .dark-mode .map-section {
-            border-color: #333;
-        }
-
-        .map-section h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-            padding: 1.5rem 1.5rem 0;
-        }
-
-        .dark-mode .map-section h2 {
-            color: #fff;
-        }
-
-        .map-placeholder {
-            height: 300px;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7f8c8d;
-            font-weight: 500;
-        }
-
-        .dark-mode .map-placeholder {
-            background: #333;
-            color: #ccc;
+            border-color: #842029;
         }
 
         /* Back to Home */
@@ -449,16 +526,15 @@
             gap: 0.5rem;
             padding: 0.8rem 1.5rem;
             background: #f8f9fa;
-            color: #2c3e50;
+            color: #000;
             text-decoration: none;
-            border-radius: 4px;
             font-weight: 500;
             transition: background 0.3s;
         }
 
         .dark-mode .back-link {
-            background: #2a2a2a;
-            color: #e0e0e0;
+            background: #222;
+            color: #f0f0f0;
         }
 
         .back-link:hover {
@@ -473,19 +549,62 @@
         .footer {
             margin-top: 4rem;
             padding: 2rem 0;
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px solid #e8e8e8;
             text-align: center;
-            color: #7f8c8d;
+            color: #666;
         }
 
         .dark-mode .footer {
-            border-top-color: #333;
+            border-top-color: #222;
+            color: #ccc;
         }
 
-        /* Mobile */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
             .nav-links {
-                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                border-top: 1px solid #e8e8e8;
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .dark-mode .nav-links {
+                background: #0a0a0a;
+                border-top-color: #222;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: all;
+            }
+
+            .nav-links a {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .dark-mode .nav-links a {
+                border-bottom-color: #222;
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
             }
 
             .hero h1 {
@@ -495,6 +614,28 @@
             .contact-content {
                 grid-template-columns: 1fr;
             }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 1.5rem 0 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .contact-info, .contact-form {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -503,13 +644,20 @@
     <header class="header">
         <div class="nav-container">
             <div class="logo">Rebienald Carpio</div>
-            <nav class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
                 <a href="index.html#education">Education</a>
                 <a href="index.html#skills">Skills</a>
                 <a href="Certifications.html">Certifications</a>
             </nav>
-            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -574,10 +722,12 @@
                         <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="email">Your Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
+
                     <div class="form-group">
                         <label for="subject">Subject</label>
                         <input type="text" id="subject" name="subject" required>
@@ -592,9 +742,6 @@
                 </form>
             </div>
         </div>
-
-        <!-- Map Section -->
-    
 
         <!-- Back to Home -->
         <div class="back-home">
@@ -632,6 +779,31 @@ themeToggle.addEventListener('click', () => {
     } else {
         sessionStorage.setItem('darkMode', 'disabled');
         themeToggle.textContent = '🌙';
+    }
+});
+
+// Hamburger Menu Toggle
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+navLinks.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+    }
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
     }
 });
 
