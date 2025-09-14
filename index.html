@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rebienald Carpio - Website Developer</title>
+    <title>Rebienald Carpio - Software Developer</title>
     <style>
         * {
             margin: 0;
@@ -398,6 +398,36 @@
             color: #fff;
         }
 
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #000;
+            color: #fff !important;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+        }
+
+        .project-link:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .project-link {
+            background: #fff;
+            color: #000 !important;
+        }
+
+        .dark-mode .project-link:hover {
+            background: #ddd;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+
         .achievement-meta {
             color: #666;
             font-weight: 500;
@@ -607,9 +637,6 @@
                 padding: 1.5rem;
             }
         }
-        #des{
-            text-align: justify;
-        }
     </style>
 </head>
 <body>
@@ -619,6 +646,7 @@
             <div class="logo">Rebienald Carpio</div>
             <nav class="nav-links" id="navLinks">
                 <a href="#education">Education</a>
+                <a href="#projects">Projects</a>
                 <a href="Certifications.html">Certifications</a>
                 <a href="#skills">Skills</a>
                 <a href="Contact.html">Contact</a>
@@ -653,12 +681,12 @@
             <div class="education-item">
                 <h3>Systems Technology Institute (STI)</h3>
                 <div class="education-meta">
-                   2024 – Present | Grade 12, ICT under TVL track
+                   2024 – Present | Grade 11, ICT under TVL track
                 </div>
                 <div class="education-details">
                     <p><strong>Specialization:</strong> Mobile Applications and Web Development</p>
                     <p><strong>Academic Standing:</strong> Consistent Honor Student</p>
-                    <p id="des">Currently pursuing advanced studies in information and communications technology with emphasis on practical application development, modern web technologies, and mobile platform development.</p>
+                    <p>Currently pursuing advanced studies in information and communications technology with emphasis on practical application development, modern web technologies, and mobile platform development.</p>
                 </div>
             </div>
 
@@ -679,6 +707,51 @@
             </div>
         </section>
 
+        <!-- Projects -->
+        <section class="section" id="projects">
+            <h2>Featured Projects</h2>
+            <div class="achievement-grid">
+
+                <div class="achievement-card">
+                    <h3>FilthyClo - E-commerce Website</h3>
+                    <div class="achievement-meta">
+                        Live Project | HTML, CSS, JavaScript
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://filthyclo.netlify.app/" target="_blank" class="project-link">
+                            View Live Site
+                        </a>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <h3>Club Management System</h3>
+                    <div class="achievement-meta">
+                        Live Project | HTML, CSS, JavaScript, PHP, MYSQL
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="project-link">
+                            View Live Site
+                        </a>
+                    </div>
+                </div>
+
+
+
+                <div class="achievement-card">
+                    <h3>Nestor Lechon - Business Website</h3>
+                    <div class="achiervement-meta">
+                        Live Poject | HTML, CSS, JavaScript
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://nestor-lechon.github.io/Details/" target="_blank" class="project-link">
+                            🔗iew Live Site
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Recent Achievements -->
         <section class="section" id="achievements">
             <h2>Recent Achievements</h2>
@@ -694,7 +767,7 @@
                 </div>
 
                 <div class="achievement-card">
-                    <h3>Mobile App Development Competition</h3>
+                    <h3>Mobile Application Development Competition</h3>
                     <div class="achievement-meta">
                         February 27, 2025 | Technologies: Java, XML, Android Studio
                     </div>
@@ -723,109 +796,3 @@
 
                 <div class="skill-category">
                     <h3>Web Development</h3>
-                    <ul class="skill-list">
-                        <li>Responsive Web Design</li>
-                        <li>Boostrap</li>
-                        <li>Cross-Browser Compatibility</li>
-                        <li>Front-End Development</li>
-                        <li>Website Deploymentt</li>
-
-                    </ul>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Mobile Development</h3>
-                    <ul class="skill-list">
-                        <li>Android Studio</li>
-                        <li>Android SDK</li>
-                        <li>Mobile UI/UX Design</li>
-                        <li>Java for Android</li>
-                        <li>XML Layouts</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Development Tools</h3>
-                    <ul class="skill-list">
-                        <li>Github</li>
-                        <li>Infinityfree</li>
-                        <li>Netlify</li>
-                        <li>Visual Studio Code</li>
-                        <li>Netbeans</li>
-                        <li>Browser Developer Tools</li>
-                    
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 Rebienald Carpio. All rights reserved.</p>
-    </footer>
-
-    <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        // Check for saved theme preference
-        if (sessionStorage.getItem('darkMode') === 'enabled') {
-            body.classList.add('dark-mode');
-            themeToggle.textContent = '☀️';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            if (body.classList.contains('dark-mode')) {
-                sessionStorage.setItem('darkMode', 'enabled');
-                themeToggle.textContent = '☀️';
-            } else {
-                sessionStorage.setItem('darkMode', 'disabled');
-                themeToggle.textContent = '🌙';
-            }
-        });
-
-        // Hamburger Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
