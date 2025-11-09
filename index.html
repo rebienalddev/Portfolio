@@ -4,41 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebienald Carpio - Software Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.10.1/tsparticles.bundle.min.js"></script>
+
     <style>
+        :root {
+            --font-main: 'Exo 2', sans-serif;
+            --font-heading: 'Rajdhani', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
+
+            /* --- FUTURISTIC THEME COLORS --- */
+            /* Using Cyan/Aqua as the primary accent */
+            --color-dark-bg: #000000;
+            --color-dark-text: #e0e0e0;
+            --color-dark-text-bright: #ffffff;
+            --color-accent: #00fff0; /* Bright Cyan */
+            --color-accent-dim: rgba(0, 255, 240, 0.1);
+            --color-accent-border: rgba(0, 255, 240, 0.25);
+            --color-accent-border-hover: #00fff0;
+            
+            --color-light-bg: #ffffff;
+            --color-light-text: #222222;
+            --color-light-text-dim: #555;
+            --color-light-border: rgba(0, 0, 0, 0.1);
+            --color-light-border-hover: #000000;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* --- PARTICLES BACKGROUND --- */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* --- SCANLINE OVERLAY --- */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.05;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0, 0, 0, 0.5) 1px,
+                rgba(0, 0, 0, 0.5) 2px
+            );
+        }
+        .dark-mode::after {
+            opacity: 0.1;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(255, 255, 255, 0.1) 1px,
+                rgba(255, 255,255, 0.1) 2px
+            );
+        }
+
+        /* --- SCROLL FADE-IN ANIMATION --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
+            font-family: var(--font-main);
+            line-height: 1.7;
+            background: var(--color-light-bg);
+            color: var(--color-light-text);
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .dark-mode {
-            background: #0a0a0a;
-            color: #f0f0f0;
+            background: var(--color-dark-bg);
+            color: var(--color-dark-text);
         }
 
-        /* Header */
+        /* --- Header & Nav --- */
         .header {
-            background: #fff;
-            border-bottom: 1px solid #e8e8e8;
+            background: var(--color-light-bg);
+            border-bottom: 1px solid var(--color-light-border);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         .dark-mode .header {
-            background: #0a0a0a;
-            border-bottom: 1px solid #222;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent */
+            border-bottom: 1px solid var(--color-accent-border);
+            backdrop-filter: blur(5px); /* Frosted glass effect */
         }
 
         .nav-container {
@@ -51,53 +132,72 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #000;
-            letter-spacing: -0.5px;
+            color: var(--color-light-border-hover);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .dark-mode .logo {
-            color: #fff;
+            color: var(--color-dark-text-bright);
+            text-shadow: 0 0 5px var(--color-accent-dim);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2.5rem;
-            transition: all 0.3s ease;
         }
 
         .nav-links a {
+            font-family: var(--font-mono);
             text-decoration: none;
-            color: #333;
+            color: var(--color-light-text-dim);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             position: relative;
-            padding: 0.5rem 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #000;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
+            padding: 0.5rem 0.25rem;
+            text-transform: uppercase;
         }
 
         .dark-mode .nav-links a {
-            color: #f0f0f0;
+            color: var(--color-dark-text);
         }
 
+        .dark-mode .nav-links a::before,
         .dark-mode .nav-links a::after {
-            background: #fff;
+            content: '';
+            position: absolute;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .dark-mode .nav-links a::before {
+            content: '[';
+            left: -10px;
+            transform: translateX(-10px);
+            color: var(--color-accent);
+        }
+        .dark-mode .nav-links a::after {
+            content: ']';
+            right: -10px;
+            transform: translateX(10px);
+            color: var(--color-accent);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-light-border-hover);
+        }
+        .dark-mode .nav-links a:hover {
+            color: var(--color-accent);
+            text-shadow: 0 0 8px var(--color-accent-dim);
+        }
+
+        .dark-mode .nav-links a:hover::before,
+        .dark-mode .nav-links a:hover::after {
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .nav-controls {
@@ -107,8 +207,9 @@
         }
 
         .theme-toggle {
-            background: none;
-            border: 1px solid #ddd;
+            background: transparent;
+            border: 1px solid var(--color-light-border);
+            color: var(--color-light-text-dim);
             padding: 0.5rem;
             cursor: pointer;
             width: 40px;
@@ -117,19 +218,22 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
+            font-size: 1.2rem;
         }
 
         .dark-mode .theme-toggle {
-            border-color: #444;
-            color: #f0f0f0;
+            border-color: var(--color-accent-border);
+            color: var(--color-dark-text);
         }
 
         .theme-toggle:hover {
-            background: #f5f5f5;
+            border-color: var(--color-light-border-hover);
         }
 
         .dark-mode .theme-toggle:hover {
-            background: #222;
+            background: var(--color-accent-dim);
+            color: var(--color-accent);
+            border-color: var(--color-accent);
         }
 
         .hamburger {
@@ -139,74 +243,108 @@
             cursor: pointer;
             padding: 0.5rem;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
+            z-index: 1001;
         }
 
         .hamburger span {
             width: 25px;
             height: 2px;
-            background: #333;
+            background: var(--color-light-text);
             transition: all 0.3s ease;
         }
 
         .dark-mode .hamburger span {
-            background: #f0f0f0;
+            background: var(--color-dark-text-bright);
         }
 
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
+            transform: rotate(45deg) translate(5px, 5px);
         }
-
         .hamburger.active span:nth-child(2) {
             opacity: 0;
         }
-
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* Main Content */
+        /* --- Main Content --- */
         .main-content {
             margin-top: 80px;
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
             padding: 2rem;
+            position: relative; /* For z-index stacking */
+            z-index: 10;
         }
 
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
             text-align: center;
-            padding: 5rem 0 4rem;
-            border-bottom: 1px solid #e8e8e8;
-            margin-bottom: 3rem;
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--color-light-border);
+            margin-bottom: 4rem;
         }
 
         .dark-mode .hero {
-            border-bottom-color: #222;
+            border-bottom-color: var(--color-accent-border);
         }
 
+        /* --- Glitch Heading --- */
         .hero h1 {
-            font-size: 3.5rem;
+            font-family: var(--font-heading);
+            font-size: 5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: #000;
-            letter-spacing: -1px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
         }
 
         .dark-mode .hero h1 {
-            color: #fff;
+            color: var(--color-dark-text-bright);
+        }
+
+        .dark-mode .hero h1::before,
+        .dark-mode .hero h1::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .dark-mode .hero h1::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            color: var(--color-accent);
+            clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
+        }
+
+        .dark-mode .hero h1::after {
+            left: -2px;
+            text-shadow: 1px 0 blue;
+            color: var(--color-accent);
+            clip-path: polygon(0 65%, 100% 65%, 100% 70%, 0 70%);
         }
 
         .hero .title {
-            font-size: 1.4rem;
-            color: #666;
-            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--color-light-text-dim);
+            margin-bottom: 2rem;
             font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
         .dark-mode .hero .title {
-            color: #ccc;
+            color: var(--color-dark-text);
+            text-shadow: 0 0 5px var(--color-accent-dim);
         }
 
         .hero .summary {
@@ -214,278 +352,228 @@
             margin: 0 auto;
             text-align: justify;
             font-size: 1.1rem;
-            line-height: 1.7;
-            
-            color: #555;
+            font-weight: 300;
+            color: var(--color-light-text-dim);
         }
 
         .dark-mode .hero .summary {
-            color: #ccc;
+            color: var(--color-dark-text);
         }
 
-        .contact-info {
-            margin-top: 2.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            color: #000;
-            text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s;
-        }
-
-        .contact-item:hover {
-            color: #555;
-        }
-
-        .dark-mode .contact-item {
-            color: #fff;
-        }
-
-        .dark-mode .contact-item:hover {
-            color: #ccc;
-        }
-
-        /* Sections */
+        /* --- Sections --- */
         .section {
             margin-bottom: 5rem;
         }
 
         .section h2 {
-            font-size: 2.2rem;
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
             font-weight: 600;
             color: #000;
             margin-bottom: 2.5rem;
-            padding-bottom: 0.75rem;
-            display: inline-block;
+            padding-bottom: 1rem;
+            display: block;
             position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--color-light-border);
         }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: #000;
+        
+        .section h2::before {
+            content: "// ";
+            color: var(--color-light-text-dim);
+            opacity: 0.5;
         }
 
         .dark-mode .section h2 {
-            color: #fff;
+            color: var(--color-accent);
+            border-bottom: 1px solid var(--color-accent-border);
+            text-shadow: 0 0 8px var(--color-accent-dim);
         }
 
-        .dark-mode .section h2::after {
+        .dark-mode .section h2::before {
+            color: var(--color-dark-text);
+        }
+
+        /* --- NEW "SCANNER" CARD --- */
+        .card {
+            border: 1px solid var(--color-light-border);
             background: #fff;
-        }
-
-        /* Education */
-        .education-item {
-            margin-bottom: 3rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid #eee;
+            padding: 2.5rem;
             position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        .dark-mode .education-item {
-            border-bottom-color: #222;
+        .dark-mode .card {
+            background: var(--color-accent-dim);
+            border: 1px solid var(--color-accent-border);
         }
 
+        /* Scanner lines */
+        .card::before,
+        .card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--color-light-border-hover);
+            transform: scaleX(0);
+            transition: transform 0.4s ease-out;
+            transform-origin: left;
+        }
+
+        .dark-mode .card::before,
+        .dark-mode .card::after {
+            background: var(--color-accent);
+            box-shadow: 0 0 8px var(--color-accent);
+        }
+
+        .card::before {
+            top: 0;
+            transform-origin: left;
+        }
+        .card::after {
+            bottom: 0;
+            transform-origin: right;
+        }
+
+        .card:hover {
+            border-color: var(--color-light-border-hover);
+        }
+        .dark-mode .card:hover {
+            border-color: var(--color-accent-border-hover);
+            background: rgba(0, 255, 240, 0.05);
+        }
+
+        .card:hover::before,
+        .card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .education-item {
+            margin-bottom: 2rem;
+        }
         .education-item:last-child {
-            border-bottom: none;
+            margin-bottom: 0;
         }
 
-        .education-item h3 {
-            font-size: 1.5rem;
+        .card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
             font-weight: 600;
             color: #000;
             margin-bottom: 0.75rem;
         }
 
-        .dark-mode .education-item h3 {
-            color: #fff;
+        .dark-mode .card h3 {
+            color: var(--color-dark-text-bright);
         }
 
-        .education-meta {
-            color: #666;
+        .card-meta {
+            font-family: var(--font-mono);
+            color: var(--color-light-text-dim);
             font-weight: 500;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
-        .dark-mode .education-meta {
-            color: #ccc;
+        .dark-mode .card-meta {
+            color: var(--color-dark-text);
         }
 
         .education-details {
-            color: #555;
+            color: var(--color-light-text-dim);
             margin-left: 1.5rem;
+            font-weight: 300;
         }
 
         .dark-mode .education-details {
-            color: #ccc;
+            color: var(--color-dark-text);
         }
 
         .education-details strong {
             color: #000;
+            font-weight: 500;
         }
 
         .dark-mode .education-details strong {
-            color: #fff;
+            color: var(--color-dark-text-bright);
         }
 
-        /* Achievements */
+        /* --- Grids --- */
         .achievement-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2.5rem;
         }
 
-        .achievement-card {
-            border: 1px solid #e8e8e8;
-            padding: 2.5rem;
-            background: #fff;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .achievement-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: #000;
-        }
-
-        .achievement-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .dark-mode .achievement-card {
-            border-color: #222;
-            background: #1a1a1a;
-        }
-
-        .dark-mode .achievement-card::before {
-            background: #fff;
-        }
-
-        .dark-mode .achievement-card:hover {
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .achievement-card h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 0.75rem;
-        }
-
-        .dark-mode .achievement-card h3 {
-            color: #fff;
-        }
-
+        /* Ghost Button */
         .project-link {
+            font-family: var(--font-mono);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: #000;
-            color: #fff !important;
+            background: var(--color-light-border-hover);
+            color: var(--color-light-bg) !important;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
-            border-radius: 4px;
-            margin-top: 1.5rem;
+            border: 1px solid var(--color-light-border-hover);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .project-link:hover {
             background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .dark-mode .project-link {
-            background: #fff;
-            color: #000 !important;
+            background: transparent;
+            color: var(--color-accent) !important;
+            border-color: var(--color-accent);
         }
 
         .dark-mode .project-link:hover {
-            background: #ddd;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            background: var(--color-accent);
+            color: var(--color-dark-bg) !important;
+            box-shadow: 0 0 15px var(--color-accent);
+            transform: translateY(-2px);
         }
-
-        .achievement-meta {
-            color: #666;
-            font-weight: 500;
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .dark-mode .achievement-meta {
-            color: #ccc;
-        }
-
+        
         .achievement-description {
-            color: #555;
+            color: var(--color-light-text-dim);
             text-align: justify;
             line-height: 1.7;
+            font-weight: 300;
         }
 
         .dark-mode .achievement-description {
-            color: #ccc;
+            color: var(--color-dark-text);
         }
 
-        /* Technical Skills */
+        /* --- Technical Skills --- */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2.5rem;
         }
 
-        .skill-category {
-            border: 1px solid #e8e8e8;
-            padding: 2rem;
-            background: #fff;
-            transition: transform 0.3s;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-        }
-
-        .dark-mode .skill-category {
-            border-color: #222;
-            background: #1a1a1a;
-        }
-
         .skill-category h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
             padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e8e8e8;
+            border-bottom: 1px solid var(--color-light-border);
         }
 
         .dark-mode .skill-category h3 {
-            color: #fff;
-            border-bottom-color: #222;
+            border-bottom-color: var(--color-accent-border);
         }
 
         .skill-list {
@@ -494,42 +582,49 @@
 
         .skill-list li {
             padding: 0.5rem 0;
-            color: #555;
+            color: var(--color-light-text-dim);
             position: relative;
             padding-left: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
         }
 
         .skill-list li::before {
-            content: "•";
+            content: "+";
             position: absolute;
             left: 0;
-            color: #000;
+            color: var(--color-light-border-hover);
             font-size: 1.2rem;
+            font-family: var(--font-mono);
         }
 
         .dark-mode .skill-list li {
-            color: #ccc;
+            color: var(--color-dark-text);
         }
 
         .dark-mode .skill-list li::before {
-            color: #fff;
+            color: var(--color-accent);
         }
 
-        /* Footer */
+        /* --- Footer --- */
         .footer {
             margin-top: 5rem;
             padding: 3rem 0;
-            border-top: 1px solid #e8e8e8;
+            border-top: 1px solid var(--color-light-border);
             text-align: center;
-            color: #666;
+            color: var(--color-light-text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            z-index: 10;
+            position: relative;
         }
 
         .dark-mode .footer {
-            border-top-color: #222;
-            color: #ccc;
+            border-top-color: var(--color-accent-border);
+            color: var(--color-dark-text);
         }
 
-        /* Mobile Responsive */
+        /* --- Mobile Responsive --- */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -537,73 +632,66 @@
 
             .nav-links {
                 position: absolute;
-                top: 100%;
+                top: 0; /* Cover full screen */
                 left: 0;
                 right: 0;
-                background: #fff;
-                border-top: 1px solid #e8e8e8;
+                height: 100vh;
+                background: var(--color-light-bg);
                 flex-direction: column;
-                padding: 1.5rem 2rem;
-                gap: 1rem;
+                padding: 6rem 2rem 2rem;
+                gap: 1.5rem;
+                align-items: center;
+                justify-content: flex-start;
                 transform: translateY(-100%);
                 opacity: 0;
-                visibility: hidden;
-                pointer-events: none;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transition: transform 0.4s ease, opacity 0.4s ease;
             }
 
             .dark-mode .nav-links {
-                background: #0a0a0a;
-                border-top-color: #222;
+                background: var(--color-dark-bg);
             }
 
             .nav-links.active {
                 transform: translateY(0);
                 opacity: 1;
-                visibility: visible;
-                pointer-events: all;
             }
 
             .nav-links a {
                 padding: 0.75rem 0;
-                border-bottom: 1px solid #eee;
-            }
-
-            .dark-mode .nav-links a {
-                border-bottom-color: #222;
-            }
-
-            .nav-links a:last-child {
-                border-bottom: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .title {
+                border-bottom: 1px solid var(--color-light-border);
+                width: 100%;
+                text-align: center;
                 font-size: 1.2rem;
             }
 
-            .contact-info {
-                flex-direction: column;
-                gap: 1rem;
+            .dark-mode .nav-links a {
+                border-bottom-color: var(--color-accent-border);
+            }
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+            .nav-links a::before,
+            .nav-links a::after {
+                content: none;
             }
 
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .hero .title {
+                font-size: 1.1rem;
+            }
             .achievement-grid {
                 grid-template-columns: 1fr;
             }
-
             .main-content {
                 padding: 1.5rem;
             }
-
             .nav-container {
                 padding: 0 1.5rem;
             }
-
             .section h2 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
         }
 
@@ -611,36 +699,31 @@
             .hero {
                 padding: 3rem 0;
             }
-
             .hero h1 {
                 font-size: 2.2rem;
             }
-
             .hero .title {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                letter-spacing: 2px;
             }
-
             .hero .summary {
                 font-size: 1rem;
-                text-align: justify;
             }
-
             .section h2 {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
-
             .skills-grid {
                 grid-template-columns: 1fr;
             }
-
-            .achievement-card, .skill-category {
+            .card {
                 padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <div id="tsparticles"></div>
+
     <header class="header">
         <div class="nav-container">
             <div class="logo">Rebienald Carpio</div>
@@ -662,26 +745,22 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Rebienald Carpio</h1>
+        <section class="hero fade-in">
+            <h1 data-text="Rebienald Carpio">Rebienald Carpio</h1>
             <p class="title">Website Developer & ICT Student</p>
             <p class="summary">
                 Dedicated ICT student at Systems Technology Institute with demonstrated expertise in full-stack web development and mobile application development. Proven track record of academic excellence and competitive programming achievements. Specialized in JavaScript, Java, HTML, CSS, and Android development with strong problem-solving capabilities.
             </p>
-        
         </section>
 
-        <!-- Education -->
-        <section class="section" id="education">
+        <section class="section fade-in" id="education">
             <h2>Education</h2>
             
-            <div class="education-item">
+            <div class="card education-item">
                 <h3>Systems Technology Institute (STI)</h3>
-                <div class="education-meta">
-                   2024 – Present | Grade 12, ICT under TVL track
+                <div class="card-meta">
+                    2024 – Present | Grade 12, ICT under TVL track
                 </div>
                 <div class="education-details">
                     <p><strong>Specialization:</strong> Mobile Applications and Web Development</p>
@@ -690,16 +769,16 @@
                 </div>
             </div>
 
-            <div class="education-item">
+            <div class="card education-item" style="margin-top: 2.5rem;">
                 <h3>Binakayan National High School</h3>
-                <div class="education-meta">
-                   2020 – 2024 | Kawit, Cavite
+                <div class="card-meta">
+                    2020 – 2024 | Kawit, Cavite
                 </div>
                 <div class="education-details">
                     <p><strong>Credential:</strong> Junior High School Graduate</p>
                     <p><strong>Academic Standing:</strong> Consistent Honor Student (Grades 7–10)</p>
                     <p><strong>Technical Specializations:</strong></p>
-                    <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <ul style="margin-left: 2rem; margin-top: 0.5rem; list-style-type: none;" class="skill-list">
                         <li>Computer System Servicing (Grade 10)</li>
                         <li>Hospitality Management (Grade 9)</li>
                     </ul>
@@ -707,14 +786,13 @@
             </div>
         </section>
 
-        <!-- Projects -->
-        <section class="section" id="projects">
+        <section class="section fade-in" id="projects">
             <h2>Featured Projects</h2>
             <div class="achievement-grid">
 
-                <div class="achievement-card">
+                <div class="card achievement-card">
                     <h3>FilthyClo - E-commerce Website</h3>
-                    <div class="achievement-meta">
+                    <div class="card-meta">
                         Live Project | HTML, CSS, JavaScript
                     </div>
                     <div style="margin-top: 1.5rem;">
@@ -724,9 +802,9 @@
                     </div>
                 </div>
 
-                <div class="achievement-card">
+                <div class="card achievement-card">
                     <h3>Club Management System</h3>
-                    <div class="achievement-meta">
+                    <div class="card-meta">
                         Live Project | HTML, CSS, JavaScript, PHP, MYSQL
                     </div>
                     <div style="margin-top: 1.5rem;">
@@ -736,11 +814,9 @@
                     </div>
                 </div>
 
-
-
-                <div class="achievement-card">
+                <div class="card achievement-card">
                     <h3>TechnoBytes - Club Website</h3>
-                    <div class="achiervement-meta">
+                    <div class="card-meta">
                         Live Poject | HTML, CSS, JavaScript
                     </div>
                     <div style="margin-top: 1.5rem;">
@@ -752,61 +828,57 @@
             </div>
         </section>
 
-                <!-- Recent Achievements -->
-        <section class="section" id="achievements">
+        <section class="section fade-in" id="achievements">
             <h2>Recent Achievements</h2>
             <div class="achievement-grid">
 
-                   <div class="achievement-card">
+                <div class="card achievement-card">
                     <h3>Resource Speaker – Web Responsiveness and Deployment</h3>
-                    <div class="achievement-meta">
-                        October 25, 2025 | STI College Bacoor | 12:00 PM – 4:00 PM
+                    <div class="card-meta">
+                        October 25, 2025 | STI College Bacoor
                     </div>
                     <p class="achievement-description">
-Served as a resource speaker and facilitated a workshop covering the fundamentals of HTML, CSS, responsive web design, and deployment. Provided hands-on guidance on coding techniques, adaptive layouts, and best practices for deploying web applications effectively.                    </p>
+                        Served as a resource speaker and facilitated a workshop covering the fundamentals of HTML, CSS, responsive web design, and deployment. Provided hands-on guidance on coding techniques, adaptive layouts, and best practices.
+                    </p>
                 </div>
                 
-                     <div class="achievement-card">
+                <div class="card achievement-card">
                     <h3>Resource Speaker – HTML & CSS Workshop</h3>
-                    <div class="achievement-meta">
-                        November 20, 2025 | STI College Bacoor | 8:00 AM – 12:00 PM
+                    <div class="card-meta">
+                        November 20, 2025 | STI College Bacoor
                     </div>
                     <p class="achievement-description">
-                        Served as a resource speaker and conducted a workshop on the basic fundamentals and structures of HTML and CSS. Shared practical coding tips, techniques, and best practices with participants to strengthen their foundational knowledge in front-end development.
+                        Served as a resource speaker and conducted a workshop on the basic fundamentals and structures of HTML and CSS. Shared practical coding tips, techniques, and best practices with participants to strengthen their foundational knowledge.
                     </p>
                 </div>
-            
-
-                <div class="achievement-card">
+        
+                <div class="card achievement-card">
                     <h3>Web Design Competition</h3>
-                    <div class="achievement-meta">
-                       April 24, 2025 | Technologies: HTML, CSS
+                    <div class="card-meta">
+                        April 24, 2025 | Technologies: HTML, CSS
                     </div>
                     <p class="achievement-description">
-                        Participated in an intensive 8-hour web design competition at Systems Technology Institute, competing against college-level students. Demonstrated advanced proficiency in HTML5, CSS3, responsive design principles, and modern web development practices under time constraints.
+                        Participated in an intensive 8-hour web design competition at Systems Technology Institute, competing against college-level students. Demonstrated advanced proficiency in HTML5, CSS3, and responsive design principles.
                     </p>
                 </div>
 
-                <div class="achievement-card">
+                <div class="card achievement-card">
                     <h3>Mobile Application Development Competition</h3>
-                    <div class="achievement-meta">
-                        February 27, 2025 | Technologies: Java, XML, Android Studio
+                    <div class="card-meta">
+                        February 27, 2025 | Technologies: Java, XML
                     </div>
                     <p class="achievement-description">
-                        Completed a 6-hour mobile application development hackathon focused on Android platform development. Enhanced practical skills in Java programming, XML layout design, Android SDK implementation, and mobile UI/UX design principles.
+                        Completed a 6-hour mobile application development hackathon focused on Android platform development. Enhanced practical skills in Java programming, XML layout design, and mobile UI/UX design principles.
                     </p>
                 </div>
-</div>
-           
+            </div>
         </section>
 
-
-        <!-- Technical Skills -->
-        <section class="section" id="skills">
+        <section class="section fade-in" id="skills">
             <h2>Technical Skills</h2>
             <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
+                <div class="card skill-category">
+                    <h3>Languages</h3>
                     <ul class="skill-list">
                         <li>JavaScript</li>
                         <li>Java</li>
@@ -817,66 +889,160 @@ Served as a resource speaker and facilitated a workshop covering the fundamental
                     </ul>
                 </div>
 
-       <div class="skill-category">
+                <div class="card skill-category">
                     <h3>Web Development</h3>
                     <ul class="skill-list">
-                        <li>Responsive Web Design</li>
+                        <li>Responsive Design</li>
                         <li>Boostrap</li>
-                        <li>Cross-Browser Compatibility</li>
-                        <li>Front-End Development</li>
-                        <li>Website Deploymentt</li>
-
+                        <li>Cross-Browser</li>
+                        <li>Front-End</li>
+                        <li>Deployment</li>
                     </ul>
                 </div>
 
-                <div class="skill-category">
-                    <h3>Mobile Development</h3>
+                <div class="card skill-category">
+                    <h3>Mobile Dev</h3>
                     <ul class="skill-list">
                         <li>Android Studio</li>
                         <li>Android SDK</li>
-                        <li>Mobile UI/UX Design</li>
+                        <li>Mobile UI/UX</li>
                         <li>Java for Android</li>
                         <li>XML Layouts</li>
                     </ul>
                 </div>
 
-                <div class="skill-category">
-                    <h3>Development Tools</h3>
+                <div class="card skill-category">
+                    <h3>Tools</h3>
                     <ul class="skill-list">
                         <li>Github</li>
                         <li>Infinityfree</li>
                         <li>Netlify</li>
-                        <li>Visual Studio Code</li>
+                        <li>VS Code</li>
                         <li>Android Studio</li>
                         <li>Netbeans</li>
-                        <li>Browser Developer Tools</li>
-                      
-                    
                     </ul>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 Rebienald Carpio. All rights reserved.</p>
+    <footer class="footer fade-in">
+        <p>&copy; 2025 Rebienald Carpio. All rights reserved. // System Interface: Online</p>
     </footer>
 
     <script>
-        // Theme Toggle
+        // --- TS-PARTICLES CONFIG ---
+        // This is the configuration for the "Cyber-Matrix" background
+        // It runs automatically after the library is loaded
+        async function loadParticles(options) {
+            await tsParticles.load("tsparticles", {
+                "particles": {
+                    "number": {
+                        "value": 80, // Number of dots
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#00fff0" // Color of dots
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false
+                        }
+                    },
+                    "size": {
+                        "value": 2, // Size of dots
+                        "random": true,
+                        "anim": {
+                            "enable": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#00fff0", // Color of lines
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse" // Dots run away from mouse
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push" // Click to add more dots
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "repulse": {
+                            "distance": 100,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+        
+        // Only run particles in dark mode for performance and aesthetic
+        function toggleParticles() {
+            const body = document.body;
+            if (body.classList.contains('dark-mode')) {
+                // Load particles if they aren't already
+                if (!document.getElementById('tsparticles').hasChildNodes()) {
+                    loadParticles();
+                }
+            } else {
+                // Destroy particles if in light mode
+                const particlesInstance = tsParticles.domItem(0);
+                if (particlesInstance) {
+                    particlesInstance.destroy();
+                }
+            }
+        }
+
+
+        // --- THEME TOGGLE SCRIPT ---
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
-        // Check for saved theme preference
-        if (sessionStorage.getItem('darkMode') === 'enabled') {
+        // Default to DARK unless 'disabled' is explicitly set
+        if (sessionStorage.getItem('darkMode') === 'disabled') {
+            body.classList.remove('dark-mode');
+            themeToggle.textContent = '🌙';
+        } else {
             body.classList.add('dark-mode');
             themeToggle.textContent = '☀️';
         }
+        
+        toggleParticles(); // Run on page load
 
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
-
             if (body.classList.contains('dark-mode')) {
                 sessionStorage.setItem('darkMode', 'enabled');
                 themeToggle.textContent = '☀️';
@@ -884,9 +1050,10 @@ Served as a resource speaker and facilitated a workshop covering the fundamental
                 sessionStorage.setItem('darkMode', 'disabled');
                 themeToggle.textContent = '🌙';
             }
+            toggleParticles(); // Run on toggle
         });
 
-        // Hamburger Menu Toggle
+        // --- HAMBURGER & SCROLL SCRIPT ---
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
@@ -895,7 +1062,6 @@ Served as a resource speaker and facilitated a workshop covering the fundamental
             navLinks.classList.toggle('active');
         });
 
-        // Close mobile menu when clicking on a link
         navLinks.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 hamburger.classList.remove('active');
@@ -903,27 +1069,43 @@ Served as a resource speaker and facilitated a workshop covering the fundamental
             }
         });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
                     });
                 }
             });
         });
+
+        // --- ON-SCROLL FADE-IN SCRIPT ---
+        const faders = document.querySelectorAll('.fade-in');
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once it's visible
+                }
+            });
+        }, options);
+
+        faders.forEach(fader => {
+            observer.observe(fader);
+        });
     </script>
 </body>
-</html>          
+</html>
