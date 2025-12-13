@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.10.1/tsparticles.bundle.min.js"></script>
+    <link rel="stylesheet" href="certs.css">
+   
+</head>
+<body>
+    <div id="tsparticles"></div>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Reb</div>
+            <nav class="nav-links" id="navLinks">
+                
+    <a href="../index.html">Home</a>
+    <a href="Certifications.html">Certifications</a>
+    <a href="../contacts/Contact.html">Contact</a>
+    <a href="../packet/packet.html">Services</a>
+
+
+            </nav>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero fade-in">
+            <h1>My Certifications</h1>
+            <p>Professional credentials and completed courses that demonstrate my expertise in web and app development</p>
+        </section>
+
+        <section class="certifications-grid fade-in">
+            
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('techtalk2.jpg')">
+                    <img src="../images/techtalk2 (1).jpg" alt="TechTalk Episode Two Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">TechTalk Episode Two: Resource Speaker</h3>
+                    <div class="cert-issuer">STI College Bacoor</div>
+                    <div class="cert-date">October 25, 2025</div>
+                    <p class="cert-description">Provided training in responsive web development and deployment techniques.</p>
+                </div>
+            </div>
+            
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('TechTalk.png')">
+                    <img src="../images/TechTalk.png" alt="TechTalk Episode One Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">TechTalk Episode One: Resource Speaker</h3>
+                    <div class="cert-issuer">STI College Bacoor</div>
+                    <div class="cert-date">November 20, 2025</div>
+                    <p class="cert-description">Instructed on the fundamental principles and structures of HTML and CSS, and provided practical coding tips, techniques, and best practices.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('web design.jpg')">
+                    <img src="../images/web design (1).jpg" alt="Web Design Competition Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Web Design Competition 2025</h3>
+                    <div class="cert-issuer">STI College Bacoor</div>
+                    <div class="cert-date">April 24, 2025</div>
+                    <p class="cert-description">Actively participated in the Web Design Competition 2025 held during the College Week 2025 celebration at STI College Bacoor.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('Web Development.png')">
+                    <img src="../images/Web Development (2).png" alt="Web Development Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Web Development</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 15, 2024</div>
+                    <p class="cert-description">Successfully completed the online Web Development course, demonstrating initiative and commitment to deepening skills.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('CSS Front-End.jpg')">
+                    <img src="../images/CSS Front-End.jpg" alt="Front End Development - CSS Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Front End Development - CSS</h3>
+                    <div class="cert-issuer">Great Learning</div>
+                    <div class="cert-date">July 2024</div>
+                    <p class="cert-description">Successfully completed a free online course on Front End Development with focus on CSS.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('HTML Front-End.png')">
+                    <img src="../images/HTML Front-End.png" alt="Front End Development - HTML Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Front End Development - HTML</h3>
+                    <div class="cert-issuer">Great Learning</div>
+                    <div class="cert-date">July 2024</div>
+                    <p class="cert-description">Successfully completed a free online course on Front End Development with focus on HTML.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('Data.png')">
+                    <img src="../images/Data.png" alt="JavaScript Algorithms and Data Structures Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">JavaScript Algorithms and Data Structures</h3>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">June 29, 2025</div>
+                    <p class="cert-description">Successfully completed the JavaScript Algorithms and Data Structures Developer Certification representing approximately 300 hours of work.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('Responsive Web Design.jpg')">
+                    <img src="../images/Responsive Web Design.jpg" alt="Responsive Web Design Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Responsive Web Design</h3>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">April 29, 2024</div>
+                    <p class="cert-description">Successfully completed the Responsive Web Design Developer Certification representing approximately 300 hours of work.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('Java Certificate_.jpg')">
+                    <img src="../images/Java Certificate_.jpg" alt="Java Programming Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Java Programming</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 13, 2024</div>
+                    <p class="cert-description">Successfully completed the online Java Programming course, demonstrating initiative and commitment to advancing skills.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('CSS Certificate_.png')">
+                    <img src="../images/CSS Certificate_.png" alt="Introduction to CSS Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Introduction to CSS</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 7, 2024</div>
+                    <p class="cert-description">Successfully completed the online Introduction to CSS course, demonstrating initiative and commitment to deepening skills.</p>
+                </div>
+            </div>
+
+            <div class="certification-card">
+                <div class="cert-img-container" onclick="openModal('Web Development (1).png')">
+                    <img src="../images/Web Development (1) (1).png" alt="Web Development Certificate" class="cert-img">
+                </div>
+                <div class="cert-content">
+                    <h3 class="cert-title">Web Development</h3>
+                    <div class="cert-issuer">Simplilearn</div>
+                    <div class="cert-date">September 15, 2024</div>
+                    <p class="cert-description">Successfully completed the online Web Development course, demonstrating initiative and commitment to deepening skills.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <div id="certModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImg">
+        </div>
+
+        <div class="back-home fade-in">
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <p class="footer fade-in">RebDev</p>
+<script src="certs.js"></script>
+</body>
+</html>
