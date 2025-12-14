@@ -85,54 +85,13 @@ navLinks.addEventListener('click', (e) => {
     }
 });
 
-// --- ON-SCROLL FADE-IN SCRIPT (FIXED FOR INITIAL LOAD) ---
-const faders = document.querySelectorAll('.fade-in');
-
-const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1 // Use 0.1 (10% visibility) as a solid starting point
-};
-
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-        }
-    });
-}, options);
-
-faders.forEach(fader => {
-    observer.observe(fader);
-});
-
-function checkInitialVisibility() {
-    faders.forEach(fader => {
-        const rect = fader.getBoundingClientRect();
-        
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            fader.classList.add('is-visible');
-            if (observer) {
-                observer.unobserve(fader);
-            }
-        }
-    });
-}
-
-window.addEventListener('load', checkInitialVisibility);
-
-
+// --- MODAL SCRIPT ---
 const modal = document.getElementById("certModal");
 const modalImg = document.getElementById("modalImg");
 
 function openModal(imageSrc) {
- 
-    modalImg.src = "../images/" + imageSrc; 
-    
-  
+    // We assume the image filename is passed and we prepend the path:
     modalImg.src = `../images/${imageSrc}`; 
-    
     modal.style.display = "block";
 }
 
