@@ -100,6 +100,11 @@
         
         toggleParticles(); 
 
+        // Mark site as visited so loader doesn't show again in this session
+        if (!sessionStorage.getItem('introShown')) {
+            sessionStorage.setItem('introShown', 'true');
+        }
+
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
