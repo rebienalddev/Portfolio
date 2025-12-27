@@ -41,7 +41,6 @@
             box-sizing: border-box;
         }
 
-        /* --- PARTICLES BACKGROUND --- */
         #tsparticles {
             position: fixed;
             top: 0;
@@ -51,7 +50,6 @@
             z-index: -1;
         }
         
-        /* --- SCANLINE OVERLAY --- */
         body::after {
             content: "";
             position: fixed;
@@ -162,6 +160,7 @@
             position: relative;
             padding: 0.5rem 0.25rem;
             text-transform: uppercase;
+            border-bottom: 2px solid transparent;
         }
 
         .dark-mode .nav-links a {
@@ -191,13 +190,24 @@
         .nav-links a:hover {
             color: var(--color-light-border-hover);
         }
-        .dark-mode .nav-links a:hover {
+
+        .nav-links a.active {
+            color: var(--color-light-border-hover);
+            font-weight: 700;
+            border-bottom-color: var(--color-light-border-hover);
+        }
+
+        .dark-mode .nav-links a:hover,
+        .dark-mode .nav-links a.active {
             color: var(--color-accent);
             text-shadow: 0 0 8px var(--color-accent-dim);
+            border-bottom-color: transparent;
         }
 
         .dark-mode .nav-links a:hover::before,
-        .dark-mode .nav-links a:hover::after {
+        .dark-mode .nav-links a:hover::after,
+        .dark-mode .nav-links a.active::before,
+        .dark-mode .nav-links a.active::after {
             transform: translateX(0);
             opacity: 1;
         }
@@ -299,7 +309,7 @@
         .profile-pic {
             width: 180px;
             height: 180px;
-            border-radius: 50%;
+            border-radius: 0%;
             object-fit: cover;
             border: 3px solid rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
@@ -754,15 +764,218 @@
                 padding: 1.5rem;
             }
         }
+
+        /* --- NEW Certification Card Style --- */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .certification-card {
+            border: 1px solid var(--color-light-border);
+            overflow: hidden;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        .dark-mode .certification-card {
+            border: 1px solid var(--color-accent-border);
+            background: var(--color-accent-dim);
+        }
+        .certification-card:hover {
+            border-color: var(--color-light-border-hover);
+        }
+        .dark-mode .certification-card:hover {
+            border-color: var(--color-accent-border-hover);
+            background: rgba(0, 255, 240, 0.05);
+        }
+        .cert-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: #000;
+        }
+        .cert-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            opacity: 0.85;
+        }
+        .certification-card:hover .cert-img {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        .cert-content {
+            padding: 1.5rem;
+        }
+        .cert-title {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.8rem;
+        }
+        .dark-mode .cert-title {
+            color: var(--color-dark-text-bright);
+        }
+        .cert-issuer {
+            font-family: var(--font-mono);
+            color: var(--color-light-text-dim);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+        }
+        .dark-mode .cert-issuer {
+            color: var(--color-dark-text);
+        }
+        .cert-date {
+            font-family: var(--font-mono);
+            color: var(--color-light-text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .dark-mode .cert-date {
+            color: var(--color-dark-text);
+        }
+        .cert-description {
+            color: var(--color-light-text-dim);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        .dark-mode .cert-description {
+            color: var(--color-dark-text);
+        }
+        /* --- Modal for certificate images --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid var(--color-accent);
+            box-shadow: 0 0 30px var(--color-accent);
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .close:hover {
+            color: var(--color-accent);
+            text-shadow: 0 0 10px var(--color-accent);
+        }
+
+        /* --- LOADER STYLES --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: var(--color-accent);
+            font-family: var(--font-mono);
+        }
+
+        .typing-text {
+            font-size: 2.5rem;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--color-accent);
+            width: 0;
+            animation: typing 1.5s steps(10, end) forwards, blink 0.75s step-end infinite;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 4px;
+            background: var(--color-accent-dim);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0;
+            background: var(--color-accent);
+            box-shadow: 0 0 10px var(--color-accent);
+            animation: loadProgress 2s ease-in-out forwards;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--color-accent) }
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
     </style>
 </head>
 <body>
+    <!-- LOADER -->
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <h1 class="typing-text">Welcome_</h1>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="tsparticles"></div>
 
     <header class="header">
         <div class="nav-container">
             <div class="logo">Reb</div>
             <nav class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
                 <a href="#education">Education</a>
                 <a href="#projects">Projects</a>
                 <a href="#skills">Skills</a>
@@ -783,13 +996,13 @@
     </header>
 
     <main class="main-content">
-        <section class="hero fade-in">
+        <section class="hero fade-in" id="home">
             <div class="hero-layout">
                 <img src="ewan.jpeg" alt="Rebienald Carpio" class="profile-pic">
                 
                 <div class="hero-text">
                     <h1 data-text="Rebienald Carpio">Rebienald Carpio</h1>
-                    <p class="title">Technologically skilled in web/app creation, recognized for high academic performance.</p>
+                    <p class="title">Technologically skilled in web/app development, recognized for high academic performance.</p>
                 </div>
             </div>
             
@@ -927,6 +1140,138 @@ Completed a 6-hour Android app hackathon, strengthening skills in Java, XML layo
             </div>
         </section>
 
+        <section class="section fade-in" id="certifications">
+            <h2>Certifications</h2>
+            <div class="certifications-grid">
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/techtalk2.jpg')">
+                        <img src="images/techtalk2.jpg" alt="TechTalk Episode Two Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">TechTalk Episode Two: Resource Speaker</h3>
+                        <div class="cert-issuer">STI College Bacoor</div>
+                        <div class="cert-date">October 25, 2025</div>
+                        <p class="cert-description">Provided training in responsive web development and deployment techniques.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/TechTalk.png')">
+                        <img src="images/TechTalk.png" alt="TechTalk Episode One Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">TechTalk Episode One: Resource Speaker</h3>
+                        <div class="cert-issuer">STI College Bacoor</div>
+                        <div class="cert-date">November 20, 2025</div>
+                        <p class="cert-description">Instructed on the fundamental principles and structures of HTML and CSS, and provided practical coding tips, techniques, and best practices.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/webdesign1.jpg')">
+                        <img src="images/webdesign1.jpg" alt="Web Design Competition Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Web Design Competition 2025</h3>
+                        <div class="cert-issuer">STI College Bacoor</div>
+                        <div class="cert-date">April 24, 2025</div>
+                        <p class="cert-description">Actively participated in the Web Design Competition 2025 held during the College Week 2025 celebration at STI College Bacoor.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/Web Development.png')">
+                        <img src="images/Web Development.png" alt="Web Development Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Web Development</h3>
+                        <div class="cert-issuer">Simplilearn</div>
+                        <div class="cert-date">September 15, 2024</div>
+                        <p class="cert-description">Successfully completed the online Web Development course, demonstrating initiative and commitment to deepening skills.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/CSS Front-End.jpg')">
+                        <img src="images/CSS Front-End.jpg" alt="Front End Development - CSS Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Front End Development - CSS</h3>
+                        <div class="cert-issuer">Great Learning</div>
+                        <div class="cert-date">July 2024</div>
+                        <p class="cert-description">Successfully completed a free online course on Front End Development with focus on CSS.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/HTML Front-End.png')">
+                        <img src="images/HTML Front-End.png" alt="Front End Development - HTML Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Front End Development - HTML</h3>
+                        <div class="cert-issuer">Great Learning</div>
+                        <div class="cert-date">July 2024</div>
+                        <p class="cert-description">Successfully completed a free online course on Front End Development with focus on HTML.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/Data.png')">
+                        <img src="images/Data.png" alt="JavaScript Algorithms and Data Structures Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">JavaScript Algorithms and Data Structures</h3>
+                        <div class="cert-issuer">freeCodeCamp</div>
+                        <div class="cert-date">June 29, 2025</div>
+                        <p class="cert-description">Successfully completed the JavaScript Algorithms and Data Structures Developer Certification representing approximately 300 hours of work.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/Responsive Web Design.jpg')">
+                        <img src="images/Responsive Web Design.jpg" alt="Responsive Web Design Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Responsive Web Design</h3>
+                        <div class="cert-issuer">freeCodeCamp</div>
+                        <div class="cert-date">April 29, 2024</div>
+                        <p class="cert-description">Successfully completed the Responsive Web Design Developer Certification representing approximately 300 hours of work.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/Java Certificate_.jpg')">
+                        <img src="images/Java Certificate_.jpg" alt="Java Programming Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Java Programming</h3>
+                        <div class="cert-issuer">Simplilearn</div>
+                        <div class="cert-date">September 13, 2024</div>
+                        <p class="cert-description">Successfully completed the online Java Programming course, demonstrating initiative and commitment to advancing skills.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/CSS Certificate_.png')">
+                        <img src="images/CSS Certificate_.png" alt="Introduction to CSS Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Introduction to CSS</h3>
+                        <div class="cert-issuer">Simplilearn</div>
+                        <div class="cert-date">September 7, 2024</div>
+                        <p class="cert-description">Successfully completed the online Introduction to CSS course, demonstrating initiative and commitment to deepening skills.</p>
+                    </div>
+                </div>
+                <div class="certification-card">
+                    <div class="cert-img-container" onclick="openModal('images/WebDevelopment2.png')">
+                        <img src="images/WebDevelopment2.png" alt="Web Development Certificate" class="cert-img">
+                    </div>
+                    <div class="cert-content">
+                        <h3 class="cert-title">Web Development</h3>
+                        <div class="cert-issuer">Simplilearn</div>
+                        <div class="cert-date">September 15, 2024</div>
+                        <p class="cert-description">Successfully completed the online Web Development course, demonstrating initiative and commitment to deepening skills.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="certModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImg">
+        </div>
+
         <section class="section fade-in" id="skills">
             <h2>Technical Skills</h2>
             <div class="skills-grid">
@@ -992,174 +1337,58 @@ Completed a 6-hour Android app hackathon, strengthening skills in Java, XML layo
 
     
 </body>
-<script>    // --- TS-PARTICLES CONFIG ---
-        // This is the configuration for the "Cyber-Matrix" background
-        // It runs automatically after the library is loaded
-        async function loadParticles(options) {
-            await tsParticles.load("tsparticles", {
-                "particles": {
-                    "number": {
-                        "value": 80, // Number of dots
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": "#00fff0" // Color of dots
-                    },
-                    "shape": {
-                        "type": "circle"
-                    },
-                    "opacity": {
-                        "value": 0.5,
-                        "random": false,
-                        "anim": {
-                            "enable": false
-                        }
-                    },
-                    "size": {
-                        "value": 2, // Size of dots
-                        "random": true,
-                        "anim": {
-                            "enable": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#00fff0", // Color of lines
-                        "opacity": 0.4,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 2,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "repulse" // Dots run away from mouse
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push" // Click to add more dots
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "repulse": {
-                            "distance": 100,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        }
-                    }
-                },
-                "retina_detect": true
-            });
-        }
-        
-        function toggleParticles() {
-            const body = document.body;
-            if (body.classList.contains('dark-mode')) {
-                if (!document.getElementById('tsparticles').hasChildNodes()) {
-                    loadParticles();
-                }
-            } else {
-                const particlesInstance = tsParticles.domItem(0);
-                if (particlesInstance) {
-                    particlesInstance.destroy();
-                }
-            }
-        }
 
-
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        if (sessionStorage.getItem('darkMode') === 'disabled') {
-            body.classList.remove('dark-mode');
-            themeToggle.textContent = '🌙';
-        } else {
-            body.classList.add('dark-mode');
-            themeToggle.textContent = '☀️';
-        }
-        
-        toggleParticles(); 
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                sessionStorage.setItem('darkMode', 'enabled');
-                themeToggle.textContent = '☀️';
-            } else {
-                sessionStorage.setItem('darkMode', 'disabled');
-                themeToggle.textContent = '🌙';
-            }
-            toggleParticles(); // Run on toggle
-        });
-
-        // --- HAMBURGER & SCROLL SCRIPT ---
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }
-            });
-        });
-
-        const faders = document.querySelectorAll('.fade-in');
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1 
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); 
-                }
-            });
-        }, options);
-
-        faders.forEach(fader => {
-            observer.observe(fader);
-        });</script>
 <script src="index/script.js"></script>
+<script>
+    function openModal(imgSrc) {
+        const modal = document.getElementById('certModal');
+        const modalImg = document.getElementById('modalImg');
+        modal.style.display = 'block';
+        modalImg.src = imgSrc;
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('certModal');
+        modal.style.display = 'none';
+    }
+
+    // Active Navigation Link on Scroll
+    document.addEventListener('DOMContentLoaded', () => {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        function updateActiveLink() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= (sectionTop - 150)) {
+                    const id = section.getAttribute('id');
+                    if (id) current = id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (current && link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    });
+
+    // Loader Script
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('loader-wrapper');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }, 2000);
+    });
+</script>
 </html>

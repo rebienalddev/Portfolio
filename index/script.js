@@ -2,6 +2,9 @@
         // This is the configuration for the "Cyber-Matrix" background
         // It runs automatically after the library is loaded
         async function loadParticles(options) {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const particleColor = isDarkMode ? "#00fff0" : "#222222";
+
             await tsParticles.load("tsparticles", {
                 "particles": {
                     "number": {
@@ -12,7 +15,7 @@
                         }
                     },
                     "color": {
-                        "value": "#00fff0" // Color of dots
+                        "value": particleColor
                     },
                     "shape": {
                         "type": "circle"
@@ -34,7 +37,7 @@
                     "line_linked": {
                         "enable": true,
                         "distance": 150,
-                        "color": "#00fff0", // Color of lines
+                        "color": particleColor, 
                         "opacity": 0.4,
                         "width": 1
                     },
@@ -76,17 +79,11 @@
         }
         
         function toggleParticles() {
-            const body = document.body;
-            if (body.classList.contains('dark-mode')) {
-                if (!document.getElementById('tsparticles').hasChildNodes()) {
-                    loadParticles();
-                }
-            } else {
-                const particlesInstance = tsParticles.domItem(0);
-                if (particlesInstance) {
-                    particlesInstance.destroy();
-                }
+            const particlesInstance = tsParticles.domItem(0);
+            if (particlesInstance) {
+                particlesInstance.destroy();
             }
+            loadParticles();
         }
 
 
