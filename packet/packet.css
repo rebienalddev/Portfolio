@@ -167,7 +167,8 @@
         }
 
         /* 2. ADDED Light Mode Hover effects for Nav Links */
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--color-light-text-black); /* Stand out in light mode */
             border-bottom: 1px solid var(--color-light-text-black); /* Added subtle hover border */
         }
@@ -207,13 +208,16 @@
 
         /* 3. Removed redundant .nav-links a:hover and kept only dark mode version below */
 
-        .dark-mode .nav-links a:hover {
+        .dark-mode .nav-links a:hover,
+        .dark-mode .nav-links a.active {
             color: var(--color-accent);
             text-shadow: 0 0 8px var(--color-accent-dim);
         }
 
         .dark-mode .nav-links a:hover::before,
-        .dark-mode .nav-links a:hover::after {
+        .dark-mode .nav-links a:hover::after,
+        .dark-mode .nav-links a.active::before,
+        .dark-mode .nav-links a.active::after {
             transform: translateX(0);
             opacity: 1;
         }

@@ -147,11 +147,33 @@
         .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -1px; }
         .nav-links { display: flex; gap: 40px; }
+        
         .nav-links a { 
             font-size: 0.85rem; text-transform: uppercase; 
             color: var(--text-muted); font-weight: 500; 
+            position: relative;
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        
+        /* Updated Active State Styles */
+        .nav-links a:hover { color: white; }
+        
+        .nav-links a.active { 
+            color: white; 
+        }
+        
+        /* Optional: Add a small dot under active link */
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
         .hamburger { display: none; cursor: pointer; color: white; font-size: 1.5rem; }
 
         /* =========================================
@@ -440,7 +462,7 @@
             <div class="logo">REB.DEV</div>
             <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
+                <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#projects">Work</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -775,6 +797,29 @@
 
         const hiddenElements = document.querySelectorAll('.hidden');
         hiddenElements.forEach((el) => observer.observe(el));
+        
+        // --- ACTIVE LINK SCROLL SPY LOGIC START --- //
+        let sections = document.querySelectorAll('section');
+        let navLinks = document.querySelectorAll('.nav-links a');
+
+        window.onscroll = () => {
+            sections.forEach(sec => {
+                let top = window.scrollY;
+                let offset = sec.offsetTop - 150; // Adjustment for fixed header
+                let height = sec.offsetHeight;
+                let id = sec.getAttribute('id');
+
+                if(top >= offset && top < offset + height) {
+                    navLinks.forEach(links => {
+                        links.classList.remove('active');
+                        document.querySelector('.nav-links a[href*=' + id + ']').classList.add('active');
+                    });
+                }
+            });
+        };
+        // --- ACTIVE LINK SCROLL SPY LOGIC END --- //
+        
     </script>
+    
 </body>
 </html>

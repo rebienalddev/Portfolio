@@ -169,3 +169,5 @@
         faders.forEach(fader => {
             observer.observe(fader);
         });
+
+    
