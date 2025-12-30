@@ -3,170 +3,673 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services</title>
-            <link rel="icon" type="image/png" href="../images/logo.png">    
-
+    <title>Rebienald Carpio | Professional Web & App Developer</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<link rel="stylesheet" href="../packet/packet.css">
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.10.1/tsparticles.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        .nav-links a {
-            border-bottom: 2px solid transparent;
+        /* =========================================
+           1. CORE VARIABLES & RESET
+           ========================================= */
+        :root {
+            --bg-main: #050505;       
+            --bg-card: #0a0a0a;       
+            --text-main: #ffffff;     
+            --text-muted: #888888;    
+            --border: #222222;        
+            --accent: #ffffff;        
         }
-        .nav-links a.active {
-            color: var(--color-light-border-hover);
-            font-weight: 700;
-            border-bottom-color: var(--color-light-border-hover);
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .dark-mode .nav-links a.active {
-            color: var(--color-accent);
-            text-shadow: 0 0 8px var(--color-accent-dim);
-            border-bottom-color: transparent;
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* =========================================
+           2. TYPOGRAPHY & UTILITIES
+           ========================================= */
+        h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.02em; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
-        .dark-mode .nav-links a.active::before,
-        .dark-mode .nav-links a.active::after {
-            transform: translateX(0);
+
+        section { padding: 100px 0; border-bottom: 1px solid var(--border); }
+
+        .section-header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        .section-header h2 { font-size: 3rem; text-transform: uppercase; }
+        .section-header span { color: var(--text-muted); font-family: monospace; }
+
+        /* =========================================
+           3. BUTTONS
+           ========================================= */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { 
+            background: var(--accent); 
+            color: var(--bg-main); 
+            border-color: var(--accent); 
+        }
+        .btn-primary:hover { 
+            background: transparent; 
+            color: var(--accent); 
+        }
+
+        .btn-outline { 
+            background: transparent; 
+            color: var(--text-main); 
+            border-color: var(--border); 
+        }
+        .btn-outline:hover { 
+            border-color: var(--accent); 
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* =========================================
+           4. NAVIGATION
+           ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -1px; }
+        
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        
+        .hamburger { display: none; cursor: pointer; color: white; font-size: 1.5rem; }
+
+        /* =========================================
+           5. HERO SECTION
+           ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px; 
+        }
+
+        .hero-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 60px;
+        }
+
+        .hero-content { max-width: 650px; }
+        .hero-content h4 { color: var(--text-muted); margin-bottom: 20px; text-transform: uppercase; font-weight: 500; letter-spacing: 2px; }
+        .hero-content h1 { font-size: 5rem; line-height: 1.1; margin-bottom: 30px; }
+        .hero-content p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 40px; max-width: 550px; }
+        
+        .hero-btns { display: flex; gap: 20px; }
+
+        .hero-img-container { flex-shrink: 0; }
+        
+        .profile-pic {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+            transition: all 0.5s ease;
+        }
+        
+        .profile-pic:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(255,255,255,0.1);
+        }
+
+        /* =========================================
+           6. SERVICES
+           ========================================= */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1px;
+            background-color: var(--border); 
+            border: 1px solid var(--border);
+        }
+
+        .service-card {
+            background-color: var(--bg-main);
+            padding: 50px 40px;
+            transition: 0.3s;
+        }
+
+        .service-card:hover { background-color: var(--bg-card); }
+        .service-card i { font-size: 2rem; margin-bottom: 25px; color: var(--text-main); }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* =========================================
+           7. PROJECTS
+           ========================================= */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        .project-content { padding: 40px; }
+        .project-meta { font-family: monospace; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; display: block; }
+        .project-title { font-size: 1.8rem; margin-bottom: 15px; }
+        .project-link { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-top: 20px; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            border-bottom: 1px solid transparent; 
+        }
+        .project-link:hover { border-bottom-color: var(--accent); gap: 15px; }
+
+        /* =========================================
+           8. SKILLS
+           ========================================= */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--border);
+        }
+        
+        .skill-col { padding: 40px 20px; border-right: 1px solid var(--border); }
+        .skill-col:last-child { border-right: none; }
+        
+        .skill-col h3 { font-size: 1.1rem; text-transform: uppercase; margin-bottom: 25px; color: var(--text-muted); }
+        .skill-col ul li { margin-bottom: 12px; font-weight: 500; display: flex; align-items: center; gap: 10px;}
+        .skill-col ul li::before { content: ''; width: 6px; height: 6px; background: var(--text-main); display: block; }
+
+        /* =========================================
+           9. TIMELINE (Education & Achievements)
+           ========================================= */
+        .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        
+        .timeline-item {
+            padding-left: 30px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: ''; position: absolute; left: -6px; top: 5px;
+            width: 10px; height: 10px; background: var(--bg-main); border: 2px solid var(--text-main);
+        }
+
+        .t-date { font-family: monospace; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px; display: block;}
+        .t-title { font-size: 1.2rem; margin-bottom: 10px; }
+        .t-desc { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* =========================================
+           10. CERTIFICATIONS (NEW GRID STYLE)
+           ========================================= */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .cert-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cert-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .cert-img-wrapper {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background: #000;
+        }
+
+        .cert-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%); /* Minimalist: B&W by default */
+            transition: all 0.5s ease;
+            opacity: 0.8;
+        }
+
+        /* Hover Effect: Full Color */
+        .cert-card:hover .cert-img-wrapper img {
+            filter: grayscale(0%);
             opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .cert-details {
+            padding: 20px;
+        }
+
+        .cert-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .cert-meta {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+
+        /* =========================================
+           11. CONTACT & FOOTER
+           ========================================= */
+        .contact-section { text-align: center; max-width: 800px; margin: 0 auto; }
+        .contact-title { font-size: 3.5rem; margin-bottom: 30px; line-height: 1.1; }
+        .contact-links { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
+        .contact-links a { font-size: 1.5rem; padding: 20px; border: 1px solid var(--border); border-radius: 50%; }
+        .contact-links a:hover { background: white; color: black; border-color: white; transform: translateY(-5px); }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+
+        /* =========================================
+           12. MOBILE RESPONSIVENESS
+           ========================================= */
+        @media (max-width: 900px) {
+            .hero-layout { flex-direction: column-reverse; text-align: center; }
+            .hero-btns { justify-content: center; }
+            .profile-pic { width: 220px; height: 220px; margin-bottom: 30px; }
+            .hero-content h1 { font-size: 3.5rem; }
+            
+            .section-header { flex-direction: column; align-items: start; gap: 10px; }
+            .section-header h2 { font-size: 2.2rem; }
+            
+            .skills-container { grid-template-columns: 1fr; border: 1px solid var(--border); }
+            .skill-col { border-right: none; border-bottom: 1px solid var(--border); }
+            .timeline-grid { grid-template-columns: 1fr; }
+            
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-main); flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); gap: 20px; text-align: center; }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
         }
     </style>
 </head>
-<body class="dark-mode"> <div id="tsparticles"></div>
+<body>
 
-    <header class="header">
-        <div class="nav-container">
-            <div class="logo">Reb</div>
-            <nav class="nav-links" id="navLinks">
-                <a href="../index.html">Home</a>
-                <a href="../index.html#education">Education</a>
-                <a href="../index.html#projects">Projects</a>
-                <a href="../index.html#skills">Skills</a>
-                <a href="../certifications/certifications.html">Certifications</a>
-                <a href="../contacts/contact.html">Contact</a>
-                <a href="packet.html" class="active">Services</a>
-            </nav>
-            <div class="nav-controls">
-                <button class="theme-toggle" id="themeToggle">☀️</button> <button class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+    <nav>
+        <div class="container nav-wrap">
+            <div class="logo">REB.DEV</div>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-layout">
+                <div class="hero-content">
+                    <h4>Web & App Developer</h4>
+                    <h1>Rebienald Carpio</h1>
+                    <p>Technologically skilled developer recognized for high academic performance and delivering clean, scalable solutions.</p>
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="#contact" class="btn btn-outline">Hire Me</a>
+                    </div>
+                </div>
+                <div class="hero-img-container">
+                    <img src="ewan.png" alt="Rebienald Carpio" class="profile-pic">
+                </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <div class="main-content">
-        <header>
-            <h1 class="header-logo fade-in">Digital Services </h1>
-        </header>
-
-        <div class="two-column-layout">
-            <div class="column-left fade-in">
-
-                <section class="section">
-                    <h2>Services Offered</h2>
-
-                    <div class="package service-category">
-                        <h3>Website Development</h3>
-                        <ul class="service-list">
-                            <li>Responsive front-end development (HTML5, CSS3, JavaScript)</li>
-                            <li>Deployment & hosting (Netlify, GitHub Pages, etc)</li>
-                            <li>Cross-browser compatibility & mobile-friendly design</li>
-                        </ul>
-                    </div>
-                    <div class="package service-category">
-                        <h3>Mobile App Development (Android)</h3>
-                        <ul class="service-list">
-                            <li>Java & XML for Android apps</li>
-                            <li>UI/UX design for mobile</li>
-                            <li>Integration with backend (if needed)</li>
-                        </ul>
-                    </div>
-
-                    <div class="package service-category">
-                        <h3>Full-Stack / Club/Business Systems</h3>
-                        <ul class="service-list">
-                            <li>PHP + MySQL for backend/database systems</li>
-                            <li>Web-apps for club management, e-commerce, etc</li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="section">
-                    <h2>How I Work / Process</h2>
-                    <ol class="process-list">
-                        <li><strong>1. Consultation</strong> – We talk about your goals, target users, design style, features.</li>
-                        <li><strong>2. Proposal & Quote</strong> – I'll send you a detailed scope and cost breakdown.</li>
-                        <li><strong>3. Deposit</strong> – Typically 50% of the quoted amount to start work.</li>
-                        <li><strong>4. Development</strong> – I build the project, keep you updated.</li>
-                        <li><strong>5. Revisions</strong> – Included as per your package. Additional changes billed separately.</li>
-                        <li><strong>6. Delivery & Launch</strong> – Final payment, then deployment or delivery of files.</li>
-                        <li><strong>7. Support</strong> – I'll be available for a short post-launch support period for issues.</li>
-                    </ol>
-                </section>
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Services</h2>
+                <span>01 // WHAT I DO</span>
             </div>
-            <div class="column-right fade-in">
-
-                <section class="section">
-                    <h2>Pricing Structure</h2>
-                    <div class="package">
-                        <h3>Basic Package - Starting at P5,000</h3>
-                        <ul class="service-list">
-                            <li>Simple front-end website</li>
-                            <li>Responsive mobile & desktop design</li>
-                            <li>1 revision round</li>
-                            <li>Basic deployment & hosting setup</li>
-                        </ul>
-                    </div>
-                    <div class="package">
-                        <h3>Standard Package - Starting at P10,000</h3>
-                        <ul class="service-list">
-                            <li>Dynamic website or small web app (front-end + backend)</li>
-
-                            <li>2 revision rounds</li>
-                            <li>Basic deployment & hosting setup</li>
-                        </ul>
-                    </div>
-                    <div class="package">
-                        <h3>Premium Package - Starting at P15,000</h3>
-                        <ul class="service-list">
-                            <li>Full custom web application or mobile app</li>
-                            <li>Advanced features + database integration</li>
-                            <li>5 revision rounds</li>
-                            <li>Deployment + maintenance support for 1 month</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="section">
-                    <h2>Payment Terms / Timeline</h2>
-
-                    <h3>Payment Terms</h3>
-                    <div class="terms-details">
-                        <p><strong>Deposit:</strong> 50% deposit due before I begin work.</p>
-                        <p><strong>Final Payment:</strong> Remaining 50% due upon completion, before final delivery/deployment.</p>
-                        <p><strong>Method:</strong> Payment via Gcash & Maya.</p>
-                        <p><strong>Late Fee:</strong> If payments are delayed more than 7 days, there may be a small fee or delay in delivery.</p>
-                    </div> <br>
-                    <h3>Timeline</h3>
-                    <div class="terms-details">
-                        <p><strong>Basic/Standard:</strong> Typical project turnaround: 7-14 days (may vary).</p>
-                        <p><strong>Premium/Custom:</strong> Timeline determined after scope is defined.</p>
-                        <p><strong>Client Duty:</strong> Client must provide all necessary content (text, images, access) to avoid delays.</p>
-                    </div>
-                </section>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Web Development</h3>
+                    <p>Custom websites built with HTML5, CSS3, JS, and PHP. Responsive and performance-optimized.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-mobile-screen"></i>
+                    <h3>Mobile App Dev</h3>
+                    <p>Android applications using Java and Android Studio with XML layouts and clean UI/UX.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-server"></i>
+                    <h3>Deployment</h3>
+                    <p>Full deployment management on GitHub, Netlify, and InfinityFree ensuring stability.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <footer class="footer fade-in">
-        <p>RebDev</p>
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2>Selected Work</h2>
+                <span>02 // PORTFOLIO</span>
+            </div>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-meta">HTML / CSS / JS</span>
+                        <h3 class="project-title">Rebify</h3>
+                        <p style="color: #888;">A live project demonstrating modern frontend techniques and clean code structure.</p>
+                        <a href="https://rebify.netlify.app/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-meta">E-COMMERCE / FRONTEND</span>
+                        <h3 class="project-title">FilthyClo</h3>
+                        <p style="color: #888;">A sleek e-commerce interface designed for a modern fashion brand.</p>
+                        <a href="https://filthyclo.netlify.app/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-meta">PHP / MYSQL / FULL STACK</span>
+                        <h3 class="project-title">Club Mgmt System</h3>
+                        <p style="color: #888;">A comprehensive solution for managing club members, data, and announcements.</p>
+                        <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-meta">ACADEMIC / EDUCATIONAL</span>
+                        <h3 class="project-title">Stem Peridot</h3>
+                        <p style="color: #888;">Interactive web platform developed for STEM academic purposes.</p>
+                        <a href="https://peridot-stem.netlify.app/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2>Technical Stack</h2>
+                <span>03 // EXPERTISE</span>
+            </div>
+            <div class="skills-container">
+                <div class="skill-col">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li>JavaScript</li>
+                        <li>Java</li>
+                        <li>HTML5 / CSS3</li>
+                        <li>PHP</li>
+                        <li>C#</li>
+                    </ul>
+                </div>
+                <div class="skill-col">
+                    <h3>Web Dev</h3>
+                    <ul>
+                        <li>Responsive Design</li>
+                        <li>Bootstrap</li>
+                        <li>Cross-Browser</li>
+                        <li>Deployment</li>
+                    </ul>
+                </div>
+                <div class="skill-col">
+                    <h3>Mobile</h3>
+                    <ul>
+                        <li>Android Studio</li>
+                        <li>Android SDK</li>
+                        <li>XML Layouts</li>
+                        <li>Mobile UI/UX</li>
+                    </ul>
+                </div>
+                <div class="skill-col">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li>GitHub</li>
+                        <li>VS Code</li>
+                        <li>Netlify / InfinityFree</li>
+                        <li>Netbeans</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container">
+            <div class="timeline-grid">
+                <div>
+                    <div class="section-header" style="border: none; padding: 0; margin-bottom: 40px;">
+                        <h3 style="font-size: 1.5rem;">Education</h3>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-date">2024 – PRESENT</span>
+                        <h4 class="t-title">STI College (Grade 12)</h4>
+                        <p class="t-desc">TVL Track - ICT. Consistent Honor Student.<br>Specializing in Web & Mobile App Development.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-date">2020 – 2024</span>
+                        <h4 class="t-title">Binakayan National High School</h4>
+                        <p class="t-desc">Consistent Honor Student.<br>Specialized in Computer System Servicing.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header" style="border: none; padding: 0; margin-bottom: 40px;">
+                        <h3 style="font-size: 1.5rem;">Achievements & Speaking</h3>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-date">NOV 20, 2025</span>
+                        <h4 class="t-title">Resource Speaker: TechTalk Ep. 1</h4>
+                        <p class="t-desc">Conducted workshop on HTML & CSS fundamentals and best practices at STI College Bacoor.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-date">OCT 25, 2025</span>
+                        <h4 class="t-title">Resource Speaker: TechTalk Ep. 2</h4>
+                        <p class="t-desc">Led hands-on training for Web Responsiveness and Deployment techniques.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-date">APR 24, 2025</span>
+                        <h4 class="t-title">Web Design Competition</h4>
+                        <p class="t-desc">Participated in 8-hour rigorous HTML/CSS design competition.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications">
+        <div class="container">
+            <div class="section-header">
+                <h2>Certifications</h2>
+                <span>04 // CREDENTIALS</span>
+            </div>
+            
+            <div class="cert-grid">
+                
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/Data.png" alt="JS Algorithms">
+                    </div>
+                    <div class="cert-details">
+                        <h4>JS Algorithms & Data Structures</h4>
+                        <span class="cert-meta">FREECODECAMP | JUNE 2025</span>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/Responsive Web Design.jpg" alt="Responsive Web Design">
+                    </div>
+                    <div class="cert-details">
+                        <h4>Responsive Web Design</h4>
+                        <span class="cert-meta">FREECODECAMP | APR 2024</span>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/Web Development.png" alt="Web Dev">
+                    </div>
+                    <div class="cert-details">
+                        <h4>Web Development</h4>
+                        <span class="cert-meta">SIMPLILEARN | SEPT 2024</span>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/Java Certificate_.jpg" alt="Java">
+                    </div>
+                    <div class="cert-details">
+                        <h4>Java Programming</h4>
+                        <span class="cert-meta">SIMPLILEARN | SEPT 2024</span>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/CSS Front-End.jpg" alt="CSS">
+                    </div>
+                    <div class="cert-details">
+                        <h4>Front End Dev - CSS</h4>
+                        <span class="cert-meta">GREAT LEARNING | JULY 2024</span>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/HTML Front-End.png" alt="HTML">
+                    </div>
+                    <div class="cert-details">
+                        <h4>Front End Dev - HTML</h4>
+                        <span class="cert-meta">GREAT LEARNING | JULY 2024</span>
+                    </div>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/techtalk2.jpg" alt="TechTalk Speaker">
+                    </div>
+                    <div class="cert-details">
+                        <h4>TechTalk Ep. 2 Speaker</h4>
+                        <span class="cert-meta">STI COLLEGE | OCT 2025</span>
+                    </div>
+                </div>
+                 
+                 <div class="cert-card">
+                    <div class="cert-img-wrapper">
+                        <img src="images/TechTalk.png" alt="TechTalk Speaker">
+                    </div>
+                    <div class="cert-details">
+                        <h4>TechTalk Ep. 1 Speaker</h4>
+                        <span class="cert-meta">STI COLLEGE | NOV 2025</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="contact-section">
+                <span style="color: var(--text-muted); letter-spacing: 2px;">READY TO START?</span>
+                <h2 class="contact-title">Let's build something<br>exceptional.</h2>
+                <div class="contact-links">
+                    <a href="mailto:rebkheicarpio@example.com"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/rebienalddev"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/rebienald-khei-carpio-68188339b/"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Rebienald Carpio. All Rights Reserved.</p>
+        </div>
     </footer>
 
-<script src="../packet/packet.js"></script>     
-<script src="../index/script.js"></script>
-   
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
