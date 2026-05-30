@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications | Rebienald Khei Carpio</title>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="certs.css">
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="glass-wallpaper"></div>
+
+    <nav class="glass-nav">
+        <a class="logo brand" href="../index.html">Reb.Dev</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="../index.html#home">Home</a></li>
+            <li><a href="../index.html#services">Services</a></li>
+            <li><a href="../index.html#projects">Work</a></li>
+            <li><a href="../index.html#skills">Skills</a></li>
+            <li><a href="certifications.html" class="active">Certs</a></li>
+            <li><a href="../contacts/contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <main>
+        <section class="hero reveal active">
+            <div class="container hero-shell">
+                <span class="eyebrow">Credentials</span>
+                <h1>My Certifications</h1>
+                <p>All certificate images loaded from the portfolio images folder, presented in a Liquid Glass gallery.</p>
+            </div>
+        </section>
+
+        <section class="container certificates-section">
+            <div class="certifications-grid" id="certificationsGrid" aria-live="polite"></div>
+        </section>
+
+        <div class="back-home reveal active">
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </main>
+
+    <div id="certModal" class="modal" aria-hidden="true" role="dialog" aria-label="Certificate preview">
+        <button class="close" id="closeModal" type="button" aria-label="Close preview">
+            <i class="fas fa-xmark"></i>
+        </button>
+        <img class="modal-content" id="modalImg" alt="">
+        <p class="modal-title" id="modalTitle"></p>
+    </div>
+
+    <footer>RebDev</footer>
+    <script src="certs.js"></script>
+</body>
+</html>
