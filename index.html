@@ -3,522 +3,431 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rebienald Khei Carpio</title>
+    <title>Rebienald Khei Carpio | Developer</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* =========================================
-           1. VARIABLES & RESET
-           ========================================= */
         :root {
-            --bg-main: #050505;
-            --bg-card: #0a0a0a;
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --border: #222222;
-            --accent: #ffffff;
+            --bg: #eef3fb;
+            --surface: rgba(255, 255, 255, 0.14);
+            --surface-strong: rgba(255, 255, 255, 0.22);
+            --border: rgba(255, 255, 255, 0.58);
+            --border-soft: rgba(20, 24, 35, 0.1);
+            --border-highlight: rgba(255, 255, 255, 0.95);
+            --text-main: #121417;
+            --text-muted: #68707d;
+            --glass-shadow: 0 24px 70px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.78);
+            --glass-glow: inset 0 0 0 1px rgba(255, 255, 255, 0.36), inset 0 -24px 54px rgba(255, 255, 255, 0.12), inset 0 18px 30px rgba(255, 255, 255, 0.12);
+            --accent: #e8892f;
+            --accent-soft: rgba(232, 137, 47, 0.18);
+            --accent-glass: rgba(255, 174, 92, 0.24);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        html { 
-            scroll-behavior: smooth; 
-            font-size: 16px;
-        }
+        html { scroll-behavior: smooth; }
         
         body {
-            background-color: var(--bg-main);
+            background:
+                linear-gradient(118deg, rgba(143, 188, 255, 0.22) 0 14%, transparent 14% 34%, rgba(255, 157, 64, 0.2) 34% 55%, rgba(255, 214, 142, 0.14) 55% 66%, transparent 66% 78%, rgba(115, 217, 194, 0.16) 78% 100%),
+                linear-gradient(22deg, rgba(255,255,255,0.72) 0 22%, rgba(255, 180, 92, 0.1) 22% 46%, transparent 46% 60%, rgba(255, 226, 190, 0.34) 60% 100%),
+                linear-gradient(125deg, #f0f7ff 0%, #fffdf8 34%, #fff7ec 66%, #ffe9cf 100%);
+            background-size: 180% 180%, 160% 160%, 100% 100%;
+            animation: warmBackgroundDrift 24s ease-in-out infinite alternate;
+            background-attachment: fixed;
             color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            
-            /* Security: Disable Selection */
-            -webkit-user-select: none;
-            -ms-user-select: none;
             user-select: none;
-            -webkit-touch-callout: none;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* Allow selection on inputs */
-        input, textarea {
-            user-select: text;
-            -webkit-user-select: text;
+        /* Premium Background Depth */
+        .noise {
+            position: fixed; inset: 0; z-index: -2; pointer-events: none;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            z-index: -1;
+            opacity: 0.04;
         }
-
-        p { text-align: justify; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-        img { max-width: 100%; display: block; pointer-events: none; }
-        h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.02em; }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
+        .glow-bg {
+            position: fixed; inset: 0;
+            z-index: -2; pointer-events: none;
+            overflow: hidden;
+            background:
+                linear-gradient(115deg, transparent 0 20%, rgba(255,255,255,0.34) 29%, transparent 40%),
+                linear-gradient(70deg, rgba(107, 167, 255, 0.1), transparent 26%, rgba(255, 145, 45, 0.14) 48%, rgba(255, 212, 138, 0.1) 62%, transparent 76%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 38%, rgba(255, 207, 151, 0.16));
+            background-size: 150% 150%, 180% 180%, 100% 100%;
+            animation: glassColorDrift 18s ease-in-out infinite alternate;
+            transition: 0.4s ease;
         }
-
-        /* =========================================
-           2. PRELOADER & ANIMATIONS
-           ========================================= */
-        body.loading { overflow: hidden; }
-
-        #preloader {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: var(--bg-main);
-            z-index: 9999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
-        }
-
-        .loader-text {
-            font-size: 1.5rem; font-weight: 300;
-            letter-spacing: 4px; text-transform: uppercase;
-            color: var(--text-main); margin-bottom: 20px;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .loader-line-container {
-            width: 120px; height: 1px;
-            background-color: var(--border);
-            position: relative; overflow: hidden;
-        }
-
-        .loader-line {
-            position: absolute; left: 0; top: 0;
-            height: 100%; width: 0%;
-            background-color: var(--accent);
-            animation: loadLine 2s ease-in-out forwards;
-        }
-
-        /* Animation Keyframes */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes loadLine {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* Scroll Animations */
-        .hidden {
-            opacity: 0; filter: blur(5px);
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .show {
-            opacity: 1; filter: blur(0);
-            transform: translateY(0);
-        }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-        .delay-400 { transition-delay: 400ms; }
-
-        /* =========================================
-           3. NAVIGATION
-           ========================================= */
-        nav {
-            position: fixed; top: 0; width: 100%;
-            padding: 20px 0;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            animation: slideDown 0.8s ease forwards;
-        }
-        .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -1px; }
-        .nav-links { display: flex; gap: 40px; }
-        
-        .nav-links a { 
-            font-size: 0.85rem; text-transform: uppercase; 
-            color: var(--text-muted); font-weight: 500; 
-            position: relative;
-        }
-        
-        /* Updated Active State Styles */
-        .nav-links a:hover { color: white; }
-        
-        .nav-links a.active { 
-            color: white; 
-        }
-        
-        /* Optional: Add a small dot under active link */
-        .nav-links a.active::after {
+        .glow-bg::before,
+        .glow-bg::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background-color: white;
-            border-radius: 50%;
+            width: 150vw;
+            height: 38vh;
+            left: -25vw;
+            pointer-events: none;
+            transform: rotate(-18deg);
+            filter: blur(80px);
+            opacity: 0.44;
+            mix-blend-mode: multiply;
+            will-change: transform;
+        }
+        .glow-bg::before {
+            top: 14vh;
+            background: linear-gradient(90deg, transparent, rgba(255, 145, 45, 0.18) 20%, rgba(255, 207, 126, 0.28) 48%, rgba(255, 135, 48, 0.14) 70%, transparent);
+            animation: orangeRibbon 12s ease-in-out infinite alternate;
+        }
+        .glow-bg::after {
+            bottom: 2vh;
+            background: linear-gradient(90deg, transparent, rgba(255, 186, 89, 0.12) 16%, rgba(255, 148, 58, 0.18) 42%, rgba(255, 226, 164, 0.12) 68%, transparent);
+            animation: orangeRibbonTwo 15s ease-in-out infinite alternate;
         }
 
-        .hamburger { display: none; cursor: pointer; color: white; font-size: 1.5rem; }
-
-        /* =========================================
-           4. COMPONENTS (Buttons, Headers)
-           ========================================= */
-        .btn {
-            display: inline-block; padding: 14px 32px;
-            font-size: 0.9rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px;
-            border: 1px solid var(--border); cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-primary { 
-            background: var(--accent); color: var(--bg-main); 
-            border-color: var(--accent); 
-        }
-        .btn-primary:hover { 
-            background: transparent; color: var(--accent); 
-        }
-        .btn-outline { 
-            background: transparent; color: var(--text-main); 
-            border-color: var(--border); 
-        }
-        .btn-outline:hover { 
-            border-color: var(--accent); 
-            background: rgba(255,255,255,0.05);
+        @keyframes warmBackgroundDrift {
+            0% { background-position: 0% 42%, 100% 16%, 50% 50%; }
+            50% { background-position: 58% 52%, 42% 72%, 50% 50%; }
+            100% { background-position: 100% 40%, 0% 84%, 50% 50%; }
         }
 
-        section { padding: 100px 0; border-bottom: 1px solid var(--border); }
-        .section-header {
-            margin-bottom: 60px; padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: end;
+        @keyframes glassColorDrift {
+            0% { background-position: 14% 10%, 86% 42%, 50% 50%; }
+            100% { background-position: 78% 88%, 8% 58%, 50% 50%; }
         }
-        .section-header h2 { font-size: 3rem; text-transform: uppercase; }
-        .section-header span { color: var(--text-muted); font-family: monospace; }
 
-        /* =========================================
-           5. SECTION SPECIFIC STYLES
-           ========================================= */
+        @keyframes orangeRibbon {
+            0% { transform: translate3d(-18vw, -4vh, 0) rotate(-18deg) scale(1); }
+            45% { transform: translate3d(3vw, 5vh, 0) rotate(-12deg) scale(1.08); }
+            100% { transform: translate3d(18vw, 9vh, 0) rotate(-16deg) scale(1.03); }
+        }
+
+        @keyframes orangeRibbonTwo {
+            0% { transform: translate3d(16vw, 6vh, 0) rotate(-22deg) scale(1.04); }
+            50% { transform: translate3d(-2vw, -2vh, 0) rotate(-17deg) scale(1.1); }
+            100% { transform: translate3d(-16vw, -7vh, 0) rotate(-15deg) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body, .glow-bg, .glow-bg::before, .glow-bg::after {
+                animation: none !important;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        body.dark-mode ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+
+        input, textarea { user-select: text; }
+        a { color: inherit; text-decoration: none; transition: 0.3s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; pointer-events: none; }
         
-        /* HERO */
-        .hero {
-            min-height: 100vh; display: flex;
-            align-items: center; padding-top: 80px;
-        }
-        .hero-layout {
-            display: flex; align-items: center;
-            justify-content: space-between; width: 100%; gap: 60px;
-        }
-        .hero-content { max-width: 650px; }
-        .hero-content h4 { 
-            color: var(--text-muted); margin-bottom: 20px; 
-            text-transform: uppercase; font-weight: 500; letter-spacing: 2px; 
-        }
-        .hero-content h1 { font-size: 5rem; line-height: 1.1; margin-bottom: 30px; }
-        .hero-content p { 
-            font-size: 1.2rem; color: var(--text-muted); 
-            margin-bottom: 40px; max-width: 550px; 
-        }
-        .hero-btns { display: flex; gap: 20px; }
-        .hero-img-container { flex-shrink: 0; margin-top: 20px; }
-        .profile-pic {
-            width: 320px; height: 320px; border-radius: 50%;
-            object-fit: cover; border: 2px solid var(--border);
-            transition: all 0.5s ease;
-            animation: float 6s ease-in-out infinite;
-        }
-        .profile-pic:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 40px rgba(255,255,255,0.1);
+        h1, h2, h3, h4, h5, .brand {
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
         }
 
-        /* SERVICES */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1px; background-color: var(--border);
-            border: 1px solid var(--border);
-        }
-        .service-card {
-            background-color: var(--bg-main); padding: 50px 40px;
-            transition: 0.3s; height: 100%;
-            display: flex; flex-direction: column;
-            overflow: hidden; 
-        }
-        .service-card:hover { background-color: var(--bg-card); }
-        .service-card i { font-size: 2rem; margin-bottom: 25px; color: var(--text-main); }
-        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
-        .service-card p { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; }
-
-        /* PROJECTS */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px; align-items: stretch;
-        }
-        .project-card {
-            border: 1px solid var(--border); background: var(--bg-card);
-            transition: 0.4s; height: 100%;
-            display: flex; flex-direction: column;
-            overflow: hidden; 
-        }
-        .project-content { 
-            padding: 25px; flex: 1;
-            display: flex; flex-direction: column;
-        }
-        .project-meta { font-family: monospace; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; display: block; }
-        .project-title { font-size: 1.5rem; margin-bottom: 15px; }
-        .project-content p { flex-grow: 1; margin-bottom: 20px; }
-        .project-link { 
-            display: inline-flex; align-items: center; gap: 10px;
-            margin-top: auto; font-size: 0.85rem; font-weight: 600;
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        /* SKILLS */
-        .skills-container {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            border-top: 1px solid var(--border);
+        /* Floating Nav */
+        nav {
+            position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 3rem); max-width: 900px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 100%);
+            backdrop-filter: saturate(200%) blur(40px); -webkit-backdrop-filter: saturate(200%) blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.8); border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 999px; padding: 0.75rem 2rem;
+            z-index: 1000; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            transition: all 0.4s ease;
         }
-        .skill-col { 
-            padding: 40px 20px; border-right: 1px solid var(--border);
-            height: 100%; display: flex; flex-direction: column;
+        .logo { font-size: 1.25rem; letter-spacing: 0; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.4rem; align-items: center; }
+        .nav-links a { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; letter-spacing: -0.01em; padding: 0.42rem 0.72rem; border-radius: 999px; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65); }
+        .nav-links a:hover { color: var(--text-main); }
+        .hamburger { display: none; font-size: 1.25rem; cursor: pointer; color: var(--text-main); }
+
+        /* Typography */
+        .text-gradient {
+            background: linear-gradient(180deg, #1d1d1f 0%, #55555c 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        body.dark-mode .text-gradient {
+            background: linear-gradient(180deg, #ffffff 0%, #88888b 100%);
+        }
+        .text-huge { font-size: clamp(2rem, 4.5vw, 3.25rem); font-weight: 600; letter-spacing: -0.03em; width: 100%; }
+        .text-lg { font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 0.5rem; font-weight: 600; letter-spacing: -0.02em; }
+        .text-sm { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 1rem; }
+
+        /* Bento Grid Architecture */
+
+
+        section { padding: 8rem 0 4rem; }
+        .section-header {
+            margin-bottom: 4rem; text-align: center;
+        }
+        
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
+
+        /* The Master Bento Card */
+        .bento {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 100%);
+            backdrop-filter: saturate(200%) blur(40px); -webkit-backdrop-filter: saturate(200%) blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.8); border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px; padding: 2.5rem;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
+        }
+        body.dark-mode .bento {
+            background: linear-gradient(135deg, rgba(40, 40, 45, 0.55) 0%, rgba(15, 15, 20, 0.25) 100%);
+            border-color: rgba(255, 255, 255, 0.1); border-top-color: rgba(255, 255, 255, 0.3); border-left-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+        }
+        .bento::before, .hero-img-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: linear-gradient(145deg, rgba(255,255,255,0.6) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.1) 100%);
+            opacity: 0.8;
+            mix-blend-mode: overlay;
+            z-index: 0;
+        }
+        .bento::after, .hero-img-box::after {
+            display: none;
+        }
+        .bento:hover {
+            border-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-6px) scale(1.02); 
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), inset 0 2px 8px rgba(255, 255, 255, 0.6);
+        }
+        body.dark-mode .bento:hover { 
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 4px rgba(255, 255, 255, 0.25);
+        }
+        
+        .bento-content { position: relative; z-index: 1; flex-grow: 1; display: flex; flex-direction: column; }
+        .bento h3 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; letter-spacing: -0.01em; }
+        .bento p { color: var(--text-muted); font-size: 0.9rem; font-weight: 400; line-height: 1.5; }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.8rem 1.75rem; font-size: 0.9rem; font-weight: 500; letter-spacing: -0.01em;
+            border-radius: 100px; transition: 0.3s; box-shadow: 0 14px 32px rgba(232, 137, 47, 0.24), inset 0 1px 0 rgba(255,255,255,0.55);
+            background: rgba(232, 137, 47, 0.86); color: #fff; border: 1px solid rgba(255,255,255,0.58); cursor: pointer;
+            backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%);
+        }
+        
+        .btn-outline { 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 100%);
+            color: #1d1d1f; 
+            border: 1px solid rgba(255, 255, 255, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(200%) blur(40px); -webkit-backdrop-filter: saturate(200%) blur(40px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+        .btn:hover { transform: scale(1.05); }
+
+        /* Hero */
+        .hero { min-height: auto; display: flex; align-items: center; padding: 10rem 0 6rem; }
+        .hero-layout { display: flex; align-items: center; gap: 4rem; width: 100%; }
+        .hero-text { flex: 1; }
+        .hero-text p { font-size: 1.05rem; color: var(--text-muted); max-width: 500px; margin-top: 1.25rem; line-height: 1.5; }
+        .hero-img-box { 
+            position: relative; border-radius: 36px; padding: 12px; 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 100%);
+            backdrop-filter: saturate(200%) blur(40px); -webkit-backdrop-filter: saturate(200%) blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.8); border-left: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
             overflow: hidden;
         }
-        .skill-col:last-child { border-right: none; }
-        .skill-col h3 { font-size: 1.1rem; text-transform: uppercase; margin-bottom: 25px; color: var(--text-muted); }
-        .skill-col ul li { margin-bottom: 12px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
-        .skill-col ul li::before { content: ''; width: 6px; height: 6px; background: var(--text-main); display: block; }
-
-        /* TIMELINE (Education) */
-        .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-        .timeline-item {
-            padding-left: 30px; border-left: 2px solid var(--border);
-            margin-bottom: 40px; position: relative;
+        .hero-img { 
+            width: 340px; height: 340px; object-fit: cover; border-radius: 31px; 
         }
+
+        /* Tags (Skills) */
+        .tag-group { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; }
+        .tag {
+            padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+            color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: saturate(200%) blur(20px); -webkit-backdrop-filter: saturate(200%) blur(20px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        body.dark-mode .tag { background: rgba(255,255,255,0.1); color: #fff; }
+        .tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        /* Project Card Specifics */
+        .project-card { cursor: pointer; text-decoration: none; }
+        .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+        .project-icon {
+            width: 40px; height: 40px; border-radius: 50%; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; color: var(--text-main); transition: 0.4s;
+        }
+        body.dark-mode .project-icon { background: rgba(255,255,255,0.1); }
+        .project-card:hover .project-icon { background: var(--accent); color: #fff; transform: rotate(45deg); }
+
+        /* Education & Achievements */
+        .timeline-box { padding: 3rem; }
+        .timeline-item { position: relative; padding-left: 2.5rem; margin-bottom: 3rem; border-left: 1px solid var(--border); }
+        .timeline-item:last-child { margin-bottom: 0; border-left-color: transparent; }
         .timeline-item::before {
-            content: ''; position: absolute; left: -6px; top: 5px;
-            width: 10px; height: 10px; background: var(--bg-main); border: 2px solid var(--text-main);
+            content: ''; position: absolute; left: -6px; top: 0; width: 11px; height: 11px;
+            background: var(--surface); border: 2px solid var(--accent); border-radius: 50%; transition: 0.4s;
         }
-        .t-date { font-family: monospace; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px; display: block; }
-        .t-title { font-size: 1.2rem; margin-bottom: 10px; }
-        .t-desc { color: var(--text-muted); font-size: 0.95rem; }
+        .timeline-item:hover::before { background: var(--accent); box-shadow: 0 0 18px rgba(232, 137, 47, 0.45); }
+        .timeline-item h4 { font-size: 1.05rem; margin-bottom: 0.25rem; font-weight: 600; }
+        .timeline-item p { font-size: 0.9rem; line-height: 1.5; }
 
-        /* CERTIFICATIONS */
-        .cert-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px; align-items: stretch;
-        }
-        .cert-card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            transition: all 0.4s ease; height: 100%;
-            display: flex; flex-direction: column;
-            overflow: hidden; 
-        }
-        .cert-img-wrapper {
-            width: 100%; height: 240px; overflow: hidden;
-            border-bottom: 1px solid var(--border);
-            background: #000; flex-shrink: 0;
-        }
-        .cert-img-wrapper img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: grayscale(100%); transition: all 0.5s ease; opacity: 0.8;
-        }
-        .cert-details {
-            padding: 20px; flex-grow: 1;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .cert-details h4 { font-size: 1.1rem; margin-bottom: 15px; line-height: 1.3; }
-        .cert-meta {
-            font-family: monospace; font-size: 0.8rem;
-            color: var(--text-muted); margin-top: auto;
-        }
+        /* Certifications */
+        .cert-card { padding: 0.3rem 0.3rem 0.75rem; }
+        .cert-img { width: 100%; height: 180px; object-fit: cover; border-radius: 25px; transition: 0.5s; margin-bottom: 0.75rem; border: 1px solid var(--border); box-shadow: 0 14px 28px rgba(31, 41, 58, 0.12); }
+        .cert-card h4 { font-size: 0.95rem; margin-bottom: 0.1rem; }
+        .cert-card .text-sm { font-size: 0.7rem; }
+        .cert-card:hover .cert-img { transform: scale(1.02); }
 
-        /* CONTACT & FOOTER */
-        .contact-section { text-align: center; max-width: 800px; margin: 0 auto; }
-        .contact-title { font-size: 2rem; margin-bottom: 30px; line-height: 1.5; }
-        .contact-links { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
-        .contact-links a { font-size: 1.5rem; padding: 20px; border: 1px solid var(--border); border-radius: 50%; }
-        .contact-links a:hover { background: white; color: black; border-color: white; transform: translateY(-5px); }
-        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+        /* Contact & Footer */
+        .contact-cta-wrapper { text-align: center; padding: 6rem 0; border-bottom: 1px solid var(--border); }
+        .contact-cta { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 600; letter-spacing: -0.04em; display: inline-block; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .contact-cta:hover { transform: scale(1.02); }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem; }
+        .social-links a { 
+            width: 55px; height: 55px; border-radius: 50%; 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-top: 1px solid rgba(255, 255, 255, 0.8); border-left: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: saturate(200%) blur(40px); -webkit-backdrop-filter: saturate(200%) blur(40px);
+            color: var(--text-main);
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; 
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.4); 
+        }
+        .social-links a:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-4px); }
+        
+        footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem; }
 
-        /* =========================================
-           6. RESPONSIVE DESIGN & HORIZONTAL SCROLL
-           ========================================= */
-        @media (max-width: 900px) {
-            html { font-size: 14px; }
-            
-            /* Typography Adjustments */
-            .hero-content h1 { font-size: 2.5rem; line-height: 1.2; }
-            .hero-content p { font-size: 0.95rem; }
-            .section-header h2 { font-size: 2rem; }
-            .contact-title { font-size: 2rem; }
-            h3, .project-title, .service-card h3 { font-size: 1.2rem; }
-            p, .t-desc, .service-card p { font-size: 0.9rem; }
-            .btn { padding: 12px 24px; font-size: 0.8rem; }
-            
-            /* Layout Adjustments */
+        /* Scroll Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive Framework */
+        @media (max-width: 1024px) {
+            .span-8, .span-6, .span-4, .span-3 { grid-column: span 12; }
             .hero-layout { flex-direction: column-reverse; text-align: center; }
-            .hero-btns { justify-content: center; }
-            .profile-pic { width: 200px; height: 200px; margin-bottom: 30px; }
-            .section-header { flex-direction: column; align-items: start; gap: 10px; }
-            .timeline-grid { grid-template-columns: 1fr; }
-            
-            /* Mobile Nav */
-            .nav-links { 
-                display: none; position: absolute; top: 100%; left: 0; 
-                width: 100%; background: var(--bg-main); 
-                flex-direction: column; padding: 20px; 
-                border-bottom: 1px solid var(--border); 
-                gap: 20px; text-align: center; 
+            .hero-text p { margin: 2rem auto; }
+            .hero-img { width: 280px; height: 280px; }
+            .btn-group { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; width: 90%; }
+            .nav-links {
+                display: none; position: absolute; top: 100%; left: 0; width: 100%;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 100%);
+                backdrop-filter: saturate(200%) blur(40px); -webkit-backdrop-filter: saturate(200%) blur(40px);
+                border: 1px solid rgba(255, 255, 255, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.8); border-left: 1px solid rgba(255, 255, 255, 0.5);
+                border-radius: 20px;
+                flex-direction: column; padding: 2rem; gap: 1.5rem; text-align: center; margin-top: 10px;
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.3);
             }
+            body.dark-mode .nav-links { background: rgba(20, 24, 35, 0.2); }
             .nav-links.active { display: flex; }
             .hamburger { display: block; }
-
-            /* --- HORIZONTAL SCROLLING FIX START --- */
-            .services-grid, 
-            .project-grid, 
-            .cert-grid,
-            .skills-container { 
-                display: flex;
-                flex-wrap: nowrap; /* Forces items to stay in a straight line */
-                overflow-x: auto; 
-                overflow-y: hidden; 
-                scroll-snap-type: x mandatory;
-                gap: 20px;
-                padding-bottom: 20px; 
-                
-                /* CRITICAL: Enables smooth momentum scrolling on mobile */
-                -webkit-overflow-scrolling: touch; 
-                
-                scrollbar-width: none; /* Hide Scrollbar Firefox */
-                background-color: transparent; 
-                border: none; 
-                
-                /* Ensure grid styles don't interfere */
-                grid-template-columns: none;
-                align-items: stretch;
-            }
-
-            /* Hide Scrollbar Chrome/Safari */
-            .services-grid::-webkit-scrollbar, 
-            .project-grid::-webkit-scrollbar, 
-            .cert-grid::-webkit-scrollbar,
-            .skills-container::-webkit-scrollbar {
-                display: none; 
-            }
-
-            .service-card, 
-            .project-card, 
-            .cert-card,
-            .skill-col { 
-                min-width: 280px; 
-                max-width: 280px;
-                scroll-snap-align: center; /* Snaps to center */
-                flex-shrink: 0;
-                border: 1px solid var(--border); 
-                height: auto; 
-                min-height: 100%;
-                
-                /* Fix for formatting */
-                margin-right: 0; 
-                white-space: normal;
-                overflow: hidden; 
-            }
-
-            .skill-col { padding: 30px 20px; }
-            /* --- HORIZONTAL SCROLLING FIX END --- */
+            .bento { padding: 1.5rem; }
+            .timeline-box { padding: 1.5rem; }
         }
     </style>
 </head>
-<body class="loading">
+<body>
 
-    <div id="preloader">
-        <div class="loader-content">
-            <div class="loader-text">Welcome</div>
-            <div class="loader-line-container">
-                <div class="loader-line"></div>
-            </div>
-        </div>
-    </div>
+    <div class="noise"></div>
+    <div class="glow-bg"></div>
 
     <nav>
-        <div class="container nav-wrap">
-            <div class="logo">REB.DEV</div>
-            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects">Work</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+        <div class="logo brand">Reb.Dev</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Work</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#certifications">Certs</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </nav>
 
     <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-layout">
-                <div class="hero-content">
-                    <h4 class="hidden">Web & App Developer</h4>
-                    <h1 class="hidden delay-100">Rebienald Khei Carpio</h1>
-                    <p class="hidden delay-200">Technologically skilled developer recognized for high academic performance and delivering clean, scalable solutions.</p>
-                    <div class="hero-btns hidden delay-300">
-                        <a href="#projects" class="btn btn-primary">View Projects</a>
-                        <a href="#contact" class="btn btn-outline">Hire Me</a>
-                    </div>
+        <div class="container hero-layout">
+            <div class="hero-text reveal">
+                <span class="text-sm">Web & App Developer</span>
+                <h1 class="text-huge text-gradient">Rebienald Khei Carpio</h1>
+                <p>Technologically skilled developer recognized for high academic performance, delivering clean, scalable, and exceptionally crafted digital solutions.</p>
+                <div class="btn-group">
+                    <a href="#projects" class="btn">View Projects</a>
+                    <a href="contacts/contact.html" class="btn btn-outline">Let's Talk</a>
                 </div>
-                <div class="hero-img-container hidden delay-200">
-                    <img src="ewan.png" alt="Rebienald Carpio" class="profile-pic">
-                </div>
+            </div>
+            <div class="hero-img-box reveal">
+                <img src="ewan.png" alt="Rebienald Carpio" class="hero-img">
             </div>
         </div>
     </section>
 
     <section id="services">
         <div class="container">
-            <div class="section-header hidden">
-                <h2>Services</h2>
-                <span>WHAT I DO</span>
+            <div class="section-header reveal">
+                <h2 class="text-lg">Services</h2>
+                <span class="text-sm">What I Do</span>
             </div>
-            <div class="services-grid">
-                <div class="service-card hidden delay-100">
-                    <div>
-                        <i class="fas fa-code"></i>
+            <div class="bento-grid">
+                <div class="bento span-8 reveal">
+                    <div class="bento-content">
+                        <span class="text-sm">01. Web App</span>
                         <h3>Web Development</h3>
+                        <p>Custom websites built with HTML5, CSS3, JS, and PHP. Focus on responsive, accessible, and performance-optimized digital experiences tailored to scale.</p>
                     </div>
-                    <p>Custom websites built with HTML5, CSS3, JS, and PHP. Responsive and performance-optimized.</p>
                 </div>
-                <div class="service-card hidden delay-200">
-                    <div>
-                        <i class="fas fa-mobile-screen"></i>
+                <div class="bento span-4 reveal">
+                    <div class="bento-content">
+                        <span class="text-sm">02. Native</span>
                         <h3>Mobile App Dev</h3>
+                        <p>Native Android applications emphasizing clean UI/UX and robust functionality.</p>
                     </div>
-                    <p>Android applications using Java and Android Studio with XML layouts and clean UI/UX.</p>
                 </div>
-                <div class="service-card hidden delay-300">
-                    <div>
-                        <i class="fas fa-server"></i>
-                        <h3>Deployment</h3>
+                <div class="bento span-12 reveal">
+                    <div class="bento-content">
+                        <span class="text-sm">03. DevOps</span>
+                        <h3>Deployment & Hosting</h3>
+                        <p>End-to-end deployment management on platforms like GitHub, Netlify, and InfinityFree. Ensuring stable environments, custom domain management, and continuous integration.</p>
                     </div>
-                    <p>Full deployment management on GitHub, Netlify, and InfinityFree ensuring stability.</p>
                 </div>
             </div>
         </div>
@@ -526,103 +435,120 @@
 
     <section id="projects">
         <div class="container">
-            <div class="section-header hidden">
-                <h2>Projects</h2>
-                <span>PORTFOLIO</span>
+            <div class="section-header reveal">
+                <h2 class="text-lg">Selected Work</h2>
+                <span class="text-sm">Portfolio</span>
             </div>
+            
+            <div class="bento-grid">
+                <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="bento project-card span-6 reveal">
+                    <div class="bento-content">
+                        <div class="project-header">
+                            <span class="text-sm">PHP / JS / AI</span>
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <h3>InfoWhiz</h3>
+                        <p>Educational gaming system with AI integration designed to assist students in studying computer programming.</p>
+                    </div>
+                </a>
 
-   <div class="project-grid">
-                <div class="project-card hidden delay-100">
-                    <div class="project-content">
-                        <span class="project-meta">PHP / JS / A.I Integration </span>
-                        <h3 class="project-title">InfoWhiz</h3>
-                        <p style="color: #888;">An educational gaming system with A.I integration designed to help students study computer programming.</p>
-                        <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="bento project-card span-6 reveal">
+                    <div class="bento-content">
+                        <div class="project-header">
+                            <span class="text-sm">HTML / CSS / JS</span>
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <h3>Cup Of Story</h3>
+                        <p>Live project demonstrating modern frontend techniques, elegant design, and clean code structure.</p>
                     </div>
-                </div>
+                </a>
 
-                <div class="project-card hidden delay-100">
-                    <div class="project-content">
-                        <span class="project-meta">HTML / CSS / JS</span>
-                        <h3 class="project-title">Cup Of Story</h3>
-                        <p style="color: #888;">A live project demonstrating modern frontend techniques and clean code structure.</p>
-                        <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                <a href="https://rebienalddev.github.io/RebifyApp/index.html" target="_blank" class="bento project-card span-4 reveal">
+                    <div class="bento-content">
+                        <div class="project-header">
+                            <span class="text-sm">Node / Frontend</span>
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <h3>Rebify</h3>
+                        <p>An AI-integrated quizlet application built to test boundaries of prompt-driven education.</p>
                     </div>
-                </div>
+                </a>
 
-                <div class="project-card hidden delay-200">
-                    <div class="project-content">
-                        <span class="project-meta">HTML / CSS / Node</span>
-                        <h3 class="project-title">Rebify</h3>
-                        <p style="color: #888;">An A.I integrated quizlet.</p>
-                        <a href="https://rebienalddev.github.io/RebifyApp/index.html" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="bento project-card span-4 reveal">
+                    <div class="bento-content">
+                        <div class="project-header">
+                            <span class="text-sm">PHP / MySQL</span>
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <h3>Club Hub</h3>
+                        <p>Comprehensive solution for managing club members, internal data, and broad announcements.</p>
                     </div>
-                </div>
-                <div class="project-card hidden delay-300">
-                    <div class="project-content">
-                        <span class="project-meta">PHP / MYSQL / CSS / JS / HTML</span>
-                        <h3 class="project-title">Club Management System</h3>
-                        <p style="color: #888;">A comprehensive solution for managing club members, data, and announcements.</p>
-                        <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
+                </a>
+
+                <a href="https://peridot-stem.netlify.app/" target="_blank" class="bento project-card span-4 reveal">
+                    <div class="bento-content">
+                        <div class="project-header">
+                            <span class="text-sm">Academic</span>
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <h3>Stem Peridot</h3>
+                        <p>Interactive web platform specifically developed for STEM academic purposes and research.</p>
                     </div>
-                </div>
-                <div class="project-card hidden delay-400">
-                    <div class="project-content">
-                        <span class="project-meta">ACADEMIC / EDUCATIONAL</span>
-                        <h3 class="project-title">Stem Peridot</h3>
-                        <p style="color: #888;">Interactive web platform developed for STEM academic purposes.</p>
-                        <a href="https://peridot-stem.netlify.app/" target="_blank" class="project-link">View Live Site <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
     <section id="skills">
         <div class="container">
-            <div class="section-header hidden">
-                <h2>Technical Stack</h2>
-                <span>EXPERTISE</span>
+            <div class="section-header reveal">
+                <h2 class="text-lg">Technical Stack</h2>
+                <span class="text-sm">Expertise</span>
             </div>
-            <div class="skills-container">
-                <div class="skill-col hidden delay-100">
-                    <h3>Languages</h3>
-                    <ul>
-                        <li>JavaScript</li>
-                        <li>Java</li>
-                        <li>HTML5 / CSS3</li>
-                        <li>PHP</li>
-                        <li>C#</li>
-                    </ul>
+            <div class="bento-grid">
+                <div class="bento span-3 reveal">
+                    <div class="bento-content">
+                        <h3>Languages</h3>
+                        <div class="tag-group">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">HTML5/CSS3</span>
+                            <span class="tag">PHP</span>
+                            <span class="tag">C#</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-col hidden delay-200">
-                    <h3>Web Dev</h3>
-                    <ul>
-                        <li>Responsive Design</li>
-                        <li>Bootstrap</li>
-                        <li>Cross-Browser</li>
-                        <li>Deployment</li>
-                    </ul>
+                <div class="bento span-3 reveal">
+                    <div class="bento-content">
+                        <h3>Web Dev</h3>
+                        <div class="tag-group">
+                            <span class="tag">Responsive</span>
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Cross-Browser</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-col hidden delay-300">
-                    <h3>Mobile</h3>
-                    <ul>
-                        <li>Android Studio</li>
-                        <li>Android SDK</li>
-                        <li>XML Layouts</li>
-                        <li>Mobile UI/UX</li>
-                    </ul>
+                <div class="bento span-3 reveal">
+                    <div class="bento-content">
+                        <h3>Mobile</h3>
+                        <div class="tag-group">
+                            <span class="tag">Android Studio</span>
+                            <span class="tag">Android SDK</span>
+                            <span class="tag">XML Layouts</span>
+                            <span class="tag">Mobile UI/UX</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-col hidden delay-400">
-                    <h3>Tools</h3>
-                    <ul>
-                        <li>GitHub</li>
-                        <li>VS Code</li>
-                        <li>Netlify / InfinityFree</li>
-                        <li>Netbeans</li>
-                        <li>Ubuntu Linux</li>
-
-                    </ul>
+                <div class="bento span-3 reveal">
+                    <div class="bento-content">
+                        <h3>Tools</h3>
+                        <div class="tag-group">
+                            <span class="tag">GitHub</span>
+                            <span class="tag">VS Code</span>
+                            <span class="tag">Netlify</span>
+                            <span class="tag">Ubuntu Linux</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -630,48 +556,35 @@
 
     <section id="education">
         <div class="container">
-            <div class="timeline-grid">
-                <div>
-                    <div class="section-header hidden" style="border: none; padding: 0; margin-bottom: 40px;">
-                        <h3 style="font-size: 1.5rem;">Education</h3>
-                    </div>
-                    <div class="timeline-item hidden delay-100">
-                        <span class="t-date">2024 – PRESENT</span>
-                        <h4 class="t-title">STI College (Grade 12)</h4>
-                        <p class="t-desc">TVL Track - ICT. Consistent Honor Student.<br>Specializing in Web & Mobile App Development.</p>
-                    </div>
-                    <div class="timeline-item hidden delay-200">
-                        <span class="t-date">2020 – 2024</span>
-                        <h4 class="t-title">Binakayan National High School</h4>
-                        <p class="t-desc">Consistent Honor Student.<br>Specialized in Computer System Servicing.</p>
+            <div class="bento-grid">
+                <div class="bento timeline-box span-6 reveal">
+                    <div class="bento-content">
+                        <h2 class="text-lg">Education</h2>
+                        <div class="timeline-item">
+                            <span class="text-sm">2024 – PRESENT</span>
+                            <h4>STI College (Grade 12)</h4>
+                            <p>TVL Track - ICT. Consistent Honor Student. Specializing in Web & Mobile App Development.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="text-sm">2020 – 2024</span>
+                            <h4>Binakayan National High School</h4>
+                            <p>Consistent Honor Student. Specialized in Computer System Servicing.</p>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <div class="section-header hidden" style="border: none; padding: 0; margin-bottom: 40px;">
-                        <h3 style="font-size: 1.5rem;">Achievements</h3>
-                    </div>
-
-            <div class="timeline-item hidden delay-100">
-                        <span class="t-date">May 22, 2026</span>
-                        <h4 class="t-title">Best in System Development</h4>
-                        <p class="t-desc">Awarded Best in System Development among all Senior High School students at STI College Bacoor.</p>
-                    </div>
-
-                    <div class="timeline-item hidden delay-100">
-                        <span class="t-date">OCT 20, 2025</span>
-                        <h4 class="t-title">Resource Speaker: TechTalk Ep. 2</h4>
-                        <p class="t-desc">Led hands-on training for Web Responsiveness and Deployment techniques.</p>
-                    </div>
-                    
-                    <div class="timeline-item hidden delay-200">
-                        <span class="t-date">NOV 25, 2025</span>
-                        <h4 class="t-title">Resource Speaker: TechTalk Ep. 1</h4>
-                        <p class="t-desc">Conducted workshop on HTML & CSS fundamentals and best practices at STI College Bacoor.</p>
-                    </div>
-                    <div class="timeline-item hidden delay-300">
-                        <span class="t-date">APR 24, 2025</span>
-                        <h4 class="t-title">Web Design Competition</h4>
-                        <p class="t-desc">Participated in 8-hour rigorous HTML/CSS design competition.</p>
+                <div class="bento timeline-box span-6 reveal">
+                    <div class="bento-content">
+                        <h2 class="text-lg">Achievements</h2>
+                        <div class="timeline-item">
+                            <span class="text-sm">OCT 20, 2025</span>
+                            <h4>Resource Speaker: TechTalk Ep. 2</h4>
+                            <p>Led hands-on training for Web Responsiveness and Deployment techniques.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="text-sm">NOV 25, 2025</span>
+                            <h4>Resource Speaker: TechTalk Ep. 1</h4>
+                            <p>Conducted workshop on HTML & CSS fundamentals and best practices.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -680,139 +593,134 @@
 
     <section id="certifications">
         <div class="container">
-            <div class="section-header hidden">
-                <h2>Certifications</h2>
-                <span>CREDENTIALS</span>
+            <div class="section-header reveal">
+                <h2 class="text-lg">Certifications</h2>
+                <span class="text-sm">Credentials</span>
             </div>
-            
-            <div class="cert-grid">
-                <div class="cert-card hidden delay-100">
-                    <div class="cert-img-wrapper">
-                        <img src="images/Repweb.png" alt="JS Algorithms">
-                    </div>
-                    <div class="cert-details">
+            <div class="bento-grid">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/Responsive Web Design.jpg" alt="Responsive Web Design certificate" class="cert-img">
                         <h4>Responsive Web Design</h4>
-                        <span class="cert-meta">FREECODECAMP | JAN 2025</span>
+                        <span class="text-sm" style="margin:0;">FreeCodeCamp | Apr 2024</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-100">
-                    <div class="cert-img-wrapper">
-                        <img src="images/Data.png" alt="JS Algorithms">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/Repweb.png" alt="Responsive Web Design certificate" class="cert-img">
+                        <h4>Responsive Web Design</h4>
+                        <span class="text-sm" style="margin:0;">FreeCodeCamp | Jan 2025</span>
                     </div>
-                    <div class="cert-details">
+                </div>
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/Data.png" alt="JS Algorithms" class="cert-img">
                         <h4>JS Algorithms & Data Structures</h4>
-                        <span class="cert-meta">FREECODECAMP | JUNE 2025</span>
+                        <span class="text-sm" style="margin:0;">FreeCodeCamp | June 2025</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-100">
-                    <div class="cert-img-wrapper">
-                        <img src="images/javaewan.jpg" alt="Java Certificate">
-                    </div>
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/javaewan.jpg" alt="Java Certificate" class="cert-img">
                         <h4>JAVA Certificate</h4>
-                        <span class="cert-meta">HACKERANK | JAN 2025</span>
+                        <span class="text-sm" style="margin:0;">HackerRank | Jan 2025</span>
                     </div>
                 </div>
-                
-                <div class="cert-card hidden delay-200">
-                    <div class="cert-img-wrapper">
-                        <img src="images/lega.png" alt="Responsive Web Design">
-                    </div> 
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/lega.png" alt="Legacy Responsive Web" class="cert-img">
                         <h4>Legacy Responsive Web Design</h4>
-                        <span class="cert-meta">FREECODECAMP | APR 2024</span>
+                        <span class="text-sm" style="margin:0;">FreeCodeCamp | Apr 2024</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-300">
-                    <div class="cert-img-wrapper">
-                        <img src="images/Web Development.png" alt="Web Dev">
-                    </div>
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/Web Development.png" alt="Web Dev" class="cert-img">
                         <h4>Web Development</h4>
-                        <span class="cert-meta">SIMPLILEARN | SEPT 2024</span>
+                        <span class="text-sm" style="margin:0;">Simplilearn | Sept 2024</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-100">
-                    <div class="cert-img-wrapper">
-                        <img src="images/Java Certificate_.jpg" alt="Java">
-                    </div>
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/Java Certificate_.jpg" alt="Java Programming" class="cert-img">
                         <h4>Java Programming</h4>
-                        <span class="cert-meta">SIMPLILEARN | SEPT 2024</span>
+                        <span class="text-sm" style="margin:0;">Simplilearn | Sept 2024</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-200">
-                    <div class="cert-img-wrapper">
-                        <img src="images/CSS Front-End.jpg" alt="CSS">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/CSS Certificate_.png" alt="Introduction to CSS certificate" class="cert-img">
+                        <h4>Introduction to CSS</h4>
+                        <span class="text-sm" style="margin:0;">Simplilearn | Sept 2024</span>
                     </div>
-                    <div class="cert-details">
+                </div>
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/CSS Front-End.jpg" alt="CSS" class="cert-img">
                         <h4>Front End Dev - CSS</h4>
-                        <span class="cert-meta">GREAT LEARNING | JULY 2024</span>
+                        <span class="text-sm" style="margin:0;">Great Learning | July 2024</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-300">
-                    <div class="cert-img-wrapper">
-                        <img src="images/HTML Front-End.png" alt="HTML">
-                    </div>
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/HTML Front-End.png" alt="HTML" class="cert-img">
                         <h4>Front End Dev - HTML</h4>
-                        <span class="cert-meta">GREAT LEARNING | JULY 2024</span>
+                        <span class="text-sm" style="margin:0;">Great Learning | July 2024</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-100">
-                    <div class="cert-img-wrapper">
-                        <img src="images/techtalk2.jpg" alt="TechTalk Speaker">
-                    </div>
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/techtalk2.jpg" alt="TechTalk 2" class="cert-img">
                         <h4>TechTalk Ep. 2 Speaker</h4>
-                        <span class="cert-meta">STI COLLEGE | NOV 2025</span>
+                        <span class="text-sm" style="margin:0;">STI College | Nov 2025</span>
                     </div>
                 </div>
-
-                <div class="cert-card hidden delay-200">
-                    <div class="cert-img-wrapper">
-                        <img src="images/TechTalk.png" alt="TechTalk Speaker">
-                    </div>
-                    <div class="cert-details">
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/TechTalk.png" alt="TechTalk 1" class="cert-img">
                         <h4>TechTalk Ep. 1 Speaker</h4>
-                        <span class="cert-meta">STI COLLEGE | OCT 2025</span>
+                        <span class="text-sm" style="margin:0;">STI College | Oct 2025</span>
+                    </div>
+                </div>
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/WebDevelopment2.png" alt="Web Development certificate" class="cert-img">
+                        <h4>Web Development</h4>
+                        <span class="text-sm" style="margin:0;">Simplilearn | Sept 2024</span>
+                    </div>
+                </div>
+                <div class="bento cert-card span-4 reveal">
+                    <div class="bento-content">
+                        <img src="images/webdesign1.jpg" alt="Web Design Competition certificate" class="cert-img">
+                        <h4>Web Design Competition</h4>
+                        <span class="text-sm" style="margin:0;">STI College | Apr 2025</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact">
+    <div id="contact" class="contact-cta-wrapper reveal">
         <div class="container">
-            <div class="contact-section hidden">
-                <span style="color: var(--text-muted); letter-spacing: 2px;">READY TO START?</span>
-                <h2 class="contact-title">Let's build something<br>exceptional.</h2>
-                <div class="contact-links">
-                    <a href="contacts/contact.html"><i class="fas fa-envelope"></i></a>
-                    <a href="https://github.com/rebienalddev"><i class="fab fa-github"></i></a>
-                    <a href="http://linkedin.com/in/rebienald-khei-carpio-68188339b/?originalSubdomain=ph"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
+            <span class="text-sm">Next Steps</span>
+            <a href="contacts/contact.html" class="contact-cta text-gradient brand">Let's build<br>something.</a>
         </div>
-    </section>
+        <div class="social-links">
+            <a href="contacts/contact.html"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/rebienalddev" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="http://linkedin.com/in/rebienald-khei-carpio-68188339b/?originalSubdomain=ph" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Rebienald Carpio. All Rights Reserved.</p>
+            <p>&copy; 2025 Rebienald Carpio. All Rights Reserved. Designed to scale.</p>
         </div>
     </footer>
 
     <script>
-        // --- SECURITY SCRIPT START --- //
+        // Security Script
         document.addEventListener('contextmenu', (e) => e.preventDefault());
-
         document.onkeydown = function(e) {
             if(e.keyCode == 123) return false;
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
@@ -820,55 +728,22 @@
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         }
-        // --- SECURITY SCRIPT END --- //
 
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                preloader.style.opacity = '0';
-                preloader.style.visibility = 'hidden';
-                document.body.classList.remove('loading');
-            }, 2000);
-        });
-
+        // Mobile Menu
         function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('active');
         }
 
+        // Scroll Reveal Animations
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
+                    entry.target.classList.add('active');
                 }
             });
-        });
-
-        const hiddenElements = document.querySelectorAll('.hidden');
-        hiddenElements.forEach((el) => observer.observe(el));
+        }, { threshold: 0.1 });
         
-        // --- ACTIVE LINK SCROLL SPY LOGIC START --- //
-        let sections = document.querySelectorAll('section');
-        let navLinks = document.querySelectorAll('.nav-links a');
-
-        window.onscroll = () => {
-            sections.forEach(sec => {
-                let top = window.scrollY;
-                let offset = sec.offsetTop - 150; // Adjustment for fixed header
-                let height = sec.offsetHeight;
-                let id = sec.getAttribute('id');
-
-                if(top >= offset && top < offset + height) {
-                    navLinks.forEach(links => {
-                        links.classList.remove('active');
-                        document.querySelector('.nav-links a[href*=' + id + ']').classList.add('active');
-                    });
-                }
-            });
-        };
-        // --- ACTIVE LINK SCROLL SPY LOGIC END --- //
-        
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
-    
 </body>
 </html>
