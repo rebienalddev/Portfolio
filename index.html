@@ -3,7 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rebienald Khei Carpio | Software Engineer</title>
+    <meta name="google-site-verification" content="lKkRPFbp4Zn6Jb69KxpPQINgMQFLoxqOzdXTNNm4mcw" />
+    <!-- Primary SEO Meta Tags -->
+    <title>Rebienald Khei Carpio </title>
+    <meta name="title" content="Rebienald Khei Carpio | Software Engineer & Web Developer">
+    <meta name="description" content="Official portfolio of Rebienald Khei Carpio, a highly skilled Software Engineer and Web Developer specializing in custom web applications, SaaS platforms, and native mobile apps.">
+    <meta name="keywords" content="Rebienald Khei Carpio, Rebienald Carpio, Rebienald, Reb.Dev, Software Engineer, Web Developer, Web Design, Mobile App Developer, Portfolio, Developer Cavite, Philippines, Frontend Developer, Backend Developer">
+    <meta name="author" content="Rebienald Khei Carpio">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rebienald Khei Carpio | Software Engineer">
+    <meta property="og:description" content="Discover the portfolio of Rebienald Khei Carpio. Building scalable, high-performance web applications and intelligent digital solutions.">
+    <meta property="og:image" content="images/logo.png">
+
+    <!-- Structured Data (JSON-LD) for better Google indexing of the person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Person",
+      "name": "Rebienald Khei Carpio",
+      "alternateName": "Rebienald Carpio",
+      "url": "https://github.com/rebienalddev",
+      "image": "images/ewan.png",
+      "jobTitle": "Software Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance"
+      },
+      "sameAs": [
+        "https://github.com/rebienalddev",
+        "http://linkedin.com/in/rebienald-khei-carpio-68188339b/"
+      ]
+    }
+    </script>
+
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -400,9 +436,16 @@
         }
 
         @media (max-width: 768px) {
-            nav { width: 90%; padding: 1rem 1.5rem; }
+            .container { padding: 0 1.5rem; }
+            nav { width: calc(100% - 3rem); padding: 1rem 1.5rem; }
             .nav-links, .nav-cta { display: none; }
             .hamburger { display: block; }
+            
+            .hero { padding-top: 8rem; min-height: auto; padding-bottom: 4rem; }
+            .hero h1 { font-size: 2.5rem !important; line-height: 1.2; margin-bottom: 1rem; }
+            .hero p { font-size: 1rem; margin-bottom: 2rem; }
+            .btn-group { flex-direction: column; width: 100%; gap: 1rem; }
+            .btn-group .btn-primary, .btn-group .btn-secondary { width: 100%; text-align: center; display: inline-flex; justify-content: center; }
             
             /* Horizontal Scroll Carousels for Mobile */
             .services-grid, .projects-grid, .certs-grid { 
@@ -411,12 +454,12 @@
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 -webkit-overflow-scrolling: touch;
-                margin-left: -2rem;
-                margin-right: -2rem;
-                padding-left: 2rem;
-                padding-right: 2rem;
-                padding-bottom: 2rem;
-                gap: 1.25rem;
+                margin-left: -1.5rem;
+                margin-right: -1.5rem;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                padding-bottom: 1.5rem;
+                gap: 1rem;
                 scrollbar-width: none; /* Firefox */
             }
             .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar {
@@ -427,10 +470,18 @@
                 scroll-snap-align: center;
             }
 
-            .skills-container { grid-template-columns: 1fr; padding: 2rem; }
+            .glass-card { padding: 1.75rem; }
+            .skills-container { grid-template-columns: 1fr; padding: 1.5rem; gap: 2rem; }
             
-            .section-header h2 { font-size: 2.2rem; }
-            section { padding: 6rem 0; }
+            .section-header { margin-bottom: 2.5rem; }
+            .section-header h2 { font-size: 2rem; }
+            section { padding: 4rem 0; }
+
+            .timeline { padding-left: 1.5rem; margin-left: 0.5rem; }
+            .timeline-dot { left: -1.85rem; width: 12px; height: 12px; top: 0.35rem; }
+            
+            .contact-cta { font-size: 2.5rem !important; margin-bottom: 2rem; }
+            .contact-section { padding: 6rem 0 3rem; margin-top: 2rem; }
         }
         
         /* Mobile Menu (Simplified) */
