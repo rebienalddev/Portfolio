@@ -72,6 +72,11 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        html, body { 
+            max-width: 100%; 
+            overflow-x: hidden; 
+        }
+
         html { scroll-behavior: smooth; background: var(--bg-base); }
         
         body {
@@ -81,11 +86,13 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
             position: relative;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(255, 122, 0, 0.03) 0%, transparent 50%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Ambient Lighting */
@@ -127,6 +134,8 @@
             font-weight: 600; 
             letter-spacing: -0.04em; 
             line-height: 1.1; 
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         
         .text-gradient {
@@ -250,8 +259,9 @@
             color: var(--accent); font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem;
             letter-spacing: 0.02em;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 122, 0, 0.1);
+            max-width: 100%;
         }
-        .hero h1 { font-size: clamp(3.5rem, 6.5vw, 6rem); line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.05em; }
+        .hero h1 { font-size: clamp(3.5rem, 6.5vw, 6rem); line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.05em; max-width: 100%; word-wrap: break-word; overflow-wrap: break-word; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 3rem; max-width: 520px; font-weight: 400; line-height: 1.7; }
         
         .btn-group { display: flex; gap: 1rem; }
@@ -400,6 +410,9 @@
             color: var(--text-primary); display: inline-block; margin-bottom: 3.5rem; 
             text-decoration: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); 
             line-height: 1.1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
         .contact-cta:hover { transform: scale(1.02); opacity: 0.9; text-shadow: 0 10px 40px rgba(255,255,255,0.1); }
         .contact-cta span { color: var(--text-tertiary); }
@@ -447,41 +460,68 @@
             .btn-group { flex-direction: column; width: 100%; gap: 1rem; }
             .btn-group .btn-primary, .btn-group .btn-secondary { width: 100%; text-align: center; display: inline-flex; justify-content: center; }
             
-            /* Horizontal Scroll Carousels for Mobile */
+            .section-header { text-align: center; margin-bottom: 2.5rem; }
+            .section-header p { margin: 0 auto; }
+
             .services-grid, .projects-grid, .certs-grid { 
-                display: flex;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                margin-left: -1.5rem;
-                margin-right: -1.5rem;
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-                padding-bottom: 1.5rem;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
                 gap: 1rem;
-                scrollbar-width: none; /* Firefox */
+                margin: 0;
+                padding: 0;
+                overflow: visible;
             }
-            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar {
-                display: none; /* Chrome/Safari */
-            }
-            .services-grid > *, .projects-grid > *, .certs-grid > * {
-                flex: 0 0 85%;
-                scroll-snap-align: center;
+            .services-grid > *, .projects-grid > *, .certs-grid > *,
+            .glass-card {
+                min-width: 0;
+                width: 100%;
             }
 
             .glass-card { padding: 1.75rem; }
             .skills-container { grid-template-columns: 1fr; padding: 1.5rem; gap: 2rem; }
             
-            .section-header { margin-bottom: 2.5rem; }
             .section-header h2 { font-size: 2rem; }
             section { padding: 4rem 0; }
+
+            .ambient-glow {
+                width: 60vw;
+                right: 10vw;
+            }
+
+            .ambient-glow-2 {
+                width: 60vw;
+                left: 10vw;
+            }
+
+            .hero-visual {
+                overflow: hidden;
+                border-radius: 32px;
+            }
+
+            .hero-glow {
+                inset: 0;
+            }
+
+            #about .container > div {
+                grid-template-columns: minmax(0, 1fr) !important;
+                gap: 3rem !important;
+            }
 
             .timeline { padding-left: 1.5rem; margin-left: 0.5rem; }
             .timeline-dot { left: -1.85rem; width: 12px; height: 12px; top: 0.35rem; }
             
-            .contact-cta { font-size: 2.5rem !important; margin-bottom: 2rem; }
+            .contact-cta { font-size: clamp(2rem, 8vw, 2.5rem) !important; margin-bottom: 2rem; }
             .contact-section { padding: 6rem 0 3rem; margin-top: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 1rem; }
+            nav { width: calc(100% - 2rem); }
+            .hero h1 { font-size: 2.25rem !important; }
+            .glass-card { padding: 1.35rem; }
+            .project-card { padding: 1.35rem; }
+            .project-meta { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+            .contact-cta { font-size: 1.8rem !important; }
         }
         
         /* Mobile Menu (Simplified) */
@@ -510,7 +550,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#certifications">Certificates</a></li>
         </ul>
-        <a href="../contacts/contact.html" class="nav-cta">Let's Talk</a>
+        <a href="contacts/contact.html" class="nav-cta">Let's Talk</a>
         <div class="hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></div>
     </nav>
     
@@ -521,7 +561,7 @@
         <a href="#expertise" onclick="toggleMobileMenu()">Expertise</a>
         <a href="#about" onclick="toggleMobileMenu()">About</a>
         <a href="#certifications" onclick="toggleMobileMenu()">Certificates</a>
-        <a href="../contacts/contact.html" onclick="toggleMobileMenu()" style="color: var(--accent)">Let's Talk</a>
+        <a href="contacts/contact.html" onclick="toggleMobileMenu()" style="color: var(--accent)">Let's Talk</a>
     </div>
 
     <section class="hero">
