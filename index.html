@@ -354,7 +354,7 @@
         .project-content p { color: var(--text-secondary); font-size: 1.05rem; }
 
         /* Skills */
-        .skills-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem; }
+        .skills-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
         .skill-group h4 { color: var(--text-primary); font-size: 1.1rem; margin-bottom: 1.5rem; font-weight: 500; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .skill-tag {
@@ -463,7 +463,7 @@
             .section-header { text-align: center; margin-bottom: 2.5rem; }
             .section-header p { margin: 0 auto; }
 
-            .services-grid, .projects-grid, .certs-grid { 
+            .services-grid, .projects-grid, .certs-grid, .skills-container { 
                 display: flex;
                 overflow-x: auto;
                 flex-wrap: nowrap;
@@ -474,21 +474,20 @@
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none; /* Firefox */
             }
-            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar {
+            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar, .skills-container::-webkit-scrollbar {
                 display: none; /* Chrome/Safari/Edge */
             }
             .glass-card {
                 min-width: 0;
                 width: 100%;
             }
-            .services-grid > *, .projects-grid > *, .certs-grid > * {
+            .services-grid > *, .projects-grid > *, .certs-grid > *, .skills-container > * {
                 flex: 0 0 85%;
                 width: 85%;
                 scroll-snap-align: center;
             }
 
             .glass-card { padding: 1.75rem; }
-            .skills-container { grid-template-columns: 1fr; padding: 1.5rem; gap: 2rem; }
             
             .section-header h2 { font-size: 2rem; }
             section { padding: 4rem 0; }
@@ -608,13 +607,13 @@
                 </div>
                 <div class="glass-card reveal">
                     <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Native Mobile</h3>
+                    <h3>Mobile App</h3>
                     <p>High-performance Android applications emphasizing clean UI/UX, robust architecture, and seamless cross-device functionality.</p>
                 </div>
                 <div class="glass-card reveal">
                     <div class="service-icon"><i class="fas fa-server"></i></div>
-                    <h3>Cloud & DevOps</h3>
-                    <p>End-to-end deployment, CI/CD pipelines, and cloud hosting architecture. Ensuring your applications remain fast, secure, and always online.</p>
+                    <h3>Deployment</h3>
+                    <p>Web Deployment through various platforms</p>
                 </div>
             </div>
         </div>
@@ -697,42 +696,71 @@
                 <p>A curated stack of modern technologies chosen for enterprise-grade scalability and refined developer experience.</p>
             </div>
             
-            <div class="glass-card skills-container reveal">
-                <div class="skill-group">
-                    <h4>Core Languages</h4>
+            <div class="skills-container">
+                <div class="glass-card skill-group reveal">
+                    <h4>Front-End</h4>
                     <div class="skill-tags">
-                        <span class="skill-tag">JavaScript / ES6+</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">PHP 8+</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="glass-card skill-group reveal">
+                    <h4>Back-end</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PHP</span>
                         <span class="skill-tag">C#</span>
-                        <span class="skill-tag">HTML5 / CSS3</span>
+                        <span class="skill-tag">Java</span>
                     </div>
                 </div>
-                <div class="skill-group">
-                    <h4>Frontend & UI</h4>
+                <div class="glass-card skill-group reveal">
+                    <h4>Database</h4>
                     <div class="skill-tags">
-                        <span class="skill-tag">Responsive Architecture</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                <div class="glass-card skill-group reveal">
+                    <h4>Framework</h4>
+                    <div class="skill-tags">
                         <span class="skill-tag">Bootstrap</span>
-                        <span class="skill-tag">TailwindCSS</span>
-                        <span class="skill-tag">Figma / UI Design</span>
+                        <span class="skill-tag">.NET Maui</span>
+                        <span class="skill-tag">ASP.NET</span>
                     </div>
                 </div>
-                <div class="skill-group">
-                    <h4>Mobile Development</h4>
+                <div class="glass-card skill-group reveal">
+                    <h4>IDE</h4>
                     <div class="skill-tags">
+                        <span class="skill-tag">VS</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Cursor</span>
                         <span class="skill-tag">Android Studio</span>
-                        <span class="skill-tag">Android SDK</span>
-                        <span class="skill-tag">XML Layouts</span>
-                        <span class="skill-tag">Mobile UI/UX</span>
                     </div>
                 </div>
-                <div class="skill-group">
-                    <h4>Infrastructure</h4>
+                <div class="glass-card skill-group reveal">
+                    <h4>OS</h4>
                     <div class="skill-tags">
-                        <span class="skill-tag">Git / GitHub</span>
-                        <span class="skill-tag">CI/CD Pipelines</span>
-                        <span class="skill-tag">Ubuntu / Linux Server</span>
-                        <span class="skill-tag">Netlify / Vercel</span>
+                        <span class="skill-tag">Ubuntu</span>
+                        <span class="skill-tag">Windows 11</span>
+                    </div>
+                </div>
+                <div class="glass-card skill-group reveal">
+                    <h4>Tools</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Github</span>
+                        <span class="skill-tag">Vercel</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Netlify</span>
+                        <span class="skill-tag">Render</span>
+                    </div>
+                </div>
+                <div class="glass-card skill-group reveal">
+                    <h4>Others</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">XAMPP</span>
+                        <span class="skill-tag">XML</span>
+                        <span class="skill-tag">XAML</span>
                     </div>
                 </div>
             </div>
