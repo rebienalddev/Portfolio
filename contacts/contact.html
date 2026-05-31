@@ -3,16 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Rebienald Carpio</title>
-    <link rel="icon" type="image/png" href="../images/logo.png">    
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
+    <!-- Primary SEO Meta Tags -->
+    <title>Rebienald Khei Carpio | Software Engineer & Web Developer</title>
+    <meta name="title" content="Rebienald Khei Carpio | Software Engineer & Web Developer">
+    <meta name="description" content="Official portfolio of Rebienald Khei Carpio, a highly skilled Software Engineer and Web Developer specializing in custom web applications, SaaS platforms, and native mobile apps.">
+    <meta name="keywords" content="Rebienald Khei Carpio, Rebienald Carpio, Rebienald, Reb.Dev, Software Engineer, Web Developer, Web Design, Mobile App Developer, Portfolio, Developer Cavite, Philippines, Frontend Developer, Backend Developer">
+    <meta name="author" content="Rebienald Khei Carpio">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rebienald Khei Carpio | Software Engineer">
+    <meta property="og:description" content="Discover the portfolio of Rebienald Khei Carpio. Building scalable, high-performance web applications and intelligent digital solutions.">
+    <meta property="og:image" content="images/logo.png">
+
+    <!-- Structured Data (JSON-LD) for better Google indexing of the person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Person",
+      "name": "Rebienald Khei Carpio",
+      "alternateName": "Rebienald Carpio",
+      "url": "https://github.com/rebienalddev",
+      "image": "images/ewan.png",
+      "jobTitle": "Software Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance"
+      },
+      "sameAs": [
+        "https://github.com/rebienalddev",
+        "http://linkedin.com/in/rebienald-khei-carpio-68188339b/"
+      ]
+    }
+    </script>
+
+    <link rel="icon" type="image/png" href="images/logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
             /* Ultra-Premium Dark Theme */
@@ -52,7 +86,6 @@
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(255, 122, 0, 0.03) 0%, transparent 50%);
-            display: flex; flex-direction: column; min-height: 100vh;
         }
 
         /* Ambient Lighting */
@@ -114,7 +147,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
-            width: 100%;
         }
 
         /* Navigation */
@@ -179,12 +211,11 @@
         
         .hamburger { display: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; }
 
-        /* Main Content */
-        .main-content { padding-top: 12rem; padding-bottom: 6rem; flex-grow: 1; }
-        
-        .hero { text-align: center; margin-bottom: 5rem; }
-        .hero h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.05em; }
-        .hero p { color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+        /* General Sections */
+        section { padding: 8rem 0; position: relative; }
+        .section-header { margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-secondary); max-width: 600px; font-size: 1.1rem; }
 
         /* Ultra-Premium Glass Card */
         .glass-card {
@@ -194,116 +225,248 @@
             border: 1px solid var(--glass-border);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 3rem;
+            padding: 2.5rem;
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.02);
         }
 
-        .contact-grid {
-            display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;
+        .glass-card:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), var(--shadow-glow);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
         }
 
-        .glass-card h2 { font-size: 1.8rem; margin-bottom: 2rem; }
-
-        /* Contact Details */
-        .contact-details { list-style: none; }
-        .contact-details li { 
-            display: flex; align-items: center; gap: 1.2rem; 
-            margin-bottom: 1.8rem; padding-bottom: 1.8rem; 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
+        /* Hero Section */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 12rem; }
+        .hero-content { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.3rem 1rem; border-radius: 100px;
+            background: linear-gradient(145deg, rgba(255, 122, 0, 0.15) 0%, rgba(255, 122, 0, 0.05) 100%);
+            border: 1px solid rgba(255, 122, 0, 0.3);
+            color: var(--accent); font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem;
+            letter-spacing: 0.02em;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 122, 0, 0.1);
         }
-        .contact-details li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .contact-icon {
-            width: 48px; height: 48px; border-radius: 50%; 
-            background: linear-gradient(145deg, rgba(255, 122, 0, 0.15) 0%, rgba(255, 122, 0, 0.02) 100%);
-            border: 1px solid rgba(255, 122, 0, 0.2);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--accent); font-size: 1.2rem;
-            transition: 0.3s;
-        }
-        .contact-details li:hover .contact-icon {
-            background: var(--accent); color: #000; border-color: var(--accent);
-            transform: scale(1.05); box-shadow: 0 0 15px var(--accent-glow);
-        }
-        .contact-text h3 { 
-            font-size: 0.8rem; text-transform: uppercase; 
-            letter-spacing: 0.05em; color: var(--text-tertiary); 
-            font-weight: 500; margin-bottom: 0.3rem; 
-        }
-        .contact-text a, .contact-text p { font-size: 1.05rem; color: var(--text-primary); text-decoration: none; transition: 0.3s; font-weight: 500;}
-        .contact-text a:hover { color: var(--accent); }
-
-        /* Form Fields */
-        .form-group { margin-bottom: 1.5rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .form-group label { 
-            display: block; margin-bottom: 0.6rem; font-size: 0.85rem; 
-            font-weight: 500; color: var(--text-secondary); 
-        }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 1rem 1.25rem;
-            background: rgba(0,0,0,0.4); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            color: var(--text-primary); font-family: 'Inter', sans-serif; 
-            font-size: 1rem; transition: all 0.3s;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .form-group input::placeholder, .form-group textarea::placeholder {
-            color: var(--text-tertiary);
-        }
-        .form-group input:focus, .form-group textarea:focus { 
-            outline: none; background: rgba(0,0,0,0.6); border-color: var(--accent);
-            box-shadow: 0 0 0 1px var(--accent), inset 0 2px 4px rgba(0,0,0,0.5); 
-        }
-        .form-group textarea { height: 160px; resize: vertical; }
-
-        .submit-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 100%; padding: 1.1rem; font-size: 1rem; font-weight: 600;
-            border-radius: 12px; transition: all 0.3s;
+        .hero h1 { font-size: clamp(3.5rem, 6.5vw, 6rem); line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.05em; }
+        .hero p { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 3rem; max-width: 520px; font-weight: 400; line-height: 1.7; }
+        
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-primary {
             background: linear-gradient(180deg, #FF8A1A 0%, #FF7A00 100%);
-            color: #000; border: none; cursor: pointer;
+            color: #000;
+            padding: 1rem 2.2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 10px 20px rgba(255, 122, 0, 0.2);
-            margin-top: 1rem;
+            border: none;
         }
-        .submit-btn:hover { 
+        .btn-primary:hover { 
             transform: translateY(-2px); 
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 15px 30px rgba(255, 122, 0, 0.3); 
             filter: brightness(1.1);
         }
-
-        .back-home { margin-top: 4rem; text-align: center; }
-        .back-link { 
-            font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; 
-            letter-spacing: 0.02em; display: inline-flex; align-items: center; gap: 0.5rem;
-            text-decoration: none; transition: 0.3s;
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-primary);
+            padding: 1rem 2.2rem;
+            border-radius: 100px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
         }
-        .back-link:hover { color: var(--text-primary); transform: translateX(-4px); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
 
-        footer { text-align: center; padding: 2rem; color: var(--text-tertiary); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .hero-visual { position: relative; }
+        .hero-img-container {
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            padding: 1rem;
+        }
+        .hero-img { width: 100%; border-radius: 24px; display: block; filter: grayscale(20%) contrast(1.1); }
+        .hero-glow {
+            position: absolute; inset: -30px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+            opacity: 0.15; filter: blur(40px); z-index: -1;
+        }
+
+        /* Services Grid */
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .service-icon { 
+            width: 52px; height: 52px; border-radius: 16px; 
+            background: linear-gradient(145deg, rgba(255, 122, 0, 0.15) 0%, rgba(255, 122, 0, 0.02) 100%);
+            color: var(--accent);
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            margin-bottom: 1.5rem; border: 1px solid rgba(255, 122, 0, 0.2);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .glass-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-primary); }
+        .glass-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+
+        /* Projects */
+        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .project-card { 
+            display: flex; flex-direction: column; text-decoration: none; 
+            padding: 2.5rem; 
+        }
+        .project-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .tech-chip { 
+            font-size: 0.75rem; padding: 0.35rem 0.9rem; border-radius: 100px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-secondary); font-weight: 500; letter-spacing: 0.02em;
+        }
+        .project-icon {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-primary); transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .project-card:hover .project-icon {
+            background: var(--text-primary); color: #000; border-color: var(--text-primary);
+            transform: rotate(-45deg) scale(1.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .project-content h3 { font-size: 1.6rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+        .project-content p { color: var(--text-secondary); font-size: 1.05rem; }
+
+        /* Skills */
+        .skills-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem; }
+        .skill-group h4 { color: var(--text-primary); font-size: 1.1rem; margin-bottom: 1.5rem; font-weight: 500; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .skill-tag {
+            padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-secondary); transition: 0.3s; font-weight: 500;
+        }
+        .skill-tag:hover { 
+            border-color: var(--accent); color: var(--accent); 
+            background: rgba(255, 122, 0, 0.05); 
+            box-shadow: 0 0 15px rgba(255,122,0,0.1);
+        }
+
+        /* Timeline */
+        .timeline { border-left: 1px solid rgba(255,255,255,0.1); margin-left: 1rem; padding-left: 2.5rem; }
+        .timeline-item { position: relative; margin-bottom: 3.5rem; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-dot {
+            position: absolute; left: -2.85rem; top: 0.3rem; width: 12px; height: 12px;
+            background: var(--bg-base); border: 2px solid rgba(255,255,255,0.2); border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 0 0 4px var(--bg-base);
+        }
+        .timeline-item:hover .timeline-dot { 
+            border-color: var(--accent); 
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--bg-base), 0 0 15px var(--accent-glow); 
+        }
+        .timeline-date { font-size: 0.8rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.75rem; display: block; text-transform: uppercase; }
+        .timeline-title { font-size: 1.3rem; color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .timeline-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; }
+
+        /* Certifications Grid */
+        .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+        .cert-card { padding: 1rem; }
+        .cert-img { 
+            width: 100%; height: 180px; object-fit: cover; border-radius: 16px; 
+            margin-bottom: 1.25rem; border: 1px solid rgba(255,255,255,0.1); 
+            opacity: 0.8; transition: 0.4s ease; 
+        }
+        .cert-card:hover .cert-img { 
+            opacity: 1; border-color: rgba(255,255,255,0.3); 
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .cert-info h4 { font-size: 1.05rem; margin-bottom: 0.3rem; color: var(--text-primary); }
+        .cert-info p { font-size: 0.85rem; color: var(--text-tertiary); font-weight: 500; }
+
+        /* Contact/Footer */
+        .contact-section { text-align: center; padding: 12rem 0 8rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 5rem; position: relative; }
+        .contact-cta { 
+            font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; letter-spacing: -0.05em; 
+            color: var(--text-primary); display: inline-block; margin-bottom: 3.5rem; 
+            text-decoration: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            line-height: 1.1;
+        }
+        .contact-cta:hover { transform: scale(1.02); opacity: 0.9; text-shadow: 0 10px 40px rgba(255,255,255,0.1); }
+        .contact-cta span { color: var(--text-tertiary); }
+        
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; }
+        .social-link {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%); 
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); font-size: 1.3rem; transition: 0.3s; text-decoration: none;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .social-link:hover { 
+            background: var(--text-primary); border-color: var(--text-primary); 
+            color: #000; transform: translateY(-4px); 
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+
+        footer { text-align: center; padding: 2rem; color: var(--text-tertiary); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.02em; }
 
         /* Animations */
-        .reveal { opacity: 0; transform: translateY(30px); animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero-badge { margin: 0 auto 1.5rem; }
+            .hero p { margin: 0 auto 2.5rem; }
+            .btn-group { justify-content: center; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .skills-container { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* Mobile */
         @media (max-width: 768px) {
-            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .form-row { grid-template-columns: 1fr; gap: 0; }
             nav { width: 90%; padding: 1rem 1.5rem; }
             .nav-links, .nav-cta { display: none; }
             .hamburger { display: block; }
-            .glass-card { padding: 2rem; }
+            
+            /* Horizontal Scroll Carousels for Mobile */
+            .services-grid, .projects-grid, .certs-grid { 
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                margin-left: -2rem;
+                margin-right: -2rem;
+                padding-left: 2rem;
+                padding-right: 2rem;
+                padding-bottom: 2rem;
+                gap: 1.25rem;
+                scrollbar-width: none; /* Firefox */
+            }
+            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar {
+                display: none; /* Chrome/Safari */
+            }
+            .services-grid > *, .projects-grid > *, .certs-grid > * {
+                flex: 0 0 85%;
+                scroll-snap-align: center;
+            }
+
+            .skills-container { grid-template-columns: 1fr; padding: 2rem; }
+            
+            .section-header h2 { font-size: 2.2rem; }
+            section { padding: 6rem 0; }
         }
         
         /* Mobile Menu (Simplified) */
@@ -324,105 +487,376 @@
     <div class="ambient-glow-2"></div>
 
     <nav>
-        <a href="../index.html" class="logo">Reb.Dev</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="../index.html#services">Services</a></li>
-            <li><a href="../index.html#work">Work</a></li>
-            <li><a href="../index.html#expertise">Expertise</a></li>
-            <li><a href="../index.html#about">About</a></li>
-            <li><a href="../index.html#certifications">Certificates</a></li>
+        <a href="#" class="logo">Reb.Dev</a>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#expertise">Expertise</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#certifications">Certificates</a></li>
         </ul>
-        <a href="contact.html" class="nav-cta">Let's Talk</a>
+        <a href="contacts/contact.html" class="nav-cta">Let's Talk</a>
         <div class="hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></div>
     </nav>
     
     <div class="mobile-menu" id="mobileMenu">
         <div class="close-menu" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></div>
-        <a href="../index.html#services" onclick="toggleMobileMenu()">Services</a>
-        <a href="../index.html#work" onclick="toggleMobileMenu()">Work</a>
-        <a href="../index.html#expertise" onclick="toggleMobileMenu()">Expertise</a>
-        <a href="../index.html#about" onclick="toggleMobileMenu()">About</a>
-        <a href="../index.html#certifications" onclick="toggleMobileMenu()">Certificates</a>
-        <a href="contact.html" onclick="toggleMobileMenu()" style="color: var(--accent)">Let's Talk</a>
+        <a href="#services" onclick="toggleMobileMenu()">Services</a>
+        <a href="#work" onclick="toggleMobileMenu()">Work</a>
+        <a href="#expertise" onclick="toggleMobileMenu()">Expertise</a>
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+        <a href="#certifications" onclick="toggleMobileMenu()">Certificates</a>
+        <a href="contacts/contact.html" onclick="toggleMobileMenu()" style="color: var(--accent)">Let's Talk</a>
     </div>
 
-    <main class="main-content">
-        <div class="container">
-            <section class="hero reveal">
-                <h1 class="text-gradient">Let's Build Something.</h1>
-                <p>Feel free to reach out for collaborations, project inquiries, or just to say hello. I'm always open to discussing new opportunities.</p>
-            </section>
-
-            <div class="contact-grid">
-                
-                <div class="glass-card reveal delay-1">
-                    <h2>Contact Info</h2>
-                    <ul class="contact-details">
-                        <li>
-                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="contact-text">
-                                <h3>Email</h3>
-                                <a href="mailto:Rebienaldev@gmail.com">Rebienaldev@gmail.com</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="contact-icon"><i class="fab fa-github"></i></div>
-                            <div class="contact-text">
-                                <h3>GitHub</h3>
-                                <a href="https://github.com/rebienalddev" target="_blank">rebienalddev</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="contact-icon"><i class="fab fa-discord"></i></div>
-                            <div class="contact-text">
-                                <h3>Discord</h3>
-                                <p>rebkhei</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
-                            <div class="contact-text">
-                                <h3>Phone</h3>
-                                <a href="tel:+639628489009">+63 962 848 9009</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="glass-card reveal delay-2">
-                    <h2>Send a Message</h2>
-                    <div id="formStatus" style="margin-bottom: 1rem;"></div>
-                    <form id="contactForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" id="name" name="name" required placeholder="John Doe">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input type="email" id="email" name="email" required placeholder="john@example.com">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" required placeholder="Tell me about your project or idea..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
-                    </form>
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text reveal">
+                <div class="hero-badge"><i class="fas fa-code"></i> Software Developer</div>
+                <h1 class="text-gradient">Rebienald Khei Carpio</h1>
+                <p>I build scalable, high-performance web applications, SaaS platforms, and intelligent digital solutions for forward-thinking brands.</p>
+                <div class="btn-group">
+                    <a href="#work" class="btn-primary">View Projects</a>
+                    <a href="contacts/contact.html" class="btn-secondary">Let's Talk</a>
                 </div>
             </div>
-
-            <div class="back-home reveal delay-2">
-                <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <div class="hero-visual reveal">
+                <div class="hero-glow"></div>
+                <div class="hero-img-container">
+                    <img src="ewan.png" alt="Rebienald Khei Carpio" class="hero-img">
+                </div>
             </div>
         </div>
-    </main>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gradient">Premium Solutions</h2>
+                <p>Specialized in building robust, user-centric software that drives business value and sets new industry standards.</p>
+            </div>
+            <div class="services-grid">
+                <div class="glass-card reveal">
+                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Web Applications</h3>
+                    <p>Custom, scalable web apps built with modern frameworks. Focus on performance, security, and exceptional UX tailored to high-end brands.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Native Mobile</h3>
+                    <p>High-performance Android applications emphasizing clean UI/UX, robust architecture, and seamless cross-device functionality.</p>
+                </div>
+                <div class="glass-card reveal">
+                    <div class="service-icon"><i class="fas fa-server"></i></div>
+                    <h3>Cloud & DevOps</h3>
+                    <p>End-to-end deployment, CI/CD pipelines, and cloud hosting architecture. Ensuring your applications remain fast, secure, and always online.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gradient">Selected Work</h2>
+                <p>A showcase of recent SaaS products, web platforms, and engineering challenges solved through elegant code.</p>
+            </div>
+            
+            <div class="projects-grid">
+                <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="glass-card project-card reveal">
+                    <div class="project-meta">
+                        <div class="project-tech">
+                            <span class="tech-chip">PHP</span>
+                            <span class="tech-chip">JS</span>
+                            <span class="tech-chip">AI API</span>
+                        </div>
+                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>InfoWhiz</h3>
+                        <p>An educational gaming system utilizing AI integrations to provide tailored assistance for students studying computer programming.</p>
+                    </div>
+                </a>
+
+                <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="glass-card project-card reveal">
+                    <div class="project-meta">
+                        <div class="project-tech">
+                            <span class="tech-chip">HTML5</span>
+                            <span class="tech-chip">CSS3</span>
+                            <span class="tech-chip">Vanilla JS</span>
+                        </div>
+                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Cup Of Story</h3>
+                        <p>A sophisticated digital storefront demonstrating modern frontend paradigms, elegant interactions, and optimized asset delivery.</p>
+                    </div>
+                </a>
+
+                <a href="https://rebienalddev.github.io/RebifyApp/index.html" target="_blank" class="glass-card project-card reveal">
+                    <div class="project-meta">
+                        <div class="project-tech">
+                            <span class="tech-chip">Node.js</span>
+                            <span class="tech-chip">Frontend UI</span>
+                        </div>
+                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Rebify</h3>
+                        <p>An AI-integrated assessment application designed to explore the boundaries of prompt-driven education and dynamic content generation.</p>
+                    </div>
+                </a>
+
+                <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="glass-card project-card reveal">
+                    <div class="project-meta">
+                        <div class="project-tech">
+                            <span class="tech-chip">PHP</span>
+                            <span class="tech-chip">MySQL</span>
+                            <span class="tech-chip">Auth</span>
+                        </div>
+                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Club Hub</h3>
+                        <p>A comprehensive administrative solution for managing organizational members, secure internal data, and broad announcements.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gradient">Technical Expertise</h2>
+                <p>A curated stack of modern technologies chosen for enterprise-grade scalability and refined developer experience.</p>
+            </div>
+            
+            <div class="glass-card skills-container reveal">
+                <div class="skill-group">
+                    <h4>Core Languages</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">JavaScript / ES6+</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">PHP 8+</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">HTML5 / CSS3</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Frontend & UI</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Responsive Architecture</span>
+                        <span class="skill-tag">Bootstrap</span>
+                        <span class="skill-tag">TailwindCSS</span>
+                        <span class="skill-tag">Figma / UI Design</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Mobile Development</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Android Studio</span>
+                        <span class="skill-tag">Android SDK</span>
+                        <span class="skill-tag">XML Layouts</span>
+                        <span class="skill-tag">Mobile UI/UX</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Infrastructure</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git / GitHub</span>
+                        <span class="skill-tag">CI/CD Pipelines</span>
+                        <span class="skill-tag">Ubuntu / Linux Server</span>
+                        <span class="skill-tag">Netlify / Vercel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem;">
+                
+                <div class="reveal">
+                    <h2 class="text-gradient" style="font-size: 2rem; margin-bottom: 2.5rem;">Education Path</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">2024 – PRESENT</span>
+                            <h3 class="timeline-title">STI College</h3>
+                            <p class="timeline-desc">TVL Track - ICT. Consistent Honor Student. Intensive focus on enterprise Web & Mobile Application Architecture.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">2020 – 2024</span>
+                            <h3 class="timeline-title">Binakayan National High School</h3>
+                            <p class="timeline-desc">Consistent Honor Student. Specialized in Computer System Servicing and hardware infrastructure.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <h2 class="text-gradient" style="font-size: 2rem; margin-bottom: 2.5rem;">Key Engagements</h2>
+                    <div class="timeline">
+
+
+
+                    <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">MAY 22, 2026</span>
+                            <h3 class="timeline-title">Best in System Development</h3>
+                            <p class="timeline-desc">Recognized as Best in System Development among all Senior High School students at STI College Bacoor for developing an AI-integrated educational gaming platform.</p>
+                        </div>
+
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">OCT 20, 2025</span>
+                            <h3 class="timeline-title">Resource Speaker: TechTalk Ep. 2</h3>
+                            <p class="timeline-desc">Directed intensive technical training on Advanced Web Responsiveness and scalable deployment pipelines.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">NOV 25, 2025</span>
+                            <h3 class="timeline-title">Resource Speaker: TechTalk Ep. 1</h3>
+                            <p class="timeline-desc">Delivered comprehensive seminars on HTML/CSS fundamentals, semantic structuring, and modern rendering standards.</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">April 24, 2025</span>
+                            <h3 class="timeline-title">Web Development & Design Competition</h3>
+                            <p class="timeline-desc">Placed 3rd in a 7-hour Web Development & Design Competition, competing against college-level participants..</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">February 28, 2025</span>
+                            <h3 class="timeline-title">CodeFest - Tagisan ng Talino </h3>
+                            <p class="timeline-desc">Competed against college-level participants in an intensive 8-hour Mobile Application Development Competition.</p>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="text-gradient">Professional Certifications</h2>
+                <p>Continuous learning and validated expertise across modern development paradigms.</p>
+            </div>
+            
+            <div class="certs-grid">
+                <div class="glass-card cert-card reveal">
+                    <img src="images/Responsive Web Design.jpg" alt="Responsive Web Design" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Responsive Web Design</h4>
+                        <p>FreeCodeCamp</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card cert-card reveal">
+                    <img src="images/Data.png" alt="JS Algorithms" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>JS Algorithms & Data Structures</h4>
+                        <p>FreeCodeCamp</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/javaewan.jpg" alt="Java Certificate" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>JAVA Certificate</h4>
+                        <p>HackerRank</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/lega.png" alt="Legacy Responsive Web" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Legacy Responsive Web Design</h4>
+                        <p>FreeCodeCamp</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/Web Development.png" alt="Web Development" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Web Development</h4>
+                        <p>Simplilearn</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/Java Certificate_.jpg" alt="Java Programming" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Java Programming</h4>
+                        <p>Simplilearn</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/CSS Certificate_.png" alt="Introduction to CSS" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Introduction to CSS</h4>
+                        <p>Simplilearn</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/CSS Front-End.jpg" alt="CSS Front End" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Front End Dev - CSS</h4>
+                        <p>Great Learning</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/HTML Front-End.png" alt="HTML Front End" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Front End Dev - HTML</h4>
+                        <p>Great Learning</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/techtalk2.jpg" alt="TechTalk Ep 2" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>TechTalk Ep. 2 Speaker</h4>
+                        <p>STI College</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <img src="images/TechTalk.png" alt="TechTalk Ep 1" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>TechTalk Ep. 1 Speaker</h4>
+                        <p>STI College</p>
+                    </div>
+                </div>
+            
+                <div class="glass-card cert-card reveal">
+                    <img src="images/webdesign1.jpg" alt="Web Design Competition" class="cert-img" onerror="this.style.display='none'">
+                    <div class="cert-info">
+                        <h4>Web Design Competition</h4>
+                        <p>STI College</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="contact-section reveal">
+        <div class="container">
+            <a href="contacts/contact.html" class="contact-cta">Let's build<br><span class="text-gradient-accent">something exceptional.</span></a>
+            
+            <div class="social-links">
+                <a href="contacts/contact.html" class="social-link"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/rebienalddev" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="http://linkedin.com/in/rebienald-khei-carpio-68188339b/?originalSubdomain=ph" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -431,22 +865,35 @@
     </footer>
 
     <script>
-        // Security logic
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-        }
+        // Smooth Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
 
-        // Mobile Menu logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Toggle
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('active');
         }
-    </script>
-    <script src="contacts.js"></script>
 
+        // Basic Security
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) || (e.ctrlKey && e.key === "U")) {
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
