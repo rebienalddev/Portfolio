@@ -383,7 +383,7 @@
             display: flex; flex-direction: column; text-decoration: none; 
             padding: 2.5rem; 
         }
-        .project-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .project-meta { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 2.5rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .tech-chip { 
             font-size: 0.75rem; padding: 0.35rem 0.9rem; border-radius: 100px;
@@ -509,13 +509,13 @@
             .hero h1 { font-size: 2.5rem !important; line-height: 1.2; margin-bottom: 1rem; }
             .hero p { font-size: 1rem; margin-bottom: 2rem; }
             .btn-group { flex-direction: row; width: 100%; gap: 0.75rem; }
-            .btn-group .btn-primary, .btn-group .btn-secondary { flex: 1; text-align: center; display: inline-flex; justify-content: center; align-items: center; }
+            .btn-group .btn-primary, .btn-group .btn-secondary { flex: 1; text-align: center; display: inline-flex; justify-content: center; align-items: center; padding: 0.5rem 1.25rem; }
             .hero-visual { display: none; }
             
             .section-header { text-align: center; margin-bottom: 2.5rem; }
             .section-header p { margin: 0 auto; }
 
-            .services-grid, .projects-grid, .certs-grid, .skills-container { 
+            .services-grid, .projects-grid, .certs-grid { 
                 display: flex;
                 overflow-x: auto;
                 overflow-y: hidden;
@@ -527,16 +527,45 @@
                 scrollbar-width: none; /* Firefox */
                 overscroll-behavior-x: contain;
             }
-            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar, .skills-container::-webkit-scrollbar {
+            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar {
                 display: none; /* Chrome/Safari/Edge */
             }
             .glass-card {
                 min-width: 0;
                 width: 100%;
             }
-            .services-grid > *, .projects-grid > *, .certs-grid > *, .skills-container > * {
+            .services-grid > *, .projects-grid > *, .certs-grid > * {
                 flex: 0 0 85%;
                 width: 85%;
+            }
+
+            .skills-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem 1.25rem;
+                margin: 0;
+                padding: 0;
+            }
+            .skills-container .skill-group {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+            .skills-container .skill-group h4 {
+                font-size: 1rem;
+                margin-bottom: 0.6rem;
+                color: var(--text-primary);
+            }
+            .skills-container .skill-tags {
+                gap: 0.5rem;
+            }
+            .skills-container .skill-tag {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.75rem;
             }
 
             .glass-card { padding: 1.75rem; }
@@ -717,11 +746,6 @@
             <div class="projects-grid">
                 <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="glass-card project-card reveal">
                     <div class="project-meta">
-                        <div class="project-tech">
-                            <span class="tech-chip">PHP</span>
-                            <span class="tech-chip">JS</span>
-                            <span class="tech-chip">AI API</span>
-                        </div>
                         <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="project-content">
@@ -733,10 +757,6 @@
                                     
     <a href="http://www.printportal.hstn.me/?i=1" target="_blank" class="glass-card project-card reveal">
                     <div class="project-meta">
-                        <div class="project-tech">
-                            <span class="tech-chip">PHP</span>
-                            <span class="tech-chip">JS</span>
-                        </div>
                         <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="project-content">
@@ -747,10 +767,6 @@
 
                 <a href="https://rebienalddev.github.io/TechnoPhotobooth/" target="_blank" class="glass-card project-card reveal">
                     <div class="project-meta">
-                        <div class="project-tech">
-                            <span class="tech-chip">PHP</span>
-                            <span class="tech-chip">JS</span>
-                        </div>
                         <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="project-content">
@@ -761,11 +777,6 @@
 
                 <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="glass-card project-card reveal">
                     <div class="project-meta">
-                        <div class="project-tech">
-                            <span class="tech-chip">HTML5</span>
-                            <span class="tech-chip">CSS3</span>
-                            <span class="tech-chip">Vanilla JS</span>
-                        </div>
                         <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="project-content">
@@ -776,10 +787,6 @@
 
                 <a href="https://rebienalddev.github.io/RebifyApp/index.html" target="_blank" class="glass-card project-card reveal">
                     <div class="project-meta">
-                        <div class="project-tech">
-                            <span class="tech-chip">Node.js</span>
-                            <span class="tech-chip">Frontend UI</span>
-                        </div>
                         <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="project-content">
@@ -790,11 +797,6 @@
 
                 <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="glass-card project-card reveal">
                     <div class="project-meta">
-                        <div class="project-tech">
-                            <span class="tech-chip">PHP</span>
-                            <span class="tech-chip">MySQL</span>
-                            <span class="tech-chip">Auth</span>
-                        </div>
                         <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="project-content">
@@ -1083,7 +1085,7 @@
     <script>
         // Prevent horizontal scroll containers from wiggling when scrolling vertically on mobile
         document.addEventListener('DOMContentLoaded', () => {
-            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .skills-container, .timeline-carousel');
+            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .timeline-carousel');
             
             scrollContainers.forEach(container => {
                 let startX = 0;
