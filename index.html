@@ -508,8 +508,9 @@
             .hero { padding-top: 8rem; min-height: auto; padding-bottom: 4rem; }
             .hero h1 { font-size: 2.5rem !important; line-height: 1.2; margin-bottom: 1rem; }
             .hero p { font-size: 1rem; margin-bottom: 2rem; }
-            .btn-group { flex-direction: column; width: 100%; gap: 1rem; }
-            .btn-group .btn-primary, .btn-group .btn-secondary { width: 100%; text-align: center; display: inline-flex; justify-content: center; }
+            .btn-group { flex-direction: row; width: 100%; gap: 0.75rem; }
+            .btn-group .btn-primary, .btn-group .btn-secondary { flex: 1; text-align: center; display: inline-flex; justify-content: center; align-items: center; }
+            .hero-visual { display: none; }
             
             .section-header { text-align: center; margin-bottom: 2.5rem; }
             .section-header p { margin: 0 auto; }
@@ -567,7 +568,7 @@
                 gap: 3rem !important;
             }
 
-            .timeline {
+            .timeline-carousel {
                 display: flex;
                 overflow-x: auto;
                 overflow-y: hidden;
@@ -581,10 +582,10 @@
                 scrollbar-width: none; /* Firefox */
                 overscroll-behavior-x: contain;
             }
-            .timeline::-webkit-scrollbar {
+            .timeline-carousel::-webkit-scrollbar {
                 display: none; /* Chrome/Safari/Edge */
             }
-            .timeline-item {
+            .timeline-carousel .timeline-item {
                 flex: 0 0 85%;
                 width: 85%;
                 margin-bottom: 0;
@@ -598,9 +599,13 @@
                 padding: 1.5rem;
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             }
-            .timeline-dot {
+            .timeline-carousel .timeline-dot {
                 display: none;
             }
+
+            .timeline { padding-left: 1.5rem; margin-left: 0.5rem; border-left: 1px solid rgba(255,255,255,0.1); }
+            .timeline-item { position: relative; margin-bottom: 2.5rem; background: none; border: none; padding: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+            .timeline-dot { display: block; left: -1.85rem; width: 12px; height: 12px; top: 0.35rem; }
             
             .contact-cta { font-size: clamp(2rem, 8vw, 2.5rem) !important; margin-bottom: 2rem; }
             .contact-section { padding: 6rem 0 3rem; margin-top: 2rem; }
@@ -903,7 +908,7 @@
 
                 <div class="reveal">
                     <h2 class="text-gradient" style="font-size: 2rem; margin-bottom: 2.5rem;">Key Engagements</h2>
-                    <div class="timeline">
+                    <div class="timeline timeline-carousel">
 
 
                     <div class="timeline-item">
@@ -1078,7 +1083,7 @@
     <script>
         // Prevent horizontal scroll containers from wiggling when scrolling vertically on mobile
         document.addEventListener('DOMContentLoaded', () => {
-            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .skills-container, .timeline');
+            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .skills-container, .timeline-carousel');
             
             scrollContainers.forEach(container => {
                 let startX = 0;
