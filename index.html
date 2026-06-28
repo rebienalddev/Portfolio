@@ -1024,6 +1024,51 @@
     </footer>
 
     <script>
+        // Prevent horizontal scroll containers from wiggling when scrolling vertically on mobile
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .skills-container');
+            
+            scrollContainers.forEach(container => {
+                let startX = 0;
+                let startY = 0;
+                let isVertical = false;
+                let isFirstMove = true;
+
+                container.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    isVertical = false;
+                    isFirstMove = true;
+                }, { passive: true });
+
+                container.addEventListener('touchmove', (e) => {
+                    if (isVertical) {
+                        container.style.overflowX = 'hidden';
+                        return;
+                    }
+
+                    if (isFirstMove) {
+                        isFirstMove = false;
+                        const diffX = Math.abs(e.touches[0].clientX - startX);
+                        const diffY = Math.abs(e.touches[0].clientY - startY);
+
+                        if (diffY > diffX && diffY > 4) {
+                            isVertical = true;
+                            container.style.overflowX = 'hidden';
+                        }
+                    }
+                }, { passive: true });
+
+                container.addEventListener('touchend', () => {
+                    container.style.overflowX = 'auto';
+                }, { passive: true });
+                
+                container.addEventListener('touchcancel', () => {
+                    container.style.overflowX = 'auto';
+                }, { passive: true });
+            });
+        });
+
         // Smooth Scroll Reveal Animation
         const observerOptions = {
             threshold: 0.1,
