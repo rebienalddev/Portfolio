@@ -566,8 +566,39 @@
                 gap: 3rem !important;
             }
 
-            .timeline { padding-left: 1.5rem; margin-left: 0.5rem; }
-            .timeline-dot { left: -1.85rem; width: 12px; height: 12px; top: 0.35rem; }
+            .timeline {
+                display: flex;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                gap: 1.25rem;
+                border-left: none;
+                margin-left: 0;
+                padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+                margin: 0 -1.5rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+                overscroll-behavior-x: contain;
+            }
+            .timeline::-webkit-scrollbar {
+                display: none; /* Chrome/Safari/Edge */
+            }
+            .timeline-item {
+                flex: 0 0 85%;
+                width: 85%;
+                margin-bottom: 0;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.07);
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+                border-left: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 20px;
+                padding: 1.5rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            }
+            .timeline-dot {
+                display: none;
+            }
             
             .contact-cta { font-size: clamp(2rem, 8vw, 2.5rem) !important; margin-bottom: 2rem; }
             .contact-section { padding: 6rem 0 3rem; margin-top: 2rem; }
@@ -1026,7 +1057,7 @@
     <script>
         // Prevent horizontal scroll containers from wiggling when scrolling vertically on mobile
         document.addEventListener('DOMContentLoaded', () => {
-            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .skills-container');
+            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .skills-container, .timeline');
             
             scrollContainers.forEach(container => {
                 let startX = 0;
