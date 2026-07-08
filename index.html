@@ -665,6 +665,10 @@
                 border-top: 1px solid rgba(0, 0, 0, 0.08);
                 border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             }
+            .skills-container .reveal {
+                opacity: 1;
+                transform: none;
+            }
             .skills-container .skill-group {
                 display: grid;
                 grid-template-columns: 100px 1fr;
@@ -680,6 +684,7 @@
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
                 border-radius: 0 !important;
+                transition: none !important;
             }
             .skills-container .skill-group:last-child {
                 border-bottom: none !important;
@@ -705,6 +710,7 @@
                 border: 1px solid rgba(0, 0, 0, 0.08);
                 border-radius: 6px;
                 color: var(--text-secondary);
+                transition: none;
             }
 
             .glass-card { padding: 1.75rem; }
