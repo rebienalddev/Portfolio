@@ -46,6 +46,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
     <style>
         :root {
@@ -335,21 +336,136 @@
         .project-content p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.3; }
 
         /* Skills */
-        .skills-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-        .skill-group h4 { color: var(--text-primary); font-size: 1.1rem; margin-bottom: 1.5rem; font-weight: 500; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-        .skill-tag {
-            padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem;
+        /* Skills */
+        .skills-filter-nav {
+            display: none; /* Hide filter nav on PC */
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
             background: #FFFFFF;
             border: 1px solid var(--glass-border);
-            color: var(--text-secondary); transition: all 0.2s ease; font-weight: 500;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            padding: 0.6rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
         }
-        .skill-tag:hover { 
-            border-color: var(--text-primary); color: var(--text-primary); 
-            background: #FAFAFA;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        .filter-btn:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+        .filter-btn.active {
+            background: var(--text-primary);
+            color: #FFFFFF;
+            border-color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .skills-categories-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            align-items: start;
+            width: 100%;
+        }
+        .skills-category-section {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .skills-category-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        .skills-category-title {
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 0;
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            width: 100%;
+        }
+        .skill-logo-item {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.5) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 0.4rem 0.8rem;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            height: auto;
+        }
+        .skill-logo-item:hover {
+            border-color: var(--brand-color) !important;
+            box-shadow: 0 4px 15px var(--brand-glow) !important;
+            transform: translateY(-2px) scale(1.03);
+            background: #FFFFFF;
+        }
+        .skill-icon-wrapper {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+            transition: all 0.3s ease;
+        }
+        .skill-icon-wrapper i {
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            filter: none;
+            opacity: 0.9;
+        }
+        .skill-logo-item:hover .skill-icon-wrapper i {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        .skill-icon-wrapper svg {
+            width: 16px;
+            height: 16px;
+            color: var(--brand-color) !important;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+        .skill-logo-item:hover .skill-icon-wrapper svg {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        .skill-logo-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        .skill-logo-item:hover .skill-logo-name {
+            color: var(--text-primary);
         }
 
         /* Timeline */
@@ -431,7 +547,6 @@
             .btn-group { justify-content: center; }
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .projects-grid { grid-template-columns: repeat(2, 1fr); }
-            .skills-container { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -493,79 +608,64 @@
                 width: 85%;
             }
 
-            .skills-container {
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-                margin: 0;
-                padding: 0;
-                border: none;
+            .skills-filter-nav {
+                display: flex !important;
+                gap: 0.5rem !important;
+                margin-bottom: 2rem !important;
+                justify-content: flex-start !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                padding-bottom: 0.5rem !important;
+                -webkit-overflow-scrolling: touch !important;
             }
-            .skills-container .reveal {
-                opacity: 1;
-                transform: none;
+            .skills-filter-nav::-webkit-scrollbar {
+                display: none;
             }
-            .skills-container .skill-group {
-                display: block !important;
-                padding: 0.5rem 0 !important;
-                border: none !important;
-                background: transparent !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
-                border-radius: 0 !important;
-                transition: none !important;
-                margin: 0 !important;
-                position: static !important;
-                overflow: visible !important;
+            .skills-categories-container {
+                grid-template-columns: 1fr !important;
+                gap: 0 !important;
             }
-            .skills-container .skill-group.glass-card {
-                background: transparent !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
-                border: none !important;
-                box-shadow: none !important;
-                padding: 0.5rem 0 !important;
-                border-radius: 0 !important;
-                position: static !important;
-                overflow: visible !important;
+            .skills-category-title {
+                display: none !important; /* Hide category headers on Mobile */
             }
-            .skills-container .glass-card {
-                all: unset !important;
-                display: block !important;
-                padding: 0.5rem 0 !important;
-                margin: 0 !important;
+            .skills-category-section {
+                display: none; /* Hide all sections by default on Mobile, toggled by JS */
+                margin-bottom: 0 !important;
+                padding: 1.25rem !important;
             }
-            .skills-container .skill-group::before,
-            .skills-container .skill-group::after {
-                display: none !important;
+            .skills-category-section.active-mobile {
+                display: flex !important; /* Preserve flex column layout */
             }
-            .skills-container .skill-group h4 {
-                font-size: 0.75rem;
-                font-weight: 600;
-                color: var(--text-primary);
-                margin: 0 0 0.5rem 0;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+            .skills-grid {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 0.6rem !important;
+                max-width: 100% !important;
             }
-            .skills-container .skill-tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.3rem;
-                will-change: auto;
+            .skill-logo-item {
+                padding: 0.4rem 0.75rem !important;
+                gap: 0.5rem !important;
+                height: auto !important;
+                border-radius: 8px !important;
             }
-            .skills-container .skill-tag {
-                font-size: 0.65rem;
-                padding: 0.2rem 0.4rem;
-                background: rgba(0, 0, 0, 0.02);
-                border: none;
-                border-radius: 4px;
-                color: var(--text-secondary);
-                transition: none;
-                will-change: auto;
+            .skill-icon-wrapper {
+                width: 18px !important;
+                height: 18px !important;
             }
-            .skills-container {
-                will-change: auto;
+            .skill-icon-wrapper i {
+                font-size: 1.15rem !important;
+            }
+            .skill-icon-wrapper svg {
+                width: 15px !important;
+                height: 15px !important;
+            }
+            .skill-logo-name {
+                font-size: 0.75rem !important;
+            }
+            .filter-btn {
+                padding: 0.4rem 0.9rem !important;
+                font-size: 0.75rem !important;
+                flex-shrink: 0 !important;
             }
 
             .glass-card { padding: 1.75rem; }
@@ -802,76 +902,298 @@
                 <h2 class="text-gradient">Technical Expertise</h2>
             </div>
             
-            <div class="skills-container">
-                <div class="glass-card skill-group reveal">
-                    <h4>Front-End</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">HTML</span>
-                        <span class="skill-tag">CSS</span>
-                        <span class="skill-tag">Tailwind</span>
-                        <span class="skill-tag">JavaScript</span>
+            <div class="skills-filter-nav reveal">
+                <button class="filter-btn active" data-filter="frontend">Front-End</button>
+                <button class="filter-btn" data-filter="backend">Back-End</button>
+                <button class="filter-btn" data-filter="database">Databases</button>
+                <button class="filter-btn" data-filter="framework">Frameworks</button>
+                <button class="filter-btn" data-filter="ide-os">IDEs & OS</button>
+                <button class="filter-btn" data-filter="tools">Tools & Others</button>
+            </div>
+            
+            <div class="skills-categories-container reveal">
+                <!-- Front-End Section -->
+                <div class="skills-category-section" data-category="frontend">
+                    <h3 class="skills-category-title">Front-End</h3>
+                    <div class="skills-grid">
+                        <!-- HTML5 -->
+                        <div class="skill-logo-item" style="--brand-color: #E34F26; --brand-glow: rgba(227, 79, 38, 0.15);" title="HTML5">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-html5-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">HTML5</span>
+                        </div>
+                        <!-- CSS3 -->
+                        <div class="skill-logo-item" style="--brand-color: #1572B6; --brand-glow: rgba(21, 114, 182, 0.15);" title="CSS3">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-css3-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">CSS3</span>
+                        </div>
+                        <!-- Tailwind -->
+                        <div class="skill-logo-item" style="--brand-color: #06B6D4; --brand-glow: rgba(6, 182, 212, 0.15);" title="Tailwind CSS">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-tailwindcss-original colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Tailwind</span>
+                        </div>
+                        <!-- JavaScript -->
+                        <div class="skill-logo-item" style="--brand-color: #F7DF1E; --brand-glow: rgba(247, 223, 30, 0.15);" title="JavaScript">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-javascript-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">JavaScript</span>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>Back-end</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PHP</span>
-                        <span class="skill-tag">C#</span>
-                        <span class="skill-tag">Java</span>
+
+                <!-- Back-End Section -->
+                <div class="skills-category-section" data-category="backend">
+                    <h3 class="skills-category-title">Back-End</h3>
+                    <div class="skills-grid">
+                        <!-- PHP -->
+                        <div class="skill-logo-item" style="--brand-color: #777BB4; --brand-glow: rgba(119, 123, 180, 0.15);" title="PHP">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-php-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">PHP</span>
+                        </div>
+                        <!-- C# -->
+                        <div class="skill-logo-item" style="--brand-color: #9B499A; --brand-glow: rgba(155, 73, 154, 0.15);" title="C#">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-csharp-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">C#</span>
+                        </div>
+                        <!-- Java -->
+                        <div class="skill-logo-item" style="--brand-color: #007396; --brand-glow: rgba(0, 115, 150, 0.15);" title="Java">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-java-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Java</span>
+                        </div>
+                        <!-- Node.js -->
+                        <div class="skill-logo-item" style="--brand-color: #339933; --brand-glow: rgba(51, 153, 51, 0.15);" title="Node.js">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-nodejs-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Node.js</span>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>Database</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">MongoDB</span>
+
+                <!-- Databases Section -->
+                <div class="skills-category-section" data-category="database">
+                    <h3 class="skills-category-title">Databases</h3>
+                    <div class="skills-grid">
+                        <!-- MySQL -->
+                        <div class="skill-logo-item" style="--brand-color: #4479A1; --brand-glow: rgba(68, 121, 161, 0.15);" title="MySQL">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-mysql-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">MySQL</span>
+                        </div>
+                        <!-- MongoDB -->
+                        <div class="skill-logo-item" style="--brand-color: #47A248; --brand-glow: rgba(71, 162, 72, 0.15);" title="MongoDB">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-mongodb-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">MongoDB</span>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>Framework</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Bootstrap</span>
-                        <span class="skill-tag">.NET Maui</span>
-                        <span class="skill-tag">ASP.NET</span>
+
+                <!-- Frameworks Section -->
+                <div class="skills-category-section" data-category="framework">
+                    <h3 class="skills-category-title">Frameworks</h3>
+                    <div class="skills-grid">
+                        <!-- Bootstrap -->
+                        <div class="skill-logo-item" style="--brand-color: #7952B3; --brand-glow: rgba(121, 82, 179, 0.15);" title="Bootstrap">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-bootstrap-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Bootstrap</span>
+                        </div>
+                        <!-- .NET Maui -->
+                        <div class="skill-logo-item" style="--brand-color: #512BD4; --brand-glow: rgba(81, 43, 212, 0.15);" title=".NET MAUI">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-dotnetcore-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">.NET MAUI</span>
+                        </div>
+                        <!-- ASP.NET -->
+                        <div class="skill-logo-item" style="--brand-color: #512BD4; --brand-glow: rgba(81, 43, 212, 0.15);" title="ASP.NET">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-dotnetcore-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">ASP.NET</span>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>IDE</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">VS</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">Cursor</span>
-                        <span class="skill-tag">Android Studio</span>
+
+                <!-- IDEs & OS Section -->
+                <div class="skills-category-section" data-category="ide-os">
+                    <h3 class="skills-category-title">IDEs & OS</h3>
+                    <div class="skills-grid">
+                        <!-- VS -->
+                        <div class="skill-logo-item" style="--brand-color: #5C2D91; --brand-glow: rgba(92, 45, 145, 0.15);" title="Visual Studio">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-visualstudio-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">VS</span>
+                        </div>
+                        <!-- VS Code -->
+                        <div class="skill-logo-item" style="--brand-color: #007ACC; --brand-glow: rgba(0, 122, 204, 0.15);" title="VS Code">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-vscode-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">VS Code</span>
+                        </div>
+                        <!-- Cursor -->
+                        <div class="skill-logo-item" style="--brand-color: #1A1A1A; --brand-glow: rgba(26, 26, 26, 0.15);" title="Cursor Editor">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 130 144" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path fill="currentColor" d="M 60.66 0.00 L 64.42 0.00 C 82.67 10.62 100.99 21.12 119.25 31.72 C 121.24 33.01 123.54 34.18 124.72 36.34 C 125.34 39.17 125.06 42.10 125.11 44.98 C 125.07 63.63 125.08 82.28 125.11 100.93 C 125.07 102.84 125.14 104.79 124.73 106.68 C 123.53 108.54 121.50 109.62 119.68 110.77 C 104.03 119.72 88.45 128.80 72.85 137.83 C 69.53 139.68 66.36 141.91 62.74 143.17 C 60.51 142.85 58.57 141.57 56.62 140.54 C 40.81 131.22 24.82 122.22 9.00 112.92 C 5.85 111.16 2.79 109.23 0.00 106.93 L 0.00 36.10 C 3.83 32.32 8.81 30.12 13.34 27.33 C 29.10 18.19 44.82 8.98 60.66 0.00 M 5.62 38.04 C 8.28 40.64 11.88 41.83 14.96 43.80 C 30.60 53.06 46.50 61.89 62.05 71.30 C 62.86 75.82 62.50 80.43 62.55 85.00 C 62.57 100.64 62.51 116.29 62.54 131.93 C 62.54 133.69 62.72 135.44 63.01 137.17 C 64.18 135.60 65.29 133.98 66.24 132.27 C 83.07 103.08 99.93 73.92 116.65 44.67 C 117.89 42.62 118.84 40.42 119.57 38.14 C 113.41 37.65 107.23 37.91 101.06 37.87 C 73.71 37.85 46.35 37.85 18.99 37.87 C 14.54 38.02 10.07 37.53 5.62 38.04 Z" />
+                                    <path fill="var(--bg-base)" d="M 5.62 38.04 C 10.07 37.53 14.54 38.02 18.99 37.87 C 46.35 37.85 73.71 37.85 101.06 37.87 C 107.23 37.91 113.41 37.65 119.57 38.14 C 118.84 40.42 117.89 42.62 116.65 44.67 C 99.93 73.92 83.07 103.08 66.24 132.27 C 65.29 133.98 64.18 135.60 63.01 137.17 C 62.72 135.44 62.54 133.69 62.54 131.93 C 62.51 116.29 62.57 100.64 62.55 85.00 C 62.50 80.43 62.86 75.82 62.05 71.30 C 46.50 61.89 30.60 53.06 14.96 43.80 C 11.88 41.83 8.28 40.64 5.62 38.04 Z" />
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">Cursor</span>
+                        </div>
+                        <!-- Devin (former windsurf) -->
+                        <div class="skill-logo-item" style="--brand-color: #0d0d0d; --brand-glow: rgba(13, 13, 13, 0.15);" title="Devin (Windsurf)">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M2.033 9.867l2.554 1.483a.589.589 0 00.592 0l2.554-1.483.01-.008a.608.608 0 00.11-.084l.013-.015a.631.631 0 00.076-.1c.003-.005.008-.01.01-.016a.558.558 0 00.052-.125l.007-.028a.611.611 0 00.019-.14V7.868c0-.572.307-1.105.8-1.392a1.595 1.595 0 011.598 0l1.277.742a.54.54 0 00.129.053l.028.01c.044.01.088.015.133.016h.006l.013-.002a.587.587 0 00.27-.074l.011-.004 2.554-1.483a.596.596 0 00.297-.516V2.253a.595.595 0 00-.297-.516L12.293.257a.587.587 0 00-.591 0L9.148 1.737l-.01.01a.609.609 0 00-.109.083l-.014.015a.632.632 0 00-.076.1c-.003.005-.008.01-.01.016a.57.57 0 00-.052.124l-.007.028a.612.612 0 00-.018.14v1.483c0 .572-.307 1.105-.8 1.393a1.597 1.597 0 01-1.599 0l-1.276-.742a.603.603 0 00-.13-.053l-.028-.008a.658.658 0 00-.133-.018h-.02a.57.57 0 00-.269.074c-.003.002-.008.002-.012.005L2.033 5.872a.596.596 0 00-.297.515v2.966c0 .213.113.41.297.515z"/>
+                                    <path d="M15.943 10.607a1.596 1.596 0 011.599 0l1.276.74c.041.025.085.04.13.055l.028.008c.043.01.088.016.133.018h.005c.005 0 .01-.002.014-.003a.474.474 0 00.122-.016l.021-.005a.616.616 0 00.126-.052c.004-.002.009-.002.013-.005l2.554-1.482a.597.597 0 00.297-.516V6.383a.596.596 0 00-.297-.515l-2.552-1.483a.587.587 0 00-.592 0l-2.553 1.482-.011.008a.61.61 0 00-.108.084l-.014.016a.637.637 0 00-.076.1c-.003.005-.008.01-.01.016a.57.57 0 00-.052.124l-.007.029a.612.612 0 00-.018.14v1.482c0 .572-.307 1.105-.8 1.393a1.597 1.597 0 01-1.599 0l-1.276-.742a.584.584 0 00-.13-.053l-.028-.008a.62.62 0 00-.133-.018h-.02a.587.587 0 00-.269.074l-.012.004L9.15 10a.596.596 0 00-.296.516v2.966c0 .212.112.409.296.515l2.554 1.483s.008.002.012.005c.04.022.082.04.126.052l.02.004a.57.57 0 00.123.017l.014.002h.006c.054 0 .108-.01.16-.025a.587.587 0 00.13-.054l1.277-.741a1.597 1.597 0 012.398 1.392v1.482c0 .049.007.095.019.14l.007.028a.619.619 0 00.051.125c.004.006.008.01.01.016a.6.6 0 00.076.1l.014.015c.033.032.069.06.108.084.004.002.006.006.011.008l2.554 1.483a.59 5.9 0 00.593 0l2.554-1.483a.597 5.97 0 00.296-.516v-2.965a.595 5.95 0 00-.296-.516l-2.554-1.483s-.008-.002-.012-.005a.54.54 0 00-.126-.051c-.007-.003-.013-.003-.02-.005a.635.635 0 00-.125-.017h-.018a.557.557 0 00-.16.026.588.588 0 00-.13.053l-1.276.742a1.595 1.595 0 01-1.598 0 1.615 1.615 0 010-2.785l-.005-.001z"/>
+                                    <path d="M14.848 18.265l-2.554-1.482-.012-.005a.526.526 0 00-.126-.052c-.007-.002-.014-.002-.02-.005a.64.64 0 00-.124-.017h-.02a.56.56 0 00-.16.026.588.588 0 00-.13.053l-1.276.742a1.594 1.594 0 01-1.598 0c-.493-.286-.8-.82-.8-1.393V14.65a.563.563 0 00-.018-.14l-.008-.028a.604.604 0 00-.051-.124l-.01-.017a.603.603 0 00-.076-.1l-.014-.015a.596.596 0 00-.109-.084c-.003-.002-.005-.006-.01-.008L5.178 12.65a.587.587 0 00-.591 0l-2.554 1.483a.596.596 0 00-.297.516v2.965c0 .213.113.41.297.516l2.554 1.483.012.004a.618.618 0 00.267.074l.016.002h.007a.55.55 0 00.16-.026.584.584 0 00.129-.053l1.277-.742a1.597 1.597 0 012.398 1.393v1.482c0 .05.007.095.019.14l.007.028c.013.044.03.085.051.125l.01.016c.022.036.047.07.076.1l.014.015c.032.032.069.06.109.084l.01.008 2.554 1.483a.587.587 0 00.593 0l2.554-1.483a.596.596 0 00.296-.515v-2.966a.596.596 0 00-.296-.516h-.002z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">Devin</span>
+                        </div>
+                        <!-- Android Studio -->
+                        <div class="skill-logo-item" style="--brand-color: #3DDC84; --brand-glow: rgba(61, 220, 132, 0.15);" title="Android Studio">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-androidstudio-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Android Studio</span>
+                        </div>
+                        <!-- Ubuntu -->
+                        <div class="skill-logo-item" style="--brand-color: #E95420; --brand-glow: rgba(233, 84, 32, 0.15);" title="Ubuntu">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-ubuntu-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Ubuntu</span>
+                        </div>
+                        <!-- Windows 11 -->
+                        <div class="skill-logo-item" style="--brand-color: #0078D4; --brand-glow: rgba(0, 120, 212, 0.15);" title="Windows 11">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-windows8-original colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Windows 11</span>
+                        </div>
+                        <!-- Zorin OS -->
+                        <div class="skill-logo-item" style="--brand-color: #15A6F0; --brand-glow: rgba(21, 166, 240, 0.15);" title="Zorin OS">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M4 18.944L5.995 22.4h12.01L20 18.944H4zM24 12l-2.013 3.488H9.216l12.771-6.976L24 12zM0 12l2.013-3.488h12.771L2.013 15.488 0 12zm4-6.944L5.995 1.6h12.01L20 5.056H4z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">Zorin OS</span>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>OS</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Ubuntu</span>
-                        <span class="skill-tag">Windows 11</span>
-                    </div>
-                </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>Tools</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Github</span>
-                        <span class="skill-tag">Vercel</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Netlify</span>
-                        <span class="skill-tag">Render</span>
-                    </div>
-                </div>
-                <div class="glass-card skill-group reveal">
-                    <h4>Others</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">XAMPP</span>
-                        <span class="skill-tag">XML</span>
-                        <span class="skill-tag">XAML</span>
+
+                <!-- Tools & Others Section -->
+                <div class="skills-category-section" data-category="tools">
+                    <h3 class="skills-category-title">Tools & Others</h3>
+                    <div class="skills-grid">
+                        <!-- Git -->
+                        <div class="skill-logo-item" style="--brand-color: #F05032; --brand-glow: rgba(240, 80, 50, 0.15);" title="Git">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-git-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Git</span>
+                        </div>
+                        <!-- GitHub -->
+                        <div class="skill-logo-item" style="--brand-color: #181717; --brand-glow: rgba(24, 23, 23, 0.15);" title="GitHub">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-github-original colored"></i>
+                            </div>
+                            <span class="skill-logo-name">GitHub</span>
+                        </div>
+                        <!-- Vercel -->
+                        <div class="skill-logo-item" style="--brand-color: #000000; --brand-glow: rgba(0, 0, 0, 0.12);" title="Vercel">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M24 22.525H0L12 1.475L24 22.525Z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">Vercel</span>
+                        </div>
+                        <!-- AWS -->
+                        <div class="skill-logo-item" style="--brand-color: #FF9900; --brand-glow: rgba(255, 153, 0, 0.15);" title="AWS">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">AWS</span>
+                        </div>
+                        <!-- Netlify -->
+                        <div class="skill-logo-item" style="--brand-color: #00C7B7; --brand-glow: rgba(0, 199, 183, 0.15);" title="Netlify">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-netlify-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">Netlify</span>
+                        </div>
+                        <!-- Render -->
+                        <div class="skill-logo-item" style="--brand-color: #46E3B7; --brand-glow: rgba(70, 227, 183, 0.15);" title="Render">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M13.586 0v3.172H7.523a4.528 4.528 0 0 0-3.018 1.305 4.498 4.498 0 0 0-1.333 2.99v11.326H0V7.509a7.472 7.472 0 0 1 2.204-5.305A7.471 7.471 0 0 1 4.588.589 7.432 7.432 0 0 1 7.51 0Zm5.207 0v3.158H15.62V0ZM24 0v3.158h-3.172V0Zm0 5.207v3.172h-3.172V5.207Zm0 5.207v3.172h-3.172v-3.172Zm0 5.207v3.172h-3.172V15.62Zm0 5.207V24h-3.172v-3.172Zm-5.207 0V24H15.62v-3.172Zm-5.207 0V24h-3.172v-3.172Zm-5.207 0V24H5.207v-3.172Zm-5.221 0V24H0v-3.172Z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">Render</span>
+                        </div>
+                        <!-- XAMPP -->
+                        <div class="skill-logo-item" style="--brand-color: #FB5A24; --brand-glow: rgba(251, 90, 36, 0.15);" title="XAMPP">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M16.792,11.923c0.113,0.043,0.226,0.079,0.334,0.128c0.45,0.203,0.715,0.553,0.748,1.044 c0.041,0.634,0.044,1.271,0.002,1.905c-0.049,0.732-0.725,1.292-1.483,1.271c-0.735-0.021-1.369-0.62-1.397-1.341 c-0.017-0.441-0.003-0.884-0.006-1.326c-0.001-0.239-0.003-0.242-0.245-0.243c-1.363-0.001-2.726,0.008-4.089-0.003 c-0.888-0.007-1.421,0.482-1.471,1.46c-0.019,0.38-0.1,0.727-0.357,1.018c-0.397,0.451-0.898,0.601-1.472,0.466 c-0.554-0.131-0.867-0.522-1.035-1.048c-0.117-0.367-0.056-0.737,0.012-1.094c0.341-1.797,1.366-3.006,3.125-3.555 c0.357-0.112,0.731-0.166,1.105-0.166c0.94,0.001,1.881,0.001,2.821-0.001c0.128,0,0.257-0.012,0.385-0.021 c0.702-0.051,1.166-0.511,1.22-1.352c0.004-0.064,0-0.129,0.001-0.193c0.011-0.788,0.605-1.396,1.393-1.425 c0.787-0.029,1.438,0.527,1.493,1.318c0.076,1.083-0.265,2.046-0.913,2.907C16.903,11.751,16.819,11.816,16.792,11.923z M8.249,10.436c-0.258-0.008-0.571,0.018-0.882-0.035c-0.536-0.09-0.876-0.39-1.02-0.916C6.19,8.912,6.25,8.388,6.698,7.96 C7.154,7.526,7.694,7.4,8.285,7.645c0.52,0.216,0.859,0.731,0.89,1.293C9.2,9.382,9.178,9.828,9.182,10.272 c0.001,0.116-0.043,0.167-0.161,0.165C8.781,10.434,8.542,10.436,8.249,10.436z M21.682,0H2.318C1.102,0,0.116,0.986,0.116,2.202 v19.317c0,1.37,1.111,2.481,2.481,2.481h18.807c1.37,0,2.481-1.111,2.481-2.481V2.202C23.884,0.986,22.898,0,21.682,0z M20.125,12.473c0.519,0.804,0.733,1.69,0.677,2.657c-0.108,1.886-1.413,3.474-3.25,3.916c-2.585,0.623-4.566-0.923-5.233-2.794 c-0.109-0.304-0.16-0.622-0.224-0.985c-0.068,0.414-0.115,0.789-0.264,1.134c-0.697,1.617-1.884,2.603-3.665,2.799 c-2.104,0.232-4.048-1.067-4.632-3.084c-0.25-0.863-0.175-1.747-0.068-2.625c0.08-0.653,0.321-1.268,0.632-1.848 c0.057-0.106,0.057-0.184-0.01-0.285c-0.561-0.845-0.779-1.777-0.7-2.784C3.43,8.035,3.56,7.52,3.805,7.038 C4.52,5.626,6.09,4.427,8.193,4.626c1.849,0.175,3.562,1.77,3.83,3.564c0.013,0.09,0.039,0.178,0.068,0.311 c0.044-0.241,0.076-0.439,0.118-0.636c0.344-1.63,1.94-3.335,4.201-3.357c2.292-0.021,3.99,1.776,4.31,3.446 c0.17,0.888,0.089,1.776-0.103,2.663c-0.112,0.517-0.31,1.008-0.524,1.492C20.034,12.245,20.043,12.345,20.125,12.473z"/></svg>
+                            </div>
+                            <span class="skill-logo-name">XAMPP</span>
+                        </div>
+                        <!-- InfinityFree -->
+                        <div class="skill-logo-item" style="--brand-color: #7852FF; --brand-glow: rgba(120, 82, 255, 0.15);" title="InfinityFree">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M17 6c-2.2 0-4.3 1.7-5 3-.7-1.3-2.8-3-5-3C3.1 6 0 9.1 0 12s3.1 6 7 6c2.2 0 4.3-1.7 5-3 .7 1.3 2.8 3 5 3 3.9 0 7-3.1 7-6s-3.1-6-7-6zm-10 9.5c-2.5 0-4.5-1.6-4.5-3.5S4.5 8.5 7 8.5c1.4 0 2.9 1.2 3.6 2.3-.7 1.1-2.2 2.3-3.6 2.3zm10 0c-1.4 0-2.9-1.2-3.6-2.3.7-1.1 2.2-2.3 3.6-2.3 2.5 0 4.5 1.6 4.5 3.5s-2 3.5-4.5 3.5z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">InfinityFree</span>
+                        </div>
+                        <!-- AeonFree -->
+                        <div class="skill-logo-item" style="--brand-color: #0066FF; --brand-glow: rgba(0, 102, 255, 0.15);" title="AeonFree">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
+                                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+                                    <path d="M7 12h10v1H7zm0 3h10v1H7z"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">AeonFree</span>
+                        </div>
+                        <!-- Antigravity -->
+                        <div class="skill-logo-item" style="--brand-color: #8E75FF; --brand-glow: rgba(142, 117, 255, 0.15);" title="Antigravity AI">
+                            <div class="skill-icon-wrapper">
+                                <svg class="tech-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px;">
+                                    <path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/>
+                                </svg>
+                            </div>
+                            <span class="skill-logo-name">Antigravity</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
     <section id="about">
@@ -1146,6 +1468,73 @@
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('active');
         }
+
+        // Skills Filter & View Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const categorySections = document.querySelectorAll('.skills-category-section');
+
+            const adjustSkillsLayout = () => {
+                const isMobile = window.innerWidth <= 768;
+                
+                if (isMobile) {
+                    const activeBtn = document.querySelector('.filter-btn.active') || filterButtons[0];
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    activeBtn.classList.add('active');
+                    
+                    const activeCategory = activeBtn.getAttribute('data-filter');
+                    categorySections.forEach(section => {
+                        if (section.getAttribute('data-category') === activeCategory) {
+                            section.classList.add('active-mobile');
+                            section.style.display = 'block';
+                            section.style.opacity = '1';
+                            section.style.transform = 'scale(1)';
+                        } else {
+                            section.classList.remove('active-mobile');
+                            section.style.display = 'none';
+                        }
+                    });
+                } else {
+                    categorySections.forEach(section => {
+                        section.classList.remove('active-mobile');
+                        section.style.display = 'block';
+                        section.style.opacity = '1';
+                        section.style.transform = 'none';
+                    });
+                }
+            };
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        filterButtons.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        
+                        const selectedCategory = btn.getAttribute('data-filter');
+                        categorySections.forEach(section => {
+                            const sectionCategory = section.getAttribute('data-category');
+                            if (sectionCategory === selectedCategory) {
+                                section.style.display = 'block';
+                                section.classList.add('active-mobile');
+                                section.style.opacity = '0';
+                                section.style.transform = 'scale(0.95)';
+                                setTimeout(() => {
+                                    section.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                                    section.style.opacity = '1';
+                                    section.style.transform = 'scale(1)';
+                                }, 50);
+                            } else {
+                                section.classList.remove('active-mobile');
+                                section.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+
+            adjustSkillsLayout();
+            window.addEventListener('resize', adjustSkillsLayout);
+        });
 
         // Basic Security
         document.addEventListener('contextmenu', e => e.preventDefault());
