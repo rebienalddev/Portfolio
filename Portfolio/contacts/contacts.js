@@ -2,47 +2,53 @@
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Check saved preference
-if (sessionStorage.getItem('darkMode') === 'disabled') {
-    body.classList.remove('dark-mode');
-    themeToggle.textContent = '🌙';
-} else {
-    body.classList.add('dark-mode');
-    themeToggle.textContent = '☀️';
-}
-
-// Toggle logic
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    if (body.classList.contains('dark-mode')) {
-        sessionStorage.setItem('darkMode', 'enabled');
-        themeToggle.textContent = '☀️';
-    } else {
-        sessionStorage.setItem('darkMode', 'disabled');
+if (themeToggle) {
+    // Check saved preference
+    if (sessionStorage.getItem('darkMode') === 'disabled') {
+        body.classList.remove('dark-mode');
         themeToggle.textContent = '🌙';
+    } else {
+        body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
     }
-});
+
+    // Toggle logic
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            sessionStorage.setItem('darkMode', 'enabled');
+            themeToggle.textContent = '☀️';
+        } else {
+            sessionStorage.setItem('darkMode', 'disabled');
+            themeToggle.textContent = '🌙';
+        }
+    });
+}
 
 // --- HAMBURGER MENU SCRIPT ---
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-});
+if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
 
-// Close menu when a link is clicked
-navLinks.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-    }
-});
+    // Close menu when a link is clicked
+    navLinks.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
+}
 
 // --- EMAILJS FORM SCRIPT ---
 (function() {
-    emailjs.init("XY57OAJ-ns3N0rlnJ"); 
+    emailjs.init({
+        publicKey: "XY57OAJ-ns3N0rlnJ"
+    }); 
 })();
 
 const contactForm = document.getElementById('contactForm');
@@ -70,7 +76,10 @@ contactForm.addEventListener('submit', async function(e) {
         await emailjs.send(
             'service_nyns041', 
             'template_m3y5b2o', 
-            formData
+            formData,
+            {
+                publicKey: 'XY57OAJ-ns3N0rlnJ'
+            }
         );
         
         formStatus.innerHTML = '<div class="status-message success">Message sent successfully! I\'ll get back to you soon.</div>';
