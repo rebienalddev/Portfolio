@@ -922,248 +922,155 @@
             position: relative;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: 4rem;
             z-index: 3;
         }
         
         .edu-col {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: stretch;
+            width: 100%;
         }
         
         .edu-col-title {
             font-size: 2.25rem;
             font-weight: 800;
             letter-spacing: -0.03em;
-            margin-bottom: 3.5rem;
+            margin-bottom: 2.5rem;
+            text-align: left;
         }
         
-        /* Education Timeline */
-        .edu-timeline {
-            position: relative;
+        /* Linux Terminal Theme */
+        .terminal-window {
+            background: #0D0D11;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0 !important; /* Sharp corners, no border radius stuff */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
             width: 100%;
-            padding-left: 50px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 2.5rem;
+            text-align: left;
         }
         
-        .edu-timeline-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 23px;
-            width: 2px;
-            background: linear-gradient(180deg, #FF7A00 0%, rgba(255, 122, 0, 0.15) 100%);
-            box-shadow: 0 0 10px rgba(255, 122, 0, 0.2);
-        }
-        
-        .edu-timeline-item {
+        .terminal-header {
+            background: #18181C;
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             position: relative;
-            width: 100%;
         }
         
-        .edu-timeline-badge {
-            position: absolute;
-            left: -42px;
-            top: 1.25rem;
-            width: 32px;
-            height: 32px;
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .terminal-dot {
+            width: 11px;
+            height: 11px;
             border-radius: 50%;
-            background: #FFFFFF;
-            border: 2px solid #FF7A00;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FF7A00;
-            font-size: 0.85rem;
-            z-index: 5;
-            box-shadow: 0 0 15px rgba(255, 122, 0, 0.1);
         }
         
-        .edu-glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .dot-close { background: #FF5F56; }
+        .dot-minimize { background: #FFBD2E; }
+        .dot-maximize { background: #27C93F; }
+        
+        .terminal-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #6C6C7C;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        
+        .terminal-body {
+            padding: 0.85rem 0.5rem 1.25rem 1.25rem;
+            color: #E2E2E9;
+            font-size: 0.88rem;
+            line-height: 1.65;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: hidden;
+            height: 350px !important; /* Limit height so it is not too long */
+            overflow-y: auto !important; /* Scrollable CLI buffer */
+            direction: rtl; /* Puts scrollbar on the left! */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: rgba(255, 255, 255, 0.15) transparent; /* Firefox */
+        }
+        
+        .terminal-body::-webkit-scrollbar {
+            width: 4px; /* Very thin scrollbar */
+        }
+        
+        .terminal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15); /* Premium clean white/gray scroll handle */
+            border-radius: 2px;
+        }
+        
+        .terminal-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .terminal-content {
+            direction: ltr; /* Reset text reading direction back to normal */
             text-align: left;
+            padding-left: 0.5rem; /* space away from the left-side scrollbar */
         }
         
-        .edu-glass-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 122, 0, 0.25);
-            box-shadow: 0 20px 40px rgba(255, 122, 0, 0.05);
-        }
-        
-        .edu-card-date {
-            font-size: 0.75rem;
+        /* Terminal Text Styling Utilities */
+        .term-prompt {
+            color: #4AF626; /* Matrix Green */
             font-weight: 700;
-            color: #FF7A00;
-            letter-spacing: 0.05em;
-            display: inline-block;
-            margin-bottom: 0.75rem;
         }
         
-        .edu-card-title {
-            font-size: 1.3rem;
-            font-weight: 750;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .edu-card-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-        }
-        
-        /* Key Engagements */
-        .engagements-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-        }
-        
-        .engagement-glass-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: 24px;
-            padding: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1.25rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-        }
-        
-        .engagement-glass-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 122, 0, 0.25);
-            box-shadow: 0 20px 40px rgba(255, 122, 0, 0.05);
-        }
-        
-        .engagement-icon {
-            width: 3.25rem;
-            height: 3.25rem;
-            border-radius: 16px;
-            background: rgba(255, 122, 0, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FF7A00;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-            transition: all 0.3s;
-        }
-        
-        .engagement-glass-card:hover .engagement-icon {
-            background: #FF7A00;
+        .term-command {
             color: #FFFFFF;
-            transform: scale(1.05);
         }
         
-        .engagement-body {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .engagement-date {
-            font-size: 0.72rem;
+        .term-date {
+            color: #FF7A00; /* Accent Orange */
             font-weight: 700;
-            color: var(--text-tertiary);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
         }
         
-        .engagement-title {
-            font-size: 1.2rem;
-            font-weight: 750;
-            color: var(--text-primary);
-            margin-bottom: 0.4rem;
-            letter-spacing: -0.02em;
-            text-align: left;
+        .term-highlight {
+            color: #00D2FF; /* Cyan */
+            font-weight: 700;
         }
         
-        .engagement-desc {
-            font-size: 0.92rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            text-align: left;
+        .term-success {
+            color: #27C93F; /* Success Green */
         }
         
+        .term-bullet {
+            color: #FFBD2E; /* Bullet Amber */
+            font-weight: 700;
+        }
         
+        .term-divider {
+            color: #25252D;
+            display: block;
+            margin: 0.75rem 0;
+            user-select: none;
+        }
         
-        /* Mobile responsiveness & horizontal scrolling for Key Engagements */
         @media (max-width: 992px) {
             .edu-grid {
                 grid-template-columns: 1fr;
-                gap: 4rem;
+                gap: 3rem;
             }
-            
-            .engagements-list {
-                display: flex;
-                flex-direction: row;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                padding: 15px 8px 25px 8px;
-                margin: -15px -8px -25px -8px;
-                gap: 1.25rem;
-                scrollbar-width: none; /* Firefox */
-            }
-            
-            .engagements-list::-webkit-scrollbar {
-                display: none; /* Chrome, Safari, Opera */
-            }
-            
-            .engagement-glass-card {
-                flex: 0 0 290px;
-                scroll-snap-align: start;
-            }
-
-            /* Make Education Path cards smaller and more compact on mobile */
-            .edu-timeline {
-                padding-left: 40px;
-                gap: 1.75rem;
-            }
-            .edu-timeline-line {
-                left: 17px;
-            }
-            .edu-timeline-badge {
-                left: -36px;
-                width: 28px;
-                height: 28px;
-                font-size: 0.75rem;
-            }
-            .edu-glass-card {
-                padding: 1.25rem !important;
-                border-radius: 18px !important;
-            }
-            .edu-card-title {
-                font-size: 1.15rem !important;
-                margin-bottom: 0.35rem !important;
-            }
-            .edu-card-desc {
-                font-size: 0.85rem !important;
-            }
-            .edu-card-date {
-                font-size: 0.7rem !important;
-                margin-bottom: 0.5rem !important;
+            .terminal-body {
+                padding: 1.15rem;
+                font-size: 0.82rem;
             }
         }
 
@@ -2376,100 +2283,80 @@
         
         <div class="container">
             <div class="edu-grid">
-                <!-- Left column: Education Path -->
+                <!-- Left column: Education Path Terminal -->
                 <div class="edu-col reveal">
                     <h2 class="edu-col-title text-gradient">Education Path</h2>
-                    <div class="edu-timeline">
-                        <div class="edu-timeline-line"></div>
-                        
-                        <div class="edu-timeline-item">
-                            <div class="edu-timeline-badge"><i class="fas fa-graduation-cap"></i></div>
-                            <div class="edu-glass-card">
-                                <span class="edu-card-date">2026 – PRESENT</span>
-                                <h3 class="edu-card-title">Cavite State University</h3>
-                                <p class="edu-card-desc">Bachelor of Science in Information Technology</p>
+                    
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-dots">
+                                <span class="terminal-dot dot-close"></span>
+                                <span class="terminal-dot dot-minimize"></span>
+                                <span class="terminal-dot dot-maximize"></span>
                             </div>
+                            <div class="terminal-title">rebienald@dev: ~/education</div>
                         </div>
-                        
-                        <div class="edu-timeline-item">
-                            <div class="edu-timeline-badge"><i class="fas fa-graduation-cap"></i></div>
-                            <div class="edu-glass-card">
-                                <span class="edu-card-date">2024 – 2026</span>
-                                <h3 class="edu-card-title">STI College</h3>
-                                <p class="edu-card-desc">TVL Track - Major in Mobile App and Web development</p>
-                            </div>
-                        </div>
-                        
-                        <div class="edu-timeline-item">
-                            <div class="edu-timeline-badge"><i class="fas fa-graduation-cap"></i></div>
-                            <div class="edu-glass-card">
-                                <span class="edu-card-date">2020 – 2024</span>
-                                <h3 class="edu-card-title">Binakayan National High School</h3>
-                                <p class="edu-card-desc">Computer System Servicing</p>
+                        <div class="terminal-body">
+                            <div class="terminal-content"><span class="term-date">[2026 – PRESENT]</span>  <span class="term-highlight">CAVITE STATE UNIVERSITY</span>
+<span class="term-divider">--------------------------------------------------</span>
+ <span class="term-bullet">» Course:</span> Bachelor of Science in Information Technology
+ <span class="term-bullet">» Status:</span> Active / Ongoing
+
+<span class="term-divider">--------------------------------------------------</span>
+<span class="term-date">[2024 – 2026]</span>     <span class="term-highlight">STI COLLEGE</span>
+<span class="term-divider">--------------------------------------------------</span>
+ <span class="term-bullet">» Track:</span>  TVL Track - Major in Mobile App and Web development
+ <span class="term-bullet">» Status:</span> Completed
+
+<span class="term-divider">--------------------------------------------------</span>
+<span class="term-date">[2020 – 2024]</span>     <span class="term-highlight">BINAKAYAN NATIONAL HIGH SCHOOL</span>
+<span class="term-divider">--------------------------------------------------</span>
+ <span class="term-bullet">» Major:</span>  Computer System Servicing
+ <span class="term-bullet">» Status:</span> Completed
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Right column: Key Engagements -->
+                <!-- Right column: Key Engagements Terminal -->
                 <div class="edu-col reveal">
                     <h2 class="edu-col-title text-gradient">Key Engagements</h2>
-                    <div class="engagements-list">
-                        
-                        <div class="engagement-glass-card">
-                            <div class="engagement-icon"><i class="fas fa-award"></i></div>
-                            <div class="engagement-body">
-                                <span class="engagement-date">June 29, 2026</span>
-                                <h3 class="engagement-title">Best in Capstone Project</h3>
-                                <p class="engagement-desc">Best Capstone Project awardee among all SHS students at STI College Bacoor.</p>
+                    
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-dots">
+                                <span class="terminal-dot dot-close"></span>
+                                <span class="terminal-dot dot-minimize"></span>
+                                <span class="terminal-dot dot-maximize"></span>
+                            </div>
+                            <div class="terminal-title">rebienald@dev: ~/engagements</div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-content"><span class="term-date">[June 29, 2026]</span>
+ <span class="term-highlight">Best in Capstone Project</span>
+ <span class="term-bullet">»</span> Best Capstone Project awardee among all SHS students at STI College Bacoor.
+
+<span class="term-date">[MAY 22, 2026]</span>
+ <span class="term-highlight">Best in System Development</span>
+ <span class="term-bullet">»</span> Recognized as Best in System Development among all Senior High School students at STI College Bacoor for developing an AI-integrated educational gaming platform.
+
+<span class="term-date">[OCT 20, 2025]</span>
+ <span class="term-highlight">Resource Speaker: TechTalk Ep. 2</span>
+ <span class="term-bullet">»</span> Directed intensive technical training on Advanced Web Responsiveness and scalable deployment pipelines.
+
+<span class="term-date">[NOV 25, 2025]</span>
+ <span class="term-highlight">Resource Speaker: TechTalk Ep. 1</span>
+ <span class="term-bullet">»</span> Delivered comprehensive seminars on HTML/CSS fundamentals, semantic structuring, and modern rendering standards.
+
+<span class="term-date">[April 24, 2025]</span>
+ <span class="term-highlight">Web Development & Design Competition</span>
+ <span class="term-bullet">»</span> Placed 3rd in a 7-hour Web Development & Design Competition, competing against college-level participants..
+
+<span class="term-date">[February 28, 2025]</span>
+ <span class="term-highlight">CodeFest - Tagisan ng Talino</span>
+ <span class="term-bullet">»</span> Competed against college-level participants in an intensive 8-hour Mobile Application Development Competition.
                             </div>
                         </div>
-                        
-                        <div class="engagement-glass-card">
-                            <div class="engagement-icon"><i class="fas fa-laptop-code"></i></div>
-                            <div class="engagement-body">
-                                <span class="engagement-date">MAY 22, 2026</span>
-                                <h3 class="engagement-title">Best in System Development</h3>
-                                <p class="engagement-desc">Recognized as Best in System Development among all Senior High School students at STI College Bacoor for developing an AI-integrated educational gaming platform.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="engagement-glass-card">
-                            <div class="engagement-icon"><i class="fas fa-microphone"></i></div>
-                            <div class="engagement-body">
-                                <span class="engagement-date">OCT 20, 2025</span>
-                                <h3 class="engagement-title">Resource Speaker: TechTalk Ep. 2</h3>
-                                <p class="engagement-desc">Directed intensive technical training on Advanced Web Responsiveness and scalable deployment pipelines.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="engagement-glass-card">
-                            <div class="engagement-icon"><i class="fas fa-microphone"></i></div>
-                            <div class="engagement-body">
-                                <span class="engagement-date">NOV 25, 2025</span>
-                                <h3 class="engagement-title">Resource Speaker: TechTalk Ep. 1</h3>
-                                <p class="engagement-desc">Delivered comprehensive seminars on HTML/CSS fundamentals, semantic structuring, and modern rendering standards.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="engagement-glass-card">
-                            <div class="engagement-icon"><i class="fas fa-trophy"></i></div>
-                            <div class="engagement-body">
-                                <span class="engagement-date">April 24, 2025</span>
-                                <h3 class="engagement-title">Web Development & Design Competition</h3>
-                                <p class="engagement-desc">Placed 3rd in a 7-hour Web Development & Design Competition, competing against college-level participants..</p>
-                            </div>
-                        </div>
-                        
-                        <div class="engagement-glass-card">
-                            <div class="engagement-icon"><i class="fas fa-code"></i></div>
-                            <div class="engagement-body">
-                                <span class="engagement-date">February 28, 2025</span>
-                                <h3 class="engagement-title">CodeFest - Tagisan ng Talino </h3>
-                                <p class="engagement-desc">Competed against college-level participants in an intensive 8-hour Mobile Application Development Competition.</p>
-                            </div>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
