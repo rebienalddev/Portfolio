@@ -1769,15 +1769,7 @@
                 
                 requestAnimationFrame(step);
                 
-                // Desktop Hover Controls (pauses scrolling)
-                marquee.addEventListener('mouseenter', () => {
-                    isInteracting = true;
-                });
-                marquee.addEventListener('mouseleave', () => {
-                    isInteracting = false;
-                    scrollPos = marquee.scrollLeft;
-                });
-                
+
                 // Mobile Touch Controls (swipe-scroll override, resumes immediately after release)
                 let startX = 0;
                 let startY = 0;
