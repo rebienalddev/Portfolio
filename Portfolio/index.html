@@ -1778,17 +1778,34 @@
                     scrollPos = marquee.scrollLeft;
                 });
                 
-                // Mobile Touch Controls (allows swipe-scroll override, resumes after 2s)
-                marquee.addEventListener('touchstart', () => {
-                    isInteracting = true;
+                // Mobile Touch Controls (swipe-scroll override, resumes immediately after release)
+                let startX = 0;
+                let startY = 0;
+                
+                marquee.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
                     if (resumeTimeout) clearTimeout(resumeTimeout);
+                }, { passive: true });
+                
+                marquee.addEventListener('touchmove', (e) => {
+                    const moveX = e.touches[0].clientX;
+                    const moveY = e.touches[0].clientY;
+                    const diffX = Math.abs(moveX - startX);
+                    const diffY = Math.abs(moveY - startY);
+                    
+                    // Only pause auto-scroll if the swipe is primarily horizontal
+                    if (diffX > 8 && diffX > diffY) {
+                        isInteracting = true;
+                    }
                 }, { passive: true });
                 
                 marquee.addEventListener('touchend', () => {
                     scrollPos = marquee.scrollLeft;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
                     resumeTimeout = setTimeout(() => {
                         isInteracting = false;
-                    }, 2000);
+                    }, 100); // Tiny delay to settle touch momentum
                 }, { passive: true });
                 
                 marquee.addEventListener('scroll', () => {
