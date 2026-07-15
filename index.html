@@ -626,15 +626,17 @@
             }
         }
 
+        .cert-card:hover {
+            transform: none !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04) !important;
+            border-color: var(--glass-border) !important;
+        }
+
         .cert-img { 
             width: 100%; height: auto; object-fit: contain; 
             margin-bottom: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.05);
-            opacity: 0.8; transition: 0.4s ease; 
+            opacity: 1; transition: 0.4s ease; 
             background: rgba(0, 0, 0, 0.02);
-        }
-        .cert-card:hover .cert-img { 
-            opacity: 1; 
-            transform: scale(1.02);
         }
         .cert-info {
             padding: 1rem 1.25rem 1.25rem;
@@ -1770,41 +1772,43 @@
                 requestAnimationFrame(step);
                 
 
-                // Mobile Touch Controls (swipe-scroll override, resumes immediately after release)
-                let startX = 0;
-                let startY = 0;
-                
-                marquee.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                    startY = e.touches[0].clientY;
-                    if (resumeTimeout) clearTimeout(resumeTimeout);
-                }, { passive: true });
-                
-                marquee.addEventListener('touchmove', (e) => {
-                    const moveX = e.touches[0].clientX;
-                    const moveY = e.touches[0].clientY;
-                    const diffX = Math.abs(moveX - startX);
-                    const diffY = Math.abs(moveY - startY);
+                // Mobile Touch Controls (only for projects marquee to allow swipe overrides)
+                if (!marquee.classList.contains('certs-marquee')) {
+                    let startX = 0;
+                    let startY = 0;
                     
-                    // Only pause auto-scroll if the swipe is primarily horizontal
-                    if (diffX > 8 && diffX > diffY) {
-                        isInteracting = true;
-                    }
-                }, { passive: true });
-                
-                marquee.addEventListener('touchend', () => {
-                    scrollPos = marquee.scrollLeft;
-                    if (resumeTimeout) clearTimeout(resumeTimeout);
-                    resumeTimeout = setTimeout(() => {
-                        isInteracting = false;
-                    }, 100); // Tiny delay to settle touch momentum
-                }, { passive: true });
-                
-                marquee.addEventListener('scroll', () => {
-                    if (isInteracting) {
+                    marquee.addEventListener('touchstart', (e) => {
+                        startX = e.touches[0].clientX;
+                        startY = e.touches[0].clientY;
+                        if (resumeTimeout) clearTimeout(resumeTimeout);
+                    }, { passive: true });
+                    
+                    marquee.addEventListener('touchmove', (e) => {
+                        const moveX = e.touches[0].clientX;
+                        const moveY = e.touches[0].clientY;
+                        const diffX = Math.abs(moveX - startX);
+                        const diffY = Math.abs(moveY - startY);
+                        
+                        // Only pause auto-scroll if the swipe is primarily horizontal
+                        if (diffX > 8 && diffX > diffY) {
+                            isInteracting = true;
+                        }
+                    }, { passive: true });
+                    
+                    marquee.addEventListener('touchend', () => {
                         scrollPos = marquee.scrollLeft;
-                    }
-                }, { passive: true });
+                        if (resumeTimeout) clearTimeout(resumeTimeout);
+                        resumeTimeout = setTimeout(() => {
+                            isInteracting = false;
+                        }, 100); // Tiny delay to settle touch momentum
+                    }, { passive: true });
+                    
+                    marquee.addEventListener('scroll', () => {
+                        if (isInteracting) {
+                            scrollPos = marquee.scrollLeft;
+                        }
+                    }, { passive: true });
+                }
             });
         });
 
