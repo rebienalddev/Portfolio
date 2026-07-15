@@ -221,6 +221,47 @@
         /* Hero Section */
         .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 12rem; }
         .hero-content { display: grid; grid-template-columns: 1.5fr 0.8fr; gap: 4rem; align-items: center; }
+        
+        /* Inline Services List in Hero Section */
+        .services-list-hero {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem 2rem;
+            margin-bottom: 2.5rem;
+            max-width: 520px;
+        }
+
+        .service-hero-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .service-hero-item i {
+            font-size: 1.1rem;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .service-hero-item:hover i {
+            transform: scale(1.1);
+        }
+
+        .hero-visual { position: relative; }
+        .hero-img-container {
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero-img { width: 100%; border-radius: 24px; display: block; }
+        .hero-glow {
+            display: none !important;
+        }
+
         .hero-badge {
             display: inline-flex; align-items: center; gap: 0.5rem;
             padding: 0.4rem 1.2rem; border-radius: 100px;
@@ -270,7 +311,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        .hero-visual { position: relative; }
         .hero-img-container {
             border-radius: 24px;
             overflow: hidden;
@@ -300,10 +340,40 @@
         .glass-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-primary); }
         .glass-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
 
-        /* Projects */
-        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        /* Projects Marquee */
+        .projects-marquee {
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100%;
+            display: flex;
+            padding: 2rem 0;
+            position: relative;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .projects-marquee::-webkit-scrollbar {
+            display: none;
+        }
+
+        .projects-marquee-track {
+            display: flex;
+            width: max-content;
+        }
+
+        .projects-marquee-group {
+            display: flex;
+            gap: 2rem;
+            padding-right: 2rem;
+            flex-shrink: 0;
+        }
+
         .project-card { 
-            display: flex; flex-direction: column; text-decoration: none; 
+            width: 380px;
+            flex-shrink: 0;
+            display: flex; 
+            flex-direction: column; 
+            text-decoration: none; 
             padding: 0; 
             overflow: hidden;
         }
@@ -333,7 +403,17 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .project-content h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: var(--text-primary); }
-        .project-content p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.3; }
+        .project-content p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.3; text-align: justify; }
+
+        @media (max-width: 768px) {
+            .projects-marquee {
+                margin: 0 -1.5rem;
+                padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+            }
+            .projects-marquee-group .project-card {
+                width: 280px !important;
+            }
+        }
 
         /* Skills */
         /* Skills */
@@ -487,18 +567,77 @@
         .timeline-title { font-size: 1.3rem; color: var(--text-primary); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
         .timeline-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; }
 
-        /* Certifications Grid */
-        .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
-        .cert-card { padding: 1rem; }
+        /* Certifications Marquee Common */
+        .certs-marquee {
+            overflow-x: auto;
+            overflow-y: hidden;
+            width: 100%;
+            display: flex;
+            padding: 0.25rem 0;
+            position: relative;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .certs-marquee::-webkit-scrollbar {
+            display: none;
+        }
+
+        .certs-marquee-track {
+            display: flex;
+            width: max-content;
+        }
+
+        .certs-marquee-group {
+            display: flex;
+            gap: 1.5rem;
+            padding-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .cert-card { 
+            width: 300px;
+            flex-shrink: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .certs-marquee {
+                margin: 0 -1.5rem;
+                padding: 0.25rem 1.5rem;
+            }
+            .certs-marquee-group .cert-card {
+                width: 250px !important;
+            }
+            .certs-marquee-group .cert-img {
+                height: auto !important;
+            }
+            .certs-marquee-group .cert-card .cert-info {
+                padding: 0.75rem !important;
+            }
+            .certs-marquee-group .cert-card .cert-info h4 {
+                font-size: 0.95rem !important;
+            }
+            .certs-marquee-group .cert-card .cert-info p {
+                font-size: 0.8rem !important;
+            }
+        }
+
         .cert-img { 
-            width: 100%; height: 180px; object-fit: cover; border-radius: 16px; 
-            margin-bottom: 1.25rem; border: 1px solid rgba(0,0,0,0.1); 
+            width: 100%; height: auto; object-fit: contain; 
+            margin-bottom: 0; border: none; border-bottom: 1px solid rgba(0,0,0,0.05);
             opacity: 0.8; transition: 0.4s ease; 
+            background: rgba(0, 0, 0, 0.02);
         }
         .cert-card:hover .cert-img { 
-            opacity: 1; border-color: rgba(0,0,0,0.2); 
+            opacity: 1; 
             transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .cert-info {
+            padding: 1rem 1.25rem 1.25rem;
         }
         .cert-info h4 { font-size: 1.05rem; margin-bottom: 0.3rem; color: var(--text-primary); }
         .cert-info p { font-size: 0.85rem; color: var(--text-tertiary); font-weight: 500; }
@@ -545,8 +684,8 @@
             .hero-badge { margin: 0 auto 1.5rem; }
             .hero p { margin: 0 auto 2.5rem; }
             .btn-group { justify-content: center; }
+            .services-list-hero { margin: 0 auto 2.5rem; }
             .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .projects-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -578,11 +717,12 @@
             .btn-group { flex-direction: row; width: 100%; gap: 0.75rem; }
             .btn-group .btn-primary, .btn-group .btn-secondary { flex: 1; text-align: center; display: inline-flex; justify-content: center; align-items: center; padding: 0.5rem 1.25rem; }
             .hero-visual { display: none; }
+            .services-list-hero { grid-template-columns: 1fr; gap: 1rem; }
             
             .section-header { text-align: center; margin-bottom: 2.5rem; }
             .section-header p { margin: 0 auto; }
-
-            .services-grid, .projects-grid, .certs-grid { 
+ 
+            .services-grid { 
                 display: flex;
                 overflow-x: auto;
                 overflow-y: hidden;
@@ -594,7 +734,7 @@
                 scrollbar-width: none;
                 overscroll-behavior-x: contain;
             }
-            .services-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar, .certs-grid::-webkit-scrollbar {
+            .services-grid::-webkit-scrollbar {
                 display: none;
             }
             .glass-card {
@@ -603,7 +743,7 @@
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
             }
-            .services-grid > *, .projects-grid > *, .certs-grid > * {
+            .services-grid > * {
                 flex: 0 0 85%;
                 width: 85%;
             }
@@ -779,6 +919,27 @@
                 <div class="hero-badge"><i class="fas fa-code"></i> Software Developer</div>
                 <h1 class="text-gradient">Rebienald Khei Carpio</h1>
                 <p>I specialize in developing mobile apps, web applications, and Discord bots.</p>
+                
+                <!-- Services list directly under name (No Cards) -->
+                <div class="services-list-hero" id="services">
+                    <div class="service-hero-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Web Applications</span>
+                    </div>
+                    <div class="service-hero-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Apps</span>
+                    </div>
+                    <div class="service-hero-item">
+                        <i class="fas fa-cubes"></i>
+                        <span>SaaS Platforms</span>
+                    </div>
+                    <div class="service-hero-item">
+                        <i class="fas fa-server"></i>
+                        <span>Cloud Deployment</span>
+                    </div>
+                </div>
+
                 <div class="btn-group">
                     <a href="#work" class="btn-primary">View Projects</a>
                     <a href="contacts/contact.html" class="btn-secondary">Let's Talk</a>
@@ -793,105 +954,83 @@
         </div>
     </section>
 
-    <section id="services">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="text-gradient">Services</h2>
-                <p>I build reliable, user-focused software that solves real problems.</p>
-            </div>
-            <div class="services-grid">
-                <div class="glass-card reveal">
-                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3>Web Applications</h3>
-                    <p>Custom, scalable web apps built with modern frameworks. Focus on performance, security, and exceptional UX tailored to high-end brands.</p>
-                </div>
-                <div class="glass-card reveal">
-                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Mobile App</h3>
-                    <p>High-performance Android applications emphasizing clean UI/UX, robust architecture, and seamless cross-device functionality.</p>
-                </div>
-                <div class="glass-card reveal">
-                    <div class="service-icon"><i class="fas fa-server"></i></div>
-                    <h3>Deployment</h3>
-                    <p>Web Deployment through various platforms</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="work">
         <div class="container">
             <div class="section-header reveal">
                 <h2 class="text-gradient">Selected Works</h2>
             </div>
-            
-            <div class="projects-grid">
-                <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="glass-card project-card reveal">
-                    <img src="projectimages/infowhiz.png" alt="InfoWhiz" class="project-image">
-                    <div class="project-meta">
-                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                    <div class="project-content">
-                        <h3>InfoWhiz</h3>
-                        <p>An educational gaming system utilizing AI integrations to provide tailored assistance for students studying computer programming.</p>
-                    </div>
-                </a>
+        </div>
+        
+        <!-- Full-bleed Marquee Container -->
+        <div class="projects-marquee reveal">
+            <div class="projects-marquee-track">
+                <div class="projects-marquee-group">
+                    <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/infowhiz.png" alt="InfoWhiz" class="project-image">
+                        <div class="project-meta">
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>InfoWhiz</h3>
+                            <p>An educational gaming system utilizing AI integrations to provide tailored assistance for students studying computer programming.</p>
+                        </div>
+                    </a>
 
-                <a href="http://www.samai.hstn.me/" target="_blank" class="glass-card project-card reveal">
-                    <img src="projectimages/samai.png" alt="SamAI" class="project-image">
-                    <div class="project-meta">
-                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                    <div class="project-content">
-                        <h3>SamAI</h3>
-                        <p>SamAI is a cute Hello Kitty-themed study companion that uploads PDF handouts, extracts text, generates AI-powered summaries, and provides an interactive chat interface for learning.</p>
-                    </div>
-                </a>
+                    <a href="http://www.samai.hstn.me/" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/samai.png" alt="SamAI" class="project-image">
+                        <div class="project-meta">
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>SamAI</h3>
+                            <p>SamAI is a cute Hello Kitty-themed study companion that uploads PDF handouts, extracts text, generates AI-powered summaries, and provides an interactive chat interface for learning.</p>
+                        </div>
+                    </a>
 
-                                    
-    <a href="http://www.printportal.hstn.me/?i=1" target="_blank" class="glass-card project-card reveal">
-                    <img src="projectimages/printportal.png" alt="Print Portal" class="project-image">
-                    <div class="project-meta">
-                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Print Portal</h3>
-                        <p>A web-based printing portal with user and admin panels for print job submission, queue management, and status tracking.</p>
-                    </div>
-                </a>
+                    <a href="http://www.printportal.hstn.me/?i=1" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/printportal.png" alt="Print Portal" class="project-image">
+                        <div class="project-meta">
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Print Portal</h3>
+                            <p>A web-based printing portal with user and admin panels for print job submission, queue management, and status tracking.</p>
+                        </div>
+                    </a>
 
-                <a href="https://rebienalddev.github.io/TechnoPhotobooth/" target="_blank" class="glass-card project-card reveal">
-                    <img src="projectimages/photobooth.png" alt="TechnoBytes Photobooth" class="project-image">
-                    <div class="project-meta">
-                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                    <div class="project-content">
-                        <h3>TechnoBytes Photobooth</h3>
-                        <p>A photobooth developed for different organizations for the foundation week of STI College Bacoor</p>
-                    </div>
-                </a>
+                    <a href="https://rebienalddev.github.io/TechnoPhotobooth/" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/photobooth.png" alt="TechnoBytes Photobooth" class="project-image">
+                        <div class="project-meta">
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>TechnoBytes Photobooth</h3>
+                            <p>A photobooth developed for different organizations for the foundation week of STI College Bacoor</p>
+                        </div>
+                    </a>
 
-                <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="glass-card project-card reveal">
-                    <img src="projectimages/cupofstory.png" alt="Cup Of Story" class="project-image">
-                    <div class="project-meta">
-                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Cup Of Story</h3>
-                        <p>A sophisticated digital storefront demonstrating modern frontend paradigms, elegant interactions, and optimized asset delivery.</p>
-                    </div>
-                </a>
+                    <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/cupofstory.png" alt="Cup Of Story" class="project-image">
+                        <div class="project-meta">
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Cup Of Story</h3>
+                            <p>A sophisticated digital storefront demonstrating modern frontend paradigms, elegant interactions, and optimized asset delivery.</p>
+                        </div>
+                    </a>
 
-                <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="glass-card project-card reveal">
-                    <img src="projectimages/clubhub.png" alt="Club Hub" class="project-image">
-                    <div class="project-meta">
-                        <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Club Hub</h3>
-                        <p>A comprehensive administrative solution for managing organizational members, secure internal data, and broad announcements.</p>
-                    </div>
-                </a>
+                    <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/clubhub.png" alt="Club Hub" class="project-image">
+                        <div class="project-meta">
+                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Club Hub</h3>
+                            <p>A comprehensive administrative solution for managing organizational members, secure internal data, and broad announcements.</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1282,92 +1421,129 @@
                 <h2 class="text-gradient">Professional Certifications</h2>
                 <p>Continuous learning and validated expertise across modern development paradigms.</p>
             </div>
-            
-            <div class="certs-grid">
-                <div class="glass-card cert-card reveal">
-                    <img src="images/Responsive Web Design.jpg" alt="Responsive Web Design" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Responsive Web Design</h4>
-                        <p>FreeCodeCamp</p>
+        </div>
+        
+        <!-- Row 1: Left to Right Marquee -->
+        <div class="certs-marquee certs-marquee-ltr reveal">
+            <div class="certs-marquee-track">
+                <div class="certs-marquee-group">
+                    <div class="glass-card cert-card">
+                        <img src="images/Responsive Web Design.jpg" alt="Responsive Web Design" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Responsive Web Design</h4>
+                            <p>FreeCodeCamp</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card cert-card">
+                        <img src="images/Data.png" alt="JS Algorithms" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>JS Algorithms & Data Structures</h4>
+                            <p>FreeCodeCamp</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/javaewan.jpg" alt="Java Certificate" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>JAVA Certificate</h4>
+                            <p>HackerRank</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/lega.png" alt="Legacy Responsive Web" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Legacy Responsive Web Design</h4>
+                            <p>FreeCodeCamp</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/Web Development.png" alt="Web Development" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Web Development</h4>
+                            <p>Simplilearn</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/Java Certificate_.jpg" alt="Java Programming" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Java Programming</h4>
+                            <p>Simplilearn</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/CSS Certificate_.png" alt="CSS Fundamentals" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>CSS Fundamentals</h4>
+                            <p>Simplilearn</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Right to Left Marquee -->
+        <div class="certs-marquee certs-marquee-rtl reveal" style="margin-top: 0.5rem;">
+            <div class="certs-marquee-track">
+                <div class="certs-marquee-group">
+                    <div class="glass-card cert-card">
+                        <img src="images/CSS Front-End.jpg" alt="CSS Front End" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Front End Dev - CSS</h4>
+                            <p>Great Learning</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/HTML Front-End.png" alt="HTML Front End" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Front End Dev - HTML</h4>
+                            <p>Great Learning</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/techtalk2.jpg" alt="TechTalk Ep 2" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>TechTalk Ep. 2 Speaker</h4>
+                            <p>STI College</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/TechTalk.png" alt="TechTalk Ep 1" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>TechTalk Ep. 1 Speaker</h4>
+                            <p>STI College</p>
+                        </div>
+                    </div>
                 
-                <div class="glass-card cert-card reveal">
-                    <img src="images/Data.png" alt="JS Algorithms" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>JS Algorithms & Data Structures</h4>
-                        <p>FreeCodeCamp</p>
+                    <div class="glass-card cert-card">
+                        <img src="images/webdesign1.jpg" alt="Web Design Competition" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Web Design Competition</h4>
+                            <p>STI College</p>
+                        </div>
                     </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/javaewan.jpg" alt="Java Certificate" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>JAVA Certificate</h4>
-                        <p>HackerRank</p>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/WebDevelopment2.png" alt="Web Development" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Web Development</h4>
+                            <p>Simplilearn</p>
+                        </div>
                     </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/lega.png" alt="Legacy Responsive Web" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Legacy Responsive Web Design</h4>
-                        <p>FreeCodeCamp</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/Web Development.png" alt="Web Development" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Web Development</h4>
-                        <p>Simplilearn</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/Java Certificate_.jpg" alt="Java Programming" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Java Programming</h4>
-                        <p>Simplilearn</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/CSS Certificate_.png" alt="Introduction to CSS" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Introduction to CSS</h4>
-                        <p>Simplilearn</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/CSS Front-End.jpg" alt="CSS Front End" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Front End Dev - CSS</h4>
-                        <p>Great Learning</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/HTML Front-End.png" alt="HTML Front End" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Front End Dev - HTML</h4>
-                        <p>Great Learning</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/techtalk2.jpg" alt="TechTalk Ep 2" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>TechTalk Ep. 2 Speaker</h4>
-                        <p>STI College</p>
-                    </div>
-                </div>
-                <div class="glass-card cert-card reveal">
-                    <img src="images/TechTalk.png" alt="TechTalk Ep 1" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>TechTalk Ep. 1 Speaker</h4>
-                        <p>STI College</p>
-                    </div>
-                </div>
-            
-                <div class="glass-card cert-card reveal">
-                    <img src="images/webdesign1.jpg" alt="Web Design Competition" class="cert-img" onerror="this.style.display='none'">
-                    <div class="cert-info">
-                        <h4>Web Design Competition</h4>
-                        <p>STI College</p>
+
+                    <div class="glass-card cert-card">
+                        <img src="images/Repweb.png" alt="Responsive Web Design" class="cert-img" onerror="this.style.display='none'">
+                        <div class="cert-info">
+                            <h4>Responsive Web Design</h4>
+                            <p>FreeCodeCamp</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1395,7 +1571,7 @@
     <script>
         // Prevent horizontal scroll containers from wiggling when scrolling vertically on mobile
         document.addEventListener('DOMContentLoaded', () => {
-            const scrollContainers = document.querySelectorAll('.services-grid, .projects-grid, .certs-grid, .timeline-carousel');
+            const scrollContainers = document.querySelectorAll('.services-grid, .timeline-carousel, .projects-marquee, .certs-marquee');
             
             scrollContainers.forEach(container => {
                 let startX = 0;
@@ -1533,6 +1709,88 @@
 
             adjustSkillsLayout();
             window.addEventListener('resize', adjustSkillsLayout);
+        });
+
+        // Draggable and Auto-Scrolling Marquee Controller
+        document.addEventListener('DOMContentLoaded', () => {
+            const marquees = document.querySelectorAll('.projects-marquee, .certs-marquee');
+            
+            marquees.forEach(marquee => {
+                const track = marquee.querySelector('.projects-marquee-track, .certs-marquee-track');
+                if (!track) return;
+                
+                // Clone the track content dynamically for infinite scrolling
+                const group = track.querySelector('.projects-marquee-group, .certs-marquee-group');
+                if (!group) return;
+                const clone = group.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+                clone.querySelectorAll('.reveal').forEach(el => el.classList.remove('reveal'));
+                track.appendChild(clone);
+                
+                const isLTR = marquee.classList.contains('certs-marquee-ltr');
+                
+                let speed = 0.8; // px scrolled per frame
+                if (marquee.classList.contains('certs-marquee')) {
+                    speed = 0.5; // slightly slower for text-dense certifications
+                }
+                
+                let scrollPos = isLTR ? group.offsetWidth : 0;
+                marquee.scrollLeft = scrollPos;
+                
+                let isInteracting = false;
+                let resumeTimeout = null;
+                
+                function step() {
+                    if (!isInteracting) {
+                        const maxScroll = group.offsetWidth;
+                        
+                        if (isLTR) {
+                            scrollPos -= speed;
+                            if (scrollPos <= 0) {
+                                scrollPos = maxScroll;
+                            }
+                        } else {
+                            scrollPos += speed;
+                            if (scrollPos >= maxScroll) {
+                                scrollPos = 0;
+                            }
+                        }
+                        marquee.scrollLeft = scrollPos;
+                    }
+                    requestAnimationFrame(step);
+                }
+                
+                requestAnimationFrame(step);
+                
+                // Desktop Hover Controls (pauses scrolling)
+                marquee.addEventListener('mouseenter', () => {
+                    isInteracting = true;
+                });
+                marquee.addEventListener('mouseleave', () => {
+                    isInteracting = false;
+                    scrollPos = marquee.scrollLeft;
+                });
+                
+                // Mobile Touch Controls (allows swipe-scroll override, resumes after 2s)
+                marquee.addEventListener('touchstart', () => {
+                    isInteracting = true;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                }, { passive: true });
+                
+                marquee.addEventListener('touchend', () => {
+                    scrollPos = marquee.scrollLeft;
+                    resumeTimeout = setTimeout(() => {
+                        isInteracting = false;
+                    }, 2000);
+                }, { passive: true });
+                
+                marquee.addEventListener('scroll', () => {
+                    if (isInteracting) {
+                        scrollPos = marquee.scrollLeft;
+                    }
+                }, { passive: true });
+            });
         });
 
         // Basic Security
