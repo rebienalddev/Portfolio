@@ -655,6 +655,14 @@
             0% { transform: translate(-50%, -50%) rotate(270deg) translateX(270px) rotate(-270deg); }
             100% { transform: translate(-50%, -50%) rotate(630deg) translateX(270px) rotate(-630deg); }
         }
+        @keyframes orbit-androidstudio {
+            0% { transform: translate(-50%, -50%) rotate(0deg) translateX(270px) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) translateX(270px) rotate(-360deg); }
+        }
+        @keyframes orbit-git {
+            0% { transform: translate(-50%, -50%) rotate(180deg) translateX(270px) rotate(-180deg); }
+            100% { transform: translate(-50%, -50%) rotate(540deg) translateX(270px) rotate(-540deg); }
+        }
         @keyframes spin-slow {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -734,6 +742,18 @@
             left: 50%; 
             transform: translate(-50%, -50%); 
             animation: orbit-vscode 15s linear infinite; 
+        }
+        .androidstudio-card { 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            animation: orbit-androidstudio 15s linear infinite; 
+        }
+        .git-card { 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            animation: orbit-git 15s linear infinite; 
         }
         
         .tech-float-card:hover {
@@ -1807,7 +1827,7 @@
                     
                     <!-- Node.js at R=390px -->
                     <div class="tech-float-card node-card">
-                        <div class="tech-icon-wrapper"><i class="devicon-nodejs-plain colored"></i></div>
+                        <div class="tech-icon-wrapper"><i class="fab fa-node-js" style="color: #339933;"></i></div>
                         <div class="tech-card-info">
                             <span class="tech-name">Node.js</span>
                             <span class="tech-desc">Server Runtime</span>
@@ -1871,7 +1891,7 @@
                     <!-- Zorin OS at R=330px -->
                     <div class="tech-float-card zorin-card">
                         <div class="tech-icon-wrapper">
-                            <svg viewBox="0 0 32 32" width="18" height="18" fill="#15a6f0" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 32 32" fill="#15a6f0" xmlns="http://www.w3.org/2000/svg" style="width: 1em; height: 1em;">
                                 <path d="M6.769 24.012L9.071 28h13.857l2.302-3.988zM29.846 16l-2.322 4.025H12.788l14.736-8.049zM2.154 16l2.322-4.025h14.736l-14.736 8.05zm4.615-8.012L9.071 4h13.857l2.302 3.988z"/>
                             </svg>
                         </div>
@@ -1896,6 +1916,24 @@
                         <div class="tech-card-info">
                             <span class="tech-name">VS Code</span>
                             <span class="tech-desc">Editor</span>
+                        </div>
+                    </div>
+
+                    <!-- Android Studio at R=270px -->
+                    <div class="tech-float-card androidstudio-card">
+                        <div class="tech-icon-wrapper"><i class="devicon-androidstudio-plain colored"></i></div>
+                        <div class="tech-card-info">
+                            <span class="tech-name">Android Studio</span>
+                            <span class="tech-desc">IDE</span>
+                        </div>
+                    </div>
+
+                    <!-- Git at R=270px -->
+                    <div class="tech-float-card git-card">
+                        <div class="tech-icon-wrapper"><i class="devicon-git-plain colored"></i></div>
+                        <div class="tech-card-info">
+                            <span class="tech-name">Git</span>
+                            <span class="tech-desc">Version Control</span>
                         </div>
                     </div>
                 </div>
@@ -2071,7 +2109,7 @@
                         <!-- Node.js -->
                         <div class="skill-logo-item" style="--brand-color: #339933; --brand-glow: rgba(51, 153, 51, 0.15);" title="Node.js">
                             <div class="skill-icon-wrapper">
-                                <i class="devicon-nodejs-plain colored"></i>
+                                <i class="fab fa-node-js" style="color: #339933;"></i>
                             </div>
                             <span class="skill-logo-name">Node.js</span>
                         </div>
