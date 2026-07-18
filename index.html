@@ -572,7 +572,7 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            background: rgba(0, 0, 0, 0.02);
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -582,7 +582,7 @@
         }
         
         .tech-float-card:hover .tech-icon-wrapper {
-            background: rgba(255, 122, 0, 0.08);
+            background: transparent;
         }
         
         .tech-card-info {
@@ -1398,7 +1398,7 @@
         .cert-info p { font-size: 0.85rem; color: var(--text-tertiary); font-weight: 500; }
 
         /* Contact/Footer */
-        .contact-section { text-align: center; padding: 12rem 0 8rem; border-top: 1px solid rgba(0,0,0,0.08); margin-top: 5rem; position: relative; }
+        .contact-section { text-align: center; padding: 4rem 0 3rem; border-top: 1px solid rgba(0,0,0,0.08); margin-top: 5rem; position: relative; }
         .contact-cta { 
             font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; letter-spacing: -0.05em; 
             color: var(--text-primary); display: inline-block; margin-bottom: 3.5rem; 
@@ -1679,8 +1679,7 @@
             .timeline-item { position: relative; margin-bottom: 2.5rem; background: none; border: none; padding: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
             .timeline-dot { display: block; left: -1.85rem; width: 12px; height: 12px; top: 0.35rem; }
             
-            .contact-cta { font-size: clamp(2rem, 8vw, 2.5rem) !important; margin-bottom: 2rem; }
-            .contact-section { padding: 6rem 0 3rem; margin-top: 2rem; }
+            .contact-section { padding: 3rem 0 2rem; margin-top: 2rem; }
         }
 
         @media (max-width: 480px) {
@@ -1696,7 +1695,6 @@
             .glass-card { padding: 1.35rem; }
             .project-card { padding: 1.35rem; }
             .project-meta { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-            .contact-cta { font-size: 1.8rem !important; }
         }
         
         /* Mobile Menu (Simplified) */
@@ -2512,11 +2510,8 @@
 
     <div class="contact-section reveal">
         <div class="container">
-            <a href="contacts/contact.html" class="contact-cta">Let's build<br><span class="text-gradient-accent">something exceptional.</span></a>
-            
             <div class="social-links">
                 <a href="contacts/contact.html" class="social-link"><i class="fas fa-envelope"></i></a>
-          
             </div>
         </div>
     </div>
