@@ -1721,8 +1721,14 @@
             .hero-visual-inner { transform: translate(-50%, -50%) scale(0.45) !important; margin: 0 !important; }
             .tech-float-card { width: auto !important; height: auto !important; }
             .tech-icon-wrapper { font-size: 4.2rem !important; }
-            .btn-group { flex-direction: column; width: 100%; gap: 0.75rem; }
-            .btn-group .btn-primary, .btn-group .btn-secondary { width: 100%; }
+            .btn-group { flex-direction: row !important; gap: 0.5rem !important; }
+            .btn-group .btn-primary, .btn-group .btn-secondary { 
+                flex: 1 !important; 
+                padding: 0.75rem 0.5rem !important; 
+                font-size: 0.82rem !important; 
+                justify-content: center !important; 
+                white-space: nowrap !important; 
+            }
             .glass-card { padding: 1.35rem; }
             .project-card { padding: 1.35rem; }
             .project-meta { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
