@@ -636,16 +636,20 @@
             100% { transform: translate(-50%, -50%) rotate(-360deg) translateX(330px) rotate(360deg); }
         }
         @keyframes orbit-java {
-            0% { transform: translate(-50%, -50%) rotate(90deg) translateX(330px) rotate(-90deg); }
-            100% { transform: translate(-50%, -50%) rotate(-270deg) translateX(330px) rotate(270deg); }
+            0% { transform: translate(-50%, -50%) rotate(72deg) translateX(330px) rotate(-72deg); }
+            100% { transform: translate(-50%, -50%) rotate(-288deg) translateX(330px) rotate(288deg); }
+        }
+        @keyframes orbit-netbeans {
+            0% { transform: translate(-50%, -50%) rotate(144deg) translateX(330px) rotate(-144deg); }
+            100% { transform: translate(-50%, -50%) rotate(-216deg) translateX(330px) rotate(216deg); }
         }
         @keyframes orbit-mongodb {
-            0% { transform: translate(-50%, -50%) rotate(180deg) translateX(330px) rotate(-180deg); }
-            100% { transform: translate(-50%, -50%) rotate(-180deg) translateX(330px) rotate(180deg); }
+            0% { transform: translate(-50%, -50%) rotate(216deg) translateX(330px) rotate(-216deg); }
+            100% { transform: translate(-50%, -50%) rotate(-144deg) translateX(330px) rotate(144deg); }
         }
         @keyframes orbit-zorin {
-            0% { transform: translate(-50%, -50%) rotate(270deg) translateX(330px) rotate(-270deg); }
-            100% { transform: translate(-50%, -50%) rotate(-90deg) translateX(330px) rotate(90deg); }
+            0% { transform: translate(-50%, -50%) rotate(288deg) translateX(330px) rotate(-288deg); }
+            100% { transform: translate(-50%, -50%) rotate(-72deg) translateX(330px) rotate(72deg); }
         }
         @keyframes orbit-bootstrap {
             0% { transform: translate(-50%, -50%) rotate(90deg) translateX(270px) rotate(-90deg); }
@@ -716,6 +720,13 @@
             left: 50%; 
             transform: translate(-50%, -50%);
             animation: orbit-java 20s linear infinite; 
+        }
+        .netbeans-card { 
+            top: 50%; 
+            right: auto;
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            animation: orbit-netbeans 20s linear infinite; 
         }
         .mongodb-card { 
             top: 50%; 
@@ -1878,6 +1889,15 @@
                             <span class="tech-desc">Applications</span>
                         </div>
                     </div>
+                    
+                    <!-- NetBeans at R=330px -->
+                    <div class="tech-float-card netbeans-card">
+                        <div class="tech-icon-wrapper"><i class="devicon-netbeans-plain colored"></i></div>
+                        <div class="tech-card-info">
+                            <span class="tech-name">NetBeans</span>
+                            <span class="tech-desc">Java IDE</span>
+                        </div>
+                    </div>
 
                     <!-- MongoDB at R=330px -->
                     <div class="tech-float-card mongodb-card">
@@ -2203,6 +2223,13 @@
                                 <i class="devicon-androidstudio-plain colored"></i>
                             </div>
                             <span class="skill-logo-name">Android Studio</span>
+                        </div>
+                        <!-- NetBeans -->
+                        <div class="skill-logo-item" style="--brand-color: #1B6AC6; --brand-glow: rgba(27, 106, 198, 0.15);" title="NetBeans">
+                            <div class="skill-icon-wrapper">
+                                <i class="devicon-netbeans-plain colored"></i>
+                            </div>
+                            <span class="skill-logo-name">NetBeans</span>
                         </div>
                         <!-- Ubuntu -->
                         <div class="skill-logo-item" style="--brand-color: #E95420; --brand-glow: rgba(233, 84, 32, 0.15);" title="Ubuntu">
