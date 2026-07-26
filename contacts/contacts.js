@@ -1,4 +1,5 @@
-// --- CONTACT FORM & DIRECT EMAIL NOTIFICATION ENGINE ---
+// --- CONTACT FORM & DIRECT EMAIL DELIVERY (FORMSUBMIT.CO) ---
+// FormSubmit delivers messages directly to Rebienaldev@gmail.com from any domain (Vercel, GitHub, Mobile, PC)
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -45,18 +46,20 @@ if (contactForm) {
                 is_read: 0
             };
 
-            // 1. Direct Email Delivery to Rebienaldev@gmail.com (via Web3Forms)
+            // 1. Direct Email Delivery to Rebienaldev@gmail.com via FormSubmit API
             try {
-                fetch('https://api.web3forms.com/submit', {
+                fetch('https://formsubmit.co/ajax/Rebienaldev@gmail.com', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify({
-                        access_key: 'YOUR_FREE_WEB3FORMS_KEY',
                         name: nameVal,
                         email: emailVal,
                         subject: subjectVal,
                         message: messageVal,
-                        to_email: 'Rebienaldev@gmail.com'
+                        _subject: `New Portfolio Inquiry: ${subjectVal}`
                     })
                 }).catch(() => {});
             } catch (err) {}
