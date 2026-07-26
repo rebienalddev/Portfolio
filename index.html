@@ -1923,7 +1923,7 @@
 
                 <div class="btn-group">
                     <a href="#work" class="btn-primary">View Projects <i class="fas fa-arrow-right" style="margin-left: 0.5rem; font-size: 0.85rem;"></i></a>
-                    <a href="Carpio Rebienald CV.pdf" download="Carpio Rebienald CV.pdf" class="btn-secondary">Download CV <i class="fas fa-download" style="margin-left: 0.5rem; font-size: 0.85rem;"></i></a>
+                    <a href="Carpio Rebienald CV.pdf" download="Carpio Rebienald CV.pdf" class="btn-secondary" onclick="if(window.trackCvDownload) window.trackCvDownload();">Download CV <i class="fas fa-download" style="margin-left: 0.5rem; font-size: 0.85rem;"></i></a>
                 </div>
             </div>
             
@@ -3145,5 +3145,6 @@
             }
         }
     </script>
+    <script src="analytics.js"></script>
 </body>
 </html>
