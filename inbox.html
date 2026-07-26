@@ -399,8 +399,10 @@
             let isCloud = false;
             if (db) {
                 try {
-                    const snap = await db.ref('messages').once('value');
-                    if (snap.exists()) {
+                    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+                    const fetchOp = db.ref('messages').once('value');
+                    const snap = await Promise.race([fetchOp, timeout]);
+                    if (snap && snap.exists()) {
                         allMessages = Object.values(snap.val()).sort((a, b) => b.id - a.id);
                         isCloud = true;
                     }

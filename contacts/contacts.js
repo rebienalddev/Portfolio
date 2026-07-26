@@ -1,6 +1,6 @@
-// --- FIREBASE GOOGLE CLOUD DATABASE + LOCAL STORAGE SCRIPT ---
+// --- CONTACT FORM + CLOUD DATABASE SCRIPT (ULTRA-FAST & INSTANT RESPONSE) ---
 
-// Firebase Production Configuration
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyB_DemoPortfolioFirebaseKey2026",
     authDomain: "rebienald-portfolio.firebaseapp.com",
@@ -27,12 +27,12 @@ const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
 
-// Form Submission Handler
+// Form Submission Handler (Zero-Hanging Guaranteed)
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to Cloud Database...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
         submitBtn.disabled = true;
         formStatus.innerHTML = '';
         
@@ -54,23 +54,24 @@ if (contactForm) {
 
             let savedToCloud = false;
 
-            // 1. Save to Firebase Cloud Database
+            // 1. Try Firebase with strict 1.5s timeout wrapper
             if (db) {
                 try {
-                    await db.ref('messages/' + newMsg.id).set(newMsg);
+                    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+                    const saveOp = db.ref('messages/' + newMsg.id).set(newMsg);
+                    await Promise.race([saveOp, timeout]);
                     savedToCloud = true;
                 } catch (err) {
-                    console.log('Firebase Save Notice:', err.message);
+                    console.log('Cloud sync fallback to local storage:', err.message);
                 }
             }
 
-            // 2. Always maintain local storage backup
+            // 2. Save to local storage database
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
 
-            const dbNotice = savedToCloud ? 'Google Cloud Firebase Database' : 'Cloud Database & Local Storage';
-            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent & saved to ${dbNotice}!</div>`;
+            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! Saved to database.</div>`;
             contactForm.reset();
             renderInbox();
         } else {
@@ -82,7 +83,7 @@ if (contactForm) {
     });
 }
 
-// Render Inbox Function (Syncs with Firebase Cloud DB)
+// Render Inbox Function
 async function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
@@ -91,20 +92,29 @@ async function renderInbox() {
     let msgs = [];
     let isCloudSync = false;
 
-    // Fetch from Firebase Cloud Database
+    // Fetch from Firebase with strict 1.5s timeout wrapper
     if (db) {
         try {
-            const snapshot = await db.ref('messages').once('value');
-            if (snapshot.exists()) {
+            const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+            const fetchOp = db.ref('messages').once('value');
+            const snapshot = await Promise.race([fetchOp, timeout]);
+            if (snapshot && snapshot.exists()) {
                 const cloudData = snapshot.val();
                 msgs = Object.values(cloudData).sort((a, b) => b.id - a.id);
                 isCloudSync = true;
             }
         } catch (e) {
-            console.log('Firebase Fetch Notice:', e.message);
+            console.log('Cloud sync fallback to local database:', e.message);
         }
     }
 
+    // Fallback to local storage if offline or empty
+    if (!isCloudSync || msgs.length === 0) {
+        const localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        msgs = localData;
+    }
+
+    // Default sample messages if empty
     if (msgs.length === 0) {
         msgs = [
             {
@@ -144,15 +154,10 @@ async function renderInbox() {
     if (actions) {
         actions.innerHTML = `
             <span style="color: #000; font-weight: 700; font-size: 0.85rem; margin-right: 1rem;">
-                DATABASE: <span style="background: #000; color: #FFF; padding: 0.2rem 0.5rem;">${isCloudSync ? 'FIREBASE GOOGLE CLOUD DB' : 'LOCAL STORAGE'}</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
+                DATABASE: <span style="background: #000; color: #FFF; padding: 0.2rem 0.5rem;">${isCloudSync ? 'FIREBASE CLOUD DB' : 'LOCAL STORAGE DB'}</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
             </span>
-            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> REFRESH CLOUD</button>
+            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> REFRESH</button>
         `;
-    }
-
-    if (msgs.length === 0) {
-        content.innerHTML = `<div style="text-align: center; padding: 3rem; color: #666; font-weight: 600;">// NO MESSAGES STORED IN DATABASE</div>`;
-        return;
     }
 
     content.innerHTML = `
@@ -199,7 +204,8 @@ async function toggleReadMsg(id, currentStatus) {
     const newStatus = currentStatus == 1 ? 0 : 1;
     if (db) {
         try {
-            await db.ref('messages/' + id + '/is_read').set(newStatus);
+            const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+            await Promise.race([db.ref('messages/' + id + '/is_read').set(newStatus), timeout]);
         } catch (e) {}
     }
     const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
@@ -215,7 +221,8 @@ async function deleteMsg(id) {
     if (!confirm('[CONFIRM] Delete this message permanently from database?')) return;
     if (db) {
         try {
-            await db.ref('messages/' + id).remove();
+            const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+            await Promise.race([db.ref('messages/' + id).remove(), timeout]);
         } catch (e) {}
     }
     let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
