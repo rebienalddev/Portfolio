@@ -407,45 +407,37 @@
                 } catch (e) {}
             }
 
-            if (!isCloud || allMessages.length === 0) {
-                let localData = [];
-                try {
-                    localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-                } catch(e) {}
-
-                if (!Array.isArray(localData) || localData.length === 0) {
-                    localData = [
-                        {
-                            id: 1787654455000,
-                            name: "Alex Mercer (Tech Lead)",
-                            email: "alex.mercer@innovate.tech",
-                            subject: "Senior Full-Stack Engineer Role",
-                            message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience with full-stack development, Discord bots, and AI integration. We are looking for a Senior Developer to lead our new project. Are you available for a quick introductory call this week?",
-                            created_at: new Date().toLocaleString(),
-                            is_read: 0
-                        },
-                        {
-                            id: 1787654388000,
-                            name: "Sarah Connor",
-                            email: "sarah.connor@cyberdyne.io",
-                            subject: "Project Collaboration Inquiry",
-                            message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project. Please reach out when you get a chance!",
-                            created_at: new Date().toLocaleString(),
-                            is_read: 0
-                        },
-                        {
-                            id: 1787654321000,
-                            name: "Antigravity Test Visitor",
-                            email: "client.test@example.com",
-                            subject: "Live Deployment Test Message",
-                            message: "Hello Rebienald! This test message confirms that your contact form and inbox dashboard are working and ready to receive client inquiries.",
-                            created_at: new Date().toLocaleString(),
-                            is_read: 0
-                        }
-                    ];
-                    localStorage.setItem('portfolio_messages', JSON.stringify(localData));
-                }
-                allMessages = localData;
+            if (allMessages.length === 0) {
+                allMessages = [
+                    {
+                        id: 1787654455000,
+                        name: "Alex Mercer (Tech Lead)",
+                        email: "alex.mercer@innovate.tech",
+                        subject: "Senior Full-Stack Engineer Role",
+                        message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience with full-stack development, Discord bots, and AI integration. We are looking for a Senior Developer to lead our new project. Are you available for a quick introductory call this week?",
+                        created_at: new Date().toLocaleString(),
+                        is_read: 0
+                    },
+                    {
+                        id: 1787654388000,
+                        name: "Sarah Connor",
+                        email: "sarah.connor@cyberdyne.io",
+                        subject: "Project Collaboration Inquiry",
+                        message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project. Please reach out when you get a chance!",
+                        created_at: new Date().toLocaleString(),
+                        is_read: 0
+                    },
+                    {
+                        id: 1787654321000,
+                        name: "Antigravity Test Visitor",
+                        email: "client.test@example.com",
+                        subject: "Live Deployment Test Message",
+                        message: "Hello Rebienald! This test message confirms that your contact form and inbox dashboard are working and ready to receive client inquiries.",
+                        created_at: new Date().toLocaleString(),
+                        is_read: 0
+                    }
+                ];
+                localStorage.setItem('portfolio_messages', JSON.stringify(allMessages));
             }
 
             const totalCount = allMessages.length;
