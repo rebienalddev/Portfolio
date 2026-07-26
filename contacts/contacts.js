@@ -1,6 +1,8 @@
-// --- CONTACT FORM & REAL-TIME CLOUD DATABASE SYNCHRONIZATION ---
+// --- GLOBAL CONTACT FORM & CLOUD DATABASE ENGINE ---
+// Allows ANY visitor from ANYWHERE in the world (Vercel, GitHub, Mobile, PC) to send messages
 
-const CLOUD_DB_ENDPOINT = "https://portfolio-db-sync.rebienald.workers.dev/messages";
+const SUPABASE_URL = "https://xvzwvjzyfvhpxxkx.supabase.co/rest/v1/messages";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2end2anp5ZnZocHh4a3giLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY3MjUwMDAwMCwiZXhwIjoyMDE4MDc2MDAwfQ.demo_key";
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -63,18 +65,24 @@ if (contactForm) {
                 }).catch(() => {});
             } catch (err) {}
 
-            // 2. Cloud DB Push & Local Cache Update
-            const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            localMsgs.unshift(newMsg);
-            localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
-
+            // 2. Central Cloud Database Push (Supabase REST API)
             try {
-                fetch(CLOUD_DB_ENDPOINT, {
+                fetch(SUPABASE_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Prefer': 'return=representation'
+                    },
                     body: JSON.stringify(newMsg)
                 }).catch(() => {});
             } catch (e) {}
+
+            // 3. Local Storage Cache
+            const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            localMsgs.unshift(newMsg);
+            localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
 
             formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! I will reply to your email shortly.</div>`;
             contactForm.reset();
@@ -95,9 +103,30 @@ async function renderInbox() {
     if (!content) return;
 
     let msgs = [];
+
+    // Try fetching from Central Cloud Database (Supabase)
     try {
-        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+        const fetchOp = fetch(`${SUPABASE_URL}?select=*&order=id.desc`, {
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+        });
+        const res = await Promise.race([fetchOp, timeout]);
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                msgs = data;
+                localStorage.setItem('portfolio_messages', JSON.stringify(data));
+            }
+        }
     } catch(e) {}
+
+    // Fallback to local storage if offline or waiting
+    if (msgs.length === 0) {
+        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    }
 
     if (msgs.length === 0) {
         msgs = [
