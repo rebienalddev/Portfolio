@@ -3,32 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inbox Dashboard | Rebienald Carpio</title>
+    <title>Inbox | Rebienald Carpio</title>
     <link rel="icon" type="image/png" href="images/logo.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-body: #F4F5F7;
-            --bg-card: #FFFFFF;
-            --border-color: #111827;
-            --text-main: #111827;
-            --text-muted: #4B5563;
-            --accent-orange: #FF7A00;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --bg: #FFFFFF;
+            --text: #111827;
+            --muted: #6B7280;
+            --border: #E5E7EB;
+            --orange: #FF7A00;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            font-family: var(--font-sans);
+            background-color: #FAFAFA;
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
             line-height: 1.5;
             min-height: 100vh;
             display: flex;
@@ -38,15 +35,12 @@
 
         .navbar {
             background: #FFFFFF;
-            border-bottom: 2px solid #111827;
+            border-bottom: 1px solid var(--border);
             padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .nav-container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -54,45 +48,31 @@
         }
 
         .brand {
-            font-family: var(--font-mono);
             font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .brand-badge {
-            background: #111827;
-            color: #FFFFFF;
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            font-size: 1.1rem;
+            color: var(--text);
+            letter-spacing: -0.02em;
         }
 
         .nav-right {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .btn-sharp {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.55rem 1.1rem;
-            font-family: var(--font-sans);
+            gap: 0.4rem;
+            padding: 0.45rem 0.9rem;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 600;
             text-decoration: none;
-            color: var(--text-main);
+            color: var(--text);
             background: #FFFFFF;
-            border: 2px solid #111827;
+            border: 1px solid #111827;
             cursor: pointer;
-            transition: all 0.15s ease;
             border-radius: 0;
+            transition: all 0.15s ease;
         }
 
         .btn-sharp:hover {
@@ -111,238 +91,145 @@
         }
 
         .main-wrapper {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
             width: 100%;
             flex: 1;
         }
 
         .page-header {
-            margin-bottom: 2rem;
-            border-bottom: 3px solid #111827;
-            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid #111827;
+            padding-bottom: 0.75rem;
         }
 
         .page-header h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            text-transform: uppercase;
-            color: #111827;
         }
 
-        .page-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-top: 0.25rem;
-        }
-
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-box {
-            background: #FFFFFF;
-            border: 2px solid #111827;
-            padding: 1.25rem;
-            border-left: 6px solid #111827;
-        }
-
-        .stat-box .val {
-            font-family: var(--font-mono);
-            font-size: 2.2rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #111827;
-        }
-
-        .stat-box .lbl {
-            font-size: 0.8rem;
+        .stats-summary {
+            font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 0.5rem;
+            color: var(--text);
         }
 
         .toolbar {
-            background: #FFFFFF;
-            border: 2px solid #111827;
-            padding: 1.25rem;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
         }
 
         .search-box {
             display: flex;
             align-items: center;
             background: #FFFFFF;
-            border: 2px solid #111827;
-            padding: 0 1rem;
+            border: 1px solid var(--border);
+            padding: 0 0.8rem;
             flex: 1;
-            min-width: 280px;
-        }
-
-        .search-box i {
-            color: #111827;
-            margin-right: 0.75rem;
-            font-size: 1rem;
         }
 
         .search-box input {
             width: 100%;
-            padding: 0.75rem 0;
+            padding: 0.6rem 0;
             border: none;
             outline: none;
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-main);
+            font-size: 0.85rem;
+            color: var(--text);
             background: transparent;
         }
 
-        .filter-group {
-            display: flex;
-            gap: 0.5rem;
-        }
-
         .filter-btn {
-            font-family: var(--font-sans);
             font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.6rem 1.1rem;
+            font-weight: 600;
+            padding: 0.5rem 0.85rem;
             background: #FFFFFF;
-            color: #111827;
-            border: 2px solid #111827;
+            color: var(--muted);
+            border: 1px solid var(--border);
             cursor: pointer;
-            text-transform: uppercase;
         }
 
         .filter-btn.active {
             background: #111827;
             color: #FFFFFF;
+            border-color: #111827;
         }
 
-        .messages-container {
+        .messages-list {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1rem;
         }
 
         .msg-card {
             background: #FFFFFF;
-            border: 2px solid #111827;
-            box-shadow: 4px 4px 0px #111827;
-            transition: all 0.15s ease;
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+            transition: border-color 0.15s ease;
         }
 
         .msg-card.unread {
-            border-left: 8px solid #FF7A00;
+            border-left: 4px solid var(--orange);
         }
 
         .msg-header {
-            padding: 1.25rem;
-            border-bottom: 2px solid #111827;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: #F9FAFB;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
         }
 
-        .msg-sender h3 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #111827;
+        .msg-sender {
+            font-size: 0.95rem;
+            font-weight: 700;
         }
 
-        .msg-sender a {
-            color: #111827;
-            font-size: 0.9rem;
-            font-weight: 600;
+        .msg-email {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 500;
+            margin-left: 0.5rem;
             text-decoration: none;
-            font-family: var(--font-mono);
-        }
-
-        .msg-sender a:hover {
-            color: #FF7A00;
-        }
-
-        .msg-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
         }
 
         .msg-time {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-        }
-
-        .badge-status {
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 0.25rem 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border: 2px solid #111827;
-        }
-
-        .badge-status.unread {
-            background: #FF7A00;
-            color: #FFFFFF;
-        }
-
-        .badge-status.read {
-            background: #E5E7EB;
-            color: #111827;
-        }
-
-        .msg-body-wrapper {
-            padding: 1.25rem;
+            font-size: 0.8rem;
+            color: var(--muted);
         }
 
         .msg-subject {
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-            color: #111827;
-        }
-
-        .msg-content {
             font-size: 0.95rem;
-            color: #111827;
-            white-space: pre-wrap;
-            line-height: 1.6;
-            font-weight: 500;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
         }
 
-        .msg-actions {
-            padding: 0.85rem 1.25rem;
-            background: #F9FAFB;
-            border-top: 2px solid #111827;
+        .msg-body {
+            font-size: 0.9rem;
+            color: #374151;
+            white-space: pre-wrap;
+            margin-bottom: 1rem;
+        }
+
+        .msg-footer {
             display: flex;
             justify-content: flex-end;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
-        .empty-box {
+        .empty-state {
             background: #FFFFFF;
-            border: 2px dashed #111827;
-            padding: 4rem 2rem;
+            border: 1px dashed var(--border);
+            padding: 3rem;
             text-align: center;
-            color: #111827;
-            font-weight: 700;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -350,11 +237,9 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <div class="brand">
-                Reb.Dev <span class="brand-badge">INBOX</span>
-            </div>
+            <div class="brand">REBIENALD CARPIO / INBOX</div>
             <div class="nav-right">
-                <a href="index.html" class="btn-sharp"><i class="fas fa-home"></i> Portfolio</a>
+                <a href="index.html" class="btn-sharp"><i class="fas fa-arrow-left"></i> Portfolio</a>
                 <a href="contacts/contact.html" class="btn-sharp"><i class="fas fa-paper-plane"></i> Contact Form</a>
             </div>
         </div>
@@ -362,55 +247,42 @@
 
     <main class="main-wrapper">
         <div class="page-header">
-            <h1>Message Center</h1>
-            <p>Direct Contact Form Submissions & Cloud Database</p>
+            <h1>Inbox Messages</h1>
+            <div class="stats-summary" id="statsSummary">Total: 0 | Unread: 0</div>
         </div>
 
-        <div id="mainContainer">
-            <!-- Rendered immediately at 0ms -->
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-search" style="color: var(--muted); margin-right: 0.5rem;"></i>
+                <input type="text" id="searchInput" placeholder="Search messages..." oninput="renderUI()">
+            </div>
+            <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
+            <button class="filter-btn" id="filterUnread" onclick="setFilter('unread')">Unread</button>
+            <button class="filter-btn" id="filterRead" onclick="setFilter('read')">Read</button>
+        </div>
+
+        <div class="messages-list" id="messagesList">
+            <!-- Messages rendered dynamically -->
         </div>
     </main>
 
-    <!-- Firebase Google Cloud Database SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyB_DemoPortfolioFirebaseKey2026",
-            authDomain: "rebienald-portfolio.firebaseapp.com",
-            databaseURL: "https://rebienald-portfolio-default-rtdb.firebaseio.com",
-            projectId: "rebienald-portfolio",
-            storageBucket: "rebienald-portfolio.appspot.com",
-            messagingSenderId: "987654321012",
-            appId: "1:987654321012:web:1a2b3c4d5e6f7g8h9i0j"
-        };
-
-        let db = null;
-        if (typeof firebase !== 'undefined') {
-            try {
-                if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-                db = firebase.database();
-            } catch (e) {}
-        }
-
         let currentFilter = 'all';
-        let allMessages = [];
+        let messages = [];
 
-        function renderApp() {
-            // 1. Instant 0ms Local Render (No Waiting / No White Screen)
-            let msgs = [];
+        function initData() {
             try {
-                msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+                messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             } catch (e) {}
 
-            if (!Array.isArray(msgs) || msgs.length === 0) {
-                msgs = [
+            if (!Array.isArray(messages) || messages.length === 0) {
+                messages = [
                     {
                         id: 1787654455000,
-                        name: "Alex Mercer (Tech Lead)",
+                        name: "Alex Mercer",
                         email: "alex.mercer@innovate.tech",
                         subject: "Senior Full-Stack Engineer Role",
-                        message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience with full-stack development, Discord bots, and AI integration. We are looking for a Senior Developer to lead our new project. Are you available for a quick introductory call this week?",
+                        message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project. Are you available for a quick call this week?",
                         created_at: new Date().toLocaleString(),
                         is_read: 0
                     },
@@ -419,83 +291,28 @@
                         name: "Sarah Connor",
                         email: "sarah.connor@cyberdyne.io",
                         subject: "Project Collaboration Inquiry",
-                        message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project. Please reach out when you get a chance!",
-                        created_at: new Date().toLocaleString(),
-                        is_read: 0
-                    },
-                    {
-                        id: 1787654321000,
-                        name: "Antigravity Test Visitor",
-                        email: "client.test@example.com",
-                        subject: "Live Deployment Test Message",
-                        message: "Hello Rebienald! This test message confirms that your contact form and inbox dashboard are working and ready to receive client inquiries.",
+                        message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project.",
                         created_at: new Date().toLocaleString(),
                         is_read: 0
                     }
                 ];
-                localStorage.setItem('portfolio_messages', JSON.stringify(msgs));
+                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
             }
-
-            allMessages = msgs;
-            drawUI();
-
-            // 2. Background Cloud Sync (Silent update without blocking UI)
-            if (db && !window.hasCloudSynced) {
-                window.hasCloudSynced = true;
-                const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
-                Promise.race([db.ref('messages').once('value'), timeout]).then(snap => {
-                    if (snap && snap.exists()) {
-                        allMessages = Object.values(snap.val()).sort((a, b) => b.id - a.id);
-                        drawUI();
-                    }
-                }).catch(() => {});
-            }
+            renderUI();
         }
 
-        function drawUI() {
-            const main = document.getElementById('mainContainer');
-            if (!main) return;
-
-            const totalCount = allMessages.length;
-            const unreadCount = allMessages.filter(m => m.is_read == 0).length;
-
-            main.innerHTML = `
-                <div class="stats-bar">
-                    <div class="stat-box">
-                        <div class="val">${totalCount}</div>
-                        <div class="lbl">Total Messages</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="val" style="color: #FF7A00;">${unreadCount}</div>
-                        <div class="lbl">Unread Messages</div>
-                    </div>
-                </div>
-
-                <div class="toolbar">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Search by name, email, or subject..." oninput="filterMessages()">
-                    </div>
-                    <div class="filter-group">
-                        <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">All (${totalCount})</button>
-                        <button class="filter-btn ${currentFilter === 'unread' ? 'active' : ''}" onclick="setFilter('unread')">Unread (${unreadCount})</button>
-                        <button class="filter-btn ${currentFilter === 'read' ? 'active' : ''}" onclick="setFilter('read')">Read</button>
-                    </div>
-                </div>
-
-                <div class="messages-container" id="messagesContainer">
-                    ${renderMessagesList(allMessages)}
-                </div>
-            `;
-        }
-
-        function renderMessagesList(messages) {
+        function renderUI() {
+            const container = document.getElementById('messagesList');
+            const stats = document.getElementById('statsSummary');
             const query = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+            const total = messages.length;
+            const unread = messages.filter(m => m.is_read == 0).length;
+            if (stats) stats.innerText = `Total: ${total} | Unread: ${unread}`;
 
             let filtered = messages.filter(msg => {
                 if (currentFilter === 'unread' && msg.is_read == 1) return false;
                 if (currentFilter === 'read' && msg.is_read == 0) return false;
-
                 if (query) {
                     const haystack = (msg.name + ' ' + msg.email + ' ' + msg.subject + ' ' + msg.message).toLowerCase();
                     return haystack.includes(query);
@@ -504,44 +321,27 @@
             });
 
             if (filtered.length === 0) {
-                return `
-                    <div class="empty-box">
-                        <i class="fas fa-inbox" style="font-size: 2.5rem; margin-bottom: 1rem; color: #111827;"></i>
-                        <div style="font-weight: 700;">No messages found in database</div>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state">No messages in inbox</div>`;
+                return;
             }
 
-            return filtered.map(msg => `
+            container.innerHTML = filtered.map(msg => `
                 <div class="msg-card ${msg.is_read == 0 ? 'unread' : ''}">
                     <div class="msg-header">
-                        <div class="msg-sender">
-                            <h3>${escapeHtml(msg.name)}</h3>
-                            <a href="mailto:${escapeHtml(msg.email)}"><i class="fas fa-envelope"></i> ${escapeHtml(msg.email)}</a>
+                        <div>
+                            <span class="msg-sender">${escapeHtml(msg.name)}</span>
+                            <a href="mailto:${escapeHtml(msg.email)}" class="msg-email">&lt;${escapeHtml(msg.email)}&gt;</a>
                         </div>
-                        <div class="msg-meta">
-                            <span class="msg-time"><i class="far fa-clock"></i> ${escapeHtml(msg.created_at)}</span>
-                            <span class="badge-status ${msg.is_read == 0 ? 'unread' : 'read'}">
-                                ${msg.is_read == 0 ? 'Unread' : 'Read'}
-                            </span>
-                        </div>
+                        <span class="msg-time">${escapeHtml(msg.created_at)}</span>
                     </div>
-
-                    <div class="msg-body-wrapper">
-                        <div class="msg-subject">
-                            <strong style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-right: 0.5rem;">Subject:</strong> 
-                            ${escapeHtml(msg.subject)}
-                        </div>
-                        <div class="msg-content">${escapeHtml(msg.message)}</div>
-                    </div>
-
-                    <div class="msg-actions">
+                    <div class="msg-subject">${escapeHtml(msg.subject)}</div>
+                    <div class="msg-body">${escapeHtml(msg.message)}</div>
+                    <div class="msg-footer">
                         <button class="btn-sharp" onclick="toggleRead('${msg.id}')">
-                            <i class="fas ${msg.is_read == 0 ? 'fa-check' : 'fa-envelope-open'}"></i>
                             ${msg.is_read == 0 ? 'Mark Read' : 'Mark Unread'}
                         </button>
                         <button class="btn-sharp btn-danger" onclick="deleteMessage('${msg.id}')">
-                            <i class="fas fa-trash"></i> Delete
+                            Delete
                         </button>
                     </div>
                 </div>
@@ -550,43 +350,27 @@
 
         function setFilter(filter) {
             currentFilter = filter;
-            drawUI();
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if (filter === 'all') document.getElementById('filterAll').classList.add('active');
+            if (filter === 'unread') document.getElementById('filterUnread').classList.add('active');
+            if (filter === 'read') document.getElementById('filterRead').classList.add('active');
+            renderUI();
         }
 
-        function filterMessages() {
-            const container = document.getElementById('messagesContainer');
-            if (!container) return;
-            container.innerHTML = renderMessagesList(allMessages);
-        }
-
-        async function toggleRead(id) {
-            const msg = allMessages.find(m => m.id == id);
+        function toggleRead(id) {
+            const msg = messages.find(m => m.id == id);
             if (msg) {
-                const newStatus = msg.is_read == 1 ? 0 : 1;
-                msg.is_read = newStatus;
-                if (db) {
-                    try { await db.ref('messages/' + id + '/is_read').set(newStatus); } catch (e) {}
-                }
-                const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-                const lMsg = localMsgs.find(m => m.id == id);
-                if (lMsg) {
-                    lMsg.is_read = newStatus;
-                    localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
-                }
-                drawUI();
+                msg.is_read = msg.is_read == 1 ? 0 : 1;
+                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+                renderUI();
             }
         }
 
-        async function deleteMessage(id) {
-            if (!confirm('[CONFIRM] Delete this message permanently from database?')) return;
-            if (db) {
-                try { await db.ref('messages/' + id).remove(); } catch (e) {}
-            }
-            allMessages = allMessages.filter(m => m.id != id);
-            let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            localMsgs = localMsgs.filter(m => m.id != id);
-            localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
-            drawUI();
+        function deleteMessage(id) {
+            if (!confirm('Delete message?')) return;
+            messages = messages.filter(m => m.id != id);
+            localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+            renderUI();
         }
 
         function escapeHtml(str) {
@@ -594,7 +378,7 @@
             return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
         }
 
-        document.addEventListener('DOMContentLoaded', renderApp);
+        document.addEventListener('DOMContentLoaded', initData);
     </script>
 </body>
 </html>
