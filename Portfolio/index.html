@@ -129,9 +129,12 @@
             min-height: 100vh;
         }
 
-        /* Globally justify all sentences/paragraphs */
+        /* Paragraph & Link Styling */
         p {
             text-align: left;
+        }
+        a {
+            text-decoration: none !important;
         }
 
         /* Ambient Lighting (Disabled for Minimalist Look) */
@@ -220,14 +223,10 @@
         
         .hamburger { display: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; }
 
-        /* General Sections & Uniform Header Sizing (Except Hero Name) */
+        /* General Sections */
         section { padding: 5rem 0; position: relative; }
         .section-header { margin-bottom: 4rem; }
-        
-        h2, .section-header h2, .glass-card h2, .edu-col-title, section h2 { 
-            font-size: 2.2rem !important; 
-            margin-bottom: 1rem; 
-        }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; }
         .section-header p { color: var(--text-secondary); max-width: 600px; font-size: 1.1rem; }
 
         /* Minimalist SaaS Card */
@@ -370,7 +369,7 @@
         .glass-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--text-primary); }
         .glass-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
 
-        /* Projects Marquee */
+        /* Projects Marquee - GPU Hardware Accelerated for Silky Smooth Swiping */
         .projects-marquee, .certs-marquee {
             overflow-x: auto;
             overflow-y: hidden;
@@ -384,6 +383,10 @@
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
+            will-change: scroll-position, transform;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .projects-marquee:active, .certs-marquee:active {
@@ -394,16 +397,24 @@
             display: none;
         }
 
-        .projects-marquee-track {
+        .projects-marquee-track, .certs-marquee-track {
             display: flex;
             width: max-content;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
-        .projects-marquee-group {
+        .projects-marquee-group, .certs-marquee-group {
             display: flex;
             gap: 2rem;
             padding-right: 2rem;
             flex-shrink: 0;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .project-card { 
@@ -972,28 +983,18 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { 
-                white-space: nowrap !important; 
-                font-size: clamp(1.2rem, 6.5vw, 2.2rem) !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
+            * {
+                -webkit-tap-highlight-color: transparent !important;
+                -webkit-touch-callout: none !important;
             }
-            h2, .section-header h2, .glass-card h2, .edu-col-title, section h2, .project-card h3, .timeline-item h3 { 
-                font-size: clamp(1.15rem, 5.2vw, 1.5rem) !important;
-                white-space: nowrap !important; 
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-            }
+            .section-header h2 { font-size: 2rem; }
+            .hero h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); }
         }
 
         @media (max-width: 480px) {
             .container { padding: 0 1rem; }
             nav { width: calc(100% - 2rem); }
-            .hero h1 { font-size: clamp(1.1rem, 6vw, 1.8rem) !important; white-space: nowrap !important; }
-            h2, .section-header h2, .glass-card h2, .edu-col-title, section h2, .project-card h3, .timeline-item h3 { 
-                font-size: 1.25rem !important; 
-                white-space: nowrap !important; 
-            }
+            .hero h1 { font-size: clamp(1.4rem, 6.5vw, 2rem) !important; }
             .hero-visual { height: 360px !important; }
             .hero-visual-inner { transform: translate(-50%, -50%) scale(0.45) !important; margin: 0 !important; }
             .tech-float-card { width: auto !important; height: auto !important; }
@@ -1867,9 +1868,7 @@
 
             adjustSkillsLayout();
             window.addEventListener('resize', adjustSkillsLayout);
-        });
-
-        // Draggable and Auto-Scrolling Marquee Controller
+            // Draggable and Auto-Scrolling Marquee Controller (GPU Accelerated & 60fps Smooth Swiping)
         document.addEventListener('DOMContentLoaded', () => {
             const marquees = document.querySelectorAll('.projects-marquee, .certs-marquee');
             
@@ -1877,9 +1876,10 @@
                 const track = marquee.querySelector('.projects-marquee-track, .certs-marquee-track');
                 if (!track) return;
                 
-                // Clone the track content dynamically for infinite scrolling
                 const group = track.querySelector('.projects-marquee-group, .certs-marquee-group');
                 if (!group) return;
+
+                // Clone the track content dynamically for infinite scrolling
                 const clone = group.cloneNode(true);
                 clone.setAttribute('aria-hidden', 'true');
                 clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
@@ -1887,42 +1887,13 @@
                 track.appendChild(clone);
                 
                 const isLTR = marquee.classList.contains('certs-marquee-ltr');
-                
-                let speed = 0.8; // px scrolled per frame
-                if (marquee.classList.contains('certs-marquee')) {
-                    speed = 0.5; // slightly slower for text-dense certifications
-                }
+                const speed = marquee.classList.contains('certs-marquee') ? 0.5 : 0.8;
                 
                 let scrollPos = isLTR ? group.offsetWidth : 0;
                 marquee.scrollLeft = scrollPos;
                 
                 let isInteracting = false;
                 let resumeTimeout = null;
-                
-                function step() {
-                    if (!isInteracting) {
-                        const maxScroll = group.offsetWidth;
-                        
-                        if (isLTR) {
-                            scrollPos -= speed;
-                            if (scrollPos <= 0) {
-                                scrollPos = maxScroll;
-                            }
-                        } else {
-                            scrollPos += speed;
-                            if (scrollPos >= maxScroll) {
-                                scrollPos = 0;
-                            }
-                        }
-                        marquee.scrollLeft = scrollPos;
-                    }
-                    requestAnimationFrame(step);
-                }
-                
-                requestAnimationFrame(step);
-                
-
-                // Touch & Mouse Drag Controls with Momentum / Inertia Physics
                 let isMouseDown = false;
                 let dragStartX = 0;
                 let scrollStart = 0;
@@ -1931,15 +1902,8 @@
 
                 let lastX = 0;
                 let lastTime = 0;
-                let velocity = 0; // px per ms
+                let velocity = 0;
                 let inertiaFrame = null;
-
-                function stopInertia() {
-                    if (inertiaFrame) {
-                        cancelAnimationFrame(inertiaFrame);
-                        inertiaFrame = null;
-                    }
-                }
 
                 function wrapScroll() {
                     const maxScroll = group.offsetWidth;
@@ -1953,43 +1917,71 @@
                     scrollPos = marquee.scrollLeft;
                 }
 
+                function step() {
+                    if (!isInteracting && !isMouseDown) {
+                        const maxScroll = group.offsetWidth;
+                        if (isLTR) {
+                            scrollPos -= speed;
+                            if (scrollPos <= 0) scrollPos = maxScroll;
+                        } else {
+                            scrollPos += speed;
+                            if (scrollPos >= maxScroll) scrollPos = 0;
+                        }
+                        marquee.scrollLeft = scrollPos;
+                    }
+                    requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+
+                function stopInertia() {
+                    if (inertiaFrame) {
+                        cancelAnimationFrame(inertiaFrame);
+                        inertiaFrame = null;
+                    }
+                }
+
                 function startInertia() {
                     stopInertia();
-                    if (Math.abs(velocity) < 0.08) {
-                        if (resumeTimeout) clearTimeout(resumeTimeout);
-                        resumeTimeout = setTimeout(() => {
-                            if (!isHovered && !isMouseDown) {
-                                isInteracting = false;
-                            }
-                        }, 1000);
+                    if (Math.abs(velocity) < 0.1) {
+                        scheduleResumeAutoScroll();
                         return;
                     }
 
-                    // Convert px/ms to px/frame (~16ms per frame)
-                    let currentVelocity = velocity * 16;
-                    if (currentVelocity > 45) currentVelocity = 45;
-                    if (currentVelocity < -45) currentVelocity = -45;
+                    // High dynamic range velocity capping for ultra-responsive fast swipes
+                    let v = velocity;
+                    if (v > 75) v = 75;
+                    if (v < -75) v = -75;
+
+                    let lastFrameTime = performance.now();
 
                     function stepInertia() {
-                        if (Math.abs(currentVelocity) > 0.2 && !isMouseDown) {
-                            marquee.scrollLeft -= currentVelocity;
+                        if (Math.abs(v) > 0.15 && !isMouseDown) {
+                            const now = performance.now();
+                            const deltaFactor = Math.min((now - lastFrameTime) / 16.67, 2);
+                            lastFrameTime = now;
+
+                            marquee.scrollLeft -= v * deltaFactor;
                             wrapScroll();
-                            currentVelocity *= 0.94; // Exponential momentum friction decay
+                            v *= 0.955; // Silky smooth inertia friction
                             inertiaFrame = requestAnimationFrame(stepInertia);
                         } else {
                             stopInertia();
-                            if (resumeTimeout) clearTimeout(resumeTimeout);
-                            resumeTimeout = setTimeout(() => {
-                                if (!isHovered && !isMouseDown) {
-                                    isInteracting = false;
-                                }
-                            }, 1000);
+                            scheduleResumeAutoScroll();
                         }
                     }
                     inertiaFrame = requestAnimationFrame(stepInertia);
                 }
 
-                // Mouse / Touch Hover: Stop scrolling when hovering or clicking cards
+                function scheduleResumeAutoScroll() {
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                    resumeTimeout = setTimeout(() => {
+                        if (!isHovered && !isMouseDown && !inertiaFrame) {
+                            isInteracting = false;
+                        }
+                    }, 1200);
+                }
+
+                // Hover & Interaction handlers
                 marquee.addEventListener('mouseenter', () => {
                     isHovered = true;
                     isInteracting = true;
@@ -1999,17 +1991,12 @@
                 marquee.addEventListener('mouseleave', () => {
                     isHovered = false;
                     if (isMouseDown) return;
-                    if (resumeTimeout) clearTimeout(resumeTimeout);
-                    resumeTimeout = setTimeout(() => {
-                        if (!isHovered && !isMouseDown && !inertiaFrame) {
-                            isInteracting = false;
-                        }
-                    }, 1000);
+                    scheduleResumeAutoScroll();
                 });
 
-                // PC View: Drag and Hold to Swipe Horizontally
+                // Desktop Mouse Dragging Controls
                 marquee.addEventListener('mousedown', (e) => {
-                    if (e.button !== 0) return; // Left mouse button only
+                    if (e.button !== 0) return;
                     stopInertia();
                     isMouseDown = true;
                     hasDragged = false;
@@ -2027,18 +2014,17 @@
                     if (!isMouseDown) return;
                     const x = e.pageX - marquee.offsetLeft;
                     const walk = (x - dragStartX);
-                    if (Math.abs(walk) > 5) {
-                        hasDragged = true;
-                    }
+                    if (Math.abs(walk) > 5) hasDragged = true;
+
                     marquee.scrollLeft = scrollStart - walk;
                     wrapScroll();
 
-                    // Calculate drag velocity
                     const now = performance.now();
                     const dt = now - lastTime;
                     if (dt > 0) {
                         const dx = e.pageX - lastX;
-                        velocity = 0.6 * (dx / dt) + 0.4 * velocity;
+                        const frameV = (dx / dt) * 16.67;
+                        velocity = velocity * 0.4 + frameV * 0.6;
                     }
                     lastX = e.pageX;
                     lastTime = now;
@@ -2051,7 +2037,6 @@
                     startInertia();
                 });
 
-                // Prevent link navigation if the mouse gesture was a horizontal swipe drag
                 marquee.addEventListener('click', (e) => {
                     if (hasDragged) {
                         e.preventDefault();
@@ -2061,7 +2046,7 @@
                     }
                 }, true);
 
-                // Mobile Touch Controls with Momentum
+                // Mobile Touch Controls (High Precision Exponential Smoothing)
                 marquee.addEventListener('touchstart', (e) => {
                     stopInertia();
                     isInteracting = true;
@@ -2076,11 +2061,14 @@
                     if (resumeTimeout) clearTimeout(resumeTimeout);
                     const now = performance.now();
                     const dt = now - lastTime;
+                    const currentTouchX = e.touches[0].clientX;
+
                     if (dt > 0) {
-                        const dx = e.touches[0].clientX - lastX;
-                        velocity = 0.6 * (dx / dt) + 0.4 * velocity;
+                        const dx = currentTouchX - lastX;
+                        const frameV = (dx / dt) * 16.67;
+                        velocity = velocity * 0.3 + frameV * 0.7; // Weighted towards recent fast flick
                     }
-                    lastX = e.touches[0].clientX;
+                    lastX = currentTouchX;
                     lastTime = now;
                     wrapScroll();
                 }, { passive: true });
@@ -2095,17 +2083,11 @@
                     }
                 }, { passive: true });
 
-                // Card-level hover & touch stop handlers & non-draggable setup
+                // Card-level non-draggable configuration
                 const cards = marquee.querySelectorAll('.project-card, .cert-card, .glass-card');
                 cards.forEach(card => {
                     card.setAttribute('draggable', 'false');
                     card.querySelectorAll('img, a, h3, p, div').forEach(el => el.setAttribute('draggable', 'false'));
-
-                    card.addEventListener('mouseenter', () => {
-                        isHovered = true;
-                        isInteracting = true;
-                    });
-                    card.addEventListener('touchstart', () => {
                         isInteracting = true;
                     }, { passive: true });
                     card.addEventListener('click', () => {
