@@ -63,7 +63,7 @@ if (contactForm) {
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
 
-            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! Saved to live Supabase online database.</div>`;
+            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! </div>`;
             contactForm.reset();
             renderInbox();
         } else {
