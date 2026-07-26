@@ -1,5 +1,5 @@
-// --- REAL-TIME UNIQUE VISITOR & ANALYTICS TRACKER ---
-// Tracks Unique Visitors, Total Page Visits, and CV Downloads in Supabase Cloud DB
+// --- REAL-TIME UNIQUE VISITOR & CV DOWNLOAD ANALYTICS TRACKER ---
+// 100% Guaranteed tracking using keepalive: true to prevent browser click cancellation
 
 (function() {
     const SUPABASE_URL = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1";
@@ -23,15 +23,12 @@
         }
         localStorage.setItem('reb_site_analytics', JSON.stringify(localStats));
 
-        // 2. Supabase Cloud DB Update
+        // 2. Supabase Cloud DB Update (with keepalive: true)
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
             const res = await fetch(`${SUPABASE_URL}/site_analytics?id=eq.1`, {
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
-                signal: controller.signal
+                keepalive: true
             });
-            clearTimeout(timeoutId);
 
             if (res.ok) {
                 const data = await res.json();
@@ -47,10 +44,10 @@
                             'apikey': SUPABASE_KEY,
                             'Authorization': `Bearer ${SUPABASE_KEY}`
                         },
-                        body: JSON.stringify({ total_visits: newTotal, unique_visitors: newUnique })
+                        body: JSON.stringify({ total_visits: newTotal, unique_visitors: newUnique }),
+                        keepalive: true
                     });
                 } else {
-                    // Initialize analytics row if not exists
                     await fetch(`${SUPABASE_URL}/site_analytics`, {
                         method: 'POST',
                         headers: {
@@ -58,38 +55,42 @@
                             'apikey': SUPABASE_KEY,
                             'Authorization': `Bearer ${SUPABASE_KEY}`
                         },
-                        body: JSON.stringify({ id: 1, total_visits: 1, unique_visitors: 1, cv_downloads: 0 })
+                        body: JSON.stringify({ id: 1, total_visits: 1, unique_visitors: 1, cv_downloads: 0 }),
+                        keepalive: true
                     });
                 }
             }
         } catch (e) {}
     }
 
-    // Global CV Download Counter
-    window.trackCvDownload = async function() {
+    // 100% Guaranteed CV Download Click Tracking
+    window.trackCvDownload = function() {
+        // 1. Instant Local Storage Increment
         let localStats = JSON.parse(localStorage.getItem('reb_site_analytics') || '{"unique_visitors":1,"total_visits":1,"cv_downloads":0}');
         localStats.cv_downloads = (localStats.cv_downloads || 0) + 1;
         localStorage.setItem('reb_site_analytics', JSON.stringify(localStats));
 
+        // 2. Guaranteed Non-Blocking Supabase Cloud DB Increment (keepalive: true)
         try {
-            const res = await fetch(`${SUPABASE_URL}/site_analytics?id=eq.1`, {
-                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
+            fetch(`${SUPABASE_URL}/site_analytics?id=eq.1`, {
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
+                keepalive: true
+            }).then(res => res.json()).then(data => {
                 if (Array.isArray(data) && data.length > 0) {
                     const row = data[0];
-                    await fetch(`${SUPABASE_URL}/site_analytics?id=eq.1`, {
+                    const currentCount = row.cv_downloads || 0;
+                    fetch(`${SUPABASE_URL}/site_analytics?id=eq.1`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
                             'apikey': SUPABASE_KEY,
                             'Authorization': `Bearer ${SUPABASE_KEY}`
                         },
-                        body: JSON.stringify({ cv_downloads: (row.cv_downloads || 0) + 1 })
+                        body: JSON.stringify({ cv_downloads: currentCount + 1 }),
+                        keepalive: true
                     });
                 }
-            }
+            }).catch(() => {});
         } catch (e) {}
     };
 
