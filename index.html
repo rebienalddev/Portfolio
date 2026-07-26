@@ -71,7 +71,33 @@
             --shadow-glow: none;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+        }
+
+        img, a, button, .project-card, .glass-card, .projects-marquee, .certs-marquee, .timeline-item, .card {
+            -webkit-user-drag: none !important;
+            -khtml-user-drag: none !important;
+            -moz-user-drag: none !important;
+            -o-user-drag: none !important;
+            user-drag: none !important;
+        }
+
+        input, textarea {
+            -webkit-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+        }
         
         /* Hide scrollbar but keep functionality */
         ::-webkit-scrollbar {
@@ -208,10 +234,14 @@
         
         .hamburger { display: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; }
 
-        /* General Sections */
+        /* General Sections & Uniform Header Sizing (Except Hero Name) */
         section { padding: 5rem 0; position: relative; }
         .section-header { margin-bottom: 4rem; }
-        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        
+        h2, .section-header h2, .glass-card h2, .edu-col-title, section h2 { 
+            font-size: 2.2rem !important; 
+            margin-bottom: 1rem; 
+        }
         .section-header p { color: var(--text-secondary); max-width: 600px; font-size: 1.1rem; }
 
         /* Minimalist SaaS Card */
@@ -1125,7 +1155,7 @@
         .glass-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
 
         /* Projects Marquee */
-        .projects-marquee {
+        .projects-marquee, .certs-marquee {
             overflow-x: auto;
             overflow-y: hidden;
             width: 100%;
@@ -1134,6 +1164,14 @@
             position: relative;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .projects-marquee:active, .certs-marquee:active {
+            cursor: grabbing;
         }
 
         .projects-marquee::-webkit-scrollbar {
@@ -1154,21 +1192,43 @@
 
         .project-card { 
             width: 380px;
+            height: 440px;
             flex-shrink: 0;
             display: flex; 
             flex-direction: column; 
+            justify-content: flex-start;
             text-decoration: none; 
             padding: 0; 
             overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .project-image {
             width: 100%;
-            height: auto;
-            object-fit: contain;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            height: 220px;
+            object-fit: cover;
+            object-position: center;
+            border-bottom: 1px solid var(--glass-border);
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.03);
         }
-        .project-meta { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 0.75rem; padding: 1rem 1.5rem 0; }
-        .project-content { padding: 0 1.5rem 1.5rem; }
+        .project-meta { 
+            display: flex; 
+            justify-content: flex-end; 
+            align-items: center; 
+            margin-bottom: 0.5rem; 
+            padding: 1rem 1.5rem 0; 
+        }
+        .project-content { 
+            padding: 0 1.5rem 1.5rem; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .tech-chip { 
             font-size: 0.75rem; padding: 0.35rem 0.9rem; border-radius: 100px;
@@ -1186,8 +1246,25 @@
             transform: rotate(-45deg);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .project-content h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: var(--text-primary); }
-        .project-content p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.3; text-align: justify; }
+        .project-content h3 { 
+            font-size: 1.15rem; 
+            font-weight: 600;
+            margin-bottom: 0.5rem; 
+            color: var(--text-primary); 
+            line-height: 1.3;
+            text-align: left;
+        }
+        .project-content p { 
+            color: var(--text-secondary); 
+            font-size: 0.85rem; 
+            line-height: 1.45; 
+            text-align: left; 
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
         @media (max-width: 768px) {
             .projects-marquee {
@@ -1196,6 +1273,37 @@
             }
             .projects-marquee-group .project-card {
                 width: 280px !important;
+                height: 400px !important;
+            }
+            .projects-marquee-group .project-image {
+                height: 170px !important;
+            }
+        }
+
+        @media (max-width: 768px), (hover: none) {
+            .projects-marquee-group .project-card,
+            .project-card,
+            .project-card:hover,
+            .project-card:active,
+            .project-card:focus,
+            .glass-card,
+            .glass-card:hover,
+            .glass-card:active,
+            .glass-card:focus {
+                transform: none !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+            }
+
+            .project-card:hover .project-icon,
+            .project-card:active .project-icon,
+            .project-card:focus .project-icon {
+                transform: none !important;
+            }
+
+            .project-card:hover .project-image,
+            .project-card:active .project-image,
+            .project-card:focus .project-image {
+                transform: none !important;
             }
         }
 
@@ -1713,10 +1821,29 @@
             .contact-section { padding: 3rem 0 2rem; margin-top: 2rem; }
         }
 
+        @media (max-width: 768px) {
+            .hero h1 { 
+                white-space: nowrap !important; 
+                font-size: clamp(1.2rem, 6.5vw, 2.2rem) !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+            h2, .section-header h2, .glass-card h2, .edu-col-title, section h2, .project-card h3, .timeline-item h3 { 
+                font-size: clamp(1.15rem, 5.2vw, 1.5rem) !important;
+                white-space: nowrap !important; 
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+        }
+
         @media (max-width: 480px) {
             .container { padding: 0 1rem; }
             nav { width: calc(100% - 2rem); }
-            .hero h1 { font-size: clamp(1.2rem, 8.2vw, 2.1rem) !important; }
+            .hero h1 { font-size: clamp(1.1rem, 6vw, 1.8rem) !important; white-space: nowrap !important; }
+            h2, .section-header h2, .glass-card h2, .edu-col-title, section h2, .project-card h3, .timeline-item h3 { 
+                font-size: 1.25rem !important; 
+                white-space: nowrap !important; 
+            }
             .hero-visual { height: 360px !important; }
             .hero-visual-inner { transform: translate(-50%, -50%) scale(0.45) !important; margin: 0 !important; }
             .tech-float-card { width: auto !important; height: auto !important; }
@@ -1991,14 +2118,15 @@
                         </div>
                     </a>
 
-                     <a href="https://rebienalddev.github.io/NasIoPing/" target="_blank" class="glass-card project-card">
-                        <img src="projectimages/NASIO.png" alt="SamAI" class="project-image">
+                    <a href="https://rebienalddev.github.io/NasIoPing/" target="_blank" class="glass-card project-card">
+                        <img src="projectimages/NASIO.png" alt="NAS.IO Bot" class="project-image">
                         <div class="project-meta">
                             <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
                         </div>
                         <div class="project-content">
                             <h3>NAS.IO Bot</h3>
-<p>Nas IO Bot is an automated Discord membership bot that verifies subscriber emails in MongoDB and auto-kicks expired users to enforce server access.</p>                        </div>
+                            <p>Nas IO Bot is an automated Discord membership bot that verifies subscriber emails in MongoDB and auto-kicks expired users to enforce server access.</p>
+                        </div>
                     </a>
                     
                     <a href="https://samai.hstn.me/SamAI/" target="_blank" class="glass-card project-card">
@@ -2011,9 +2139,6 @@
                             <p>SamAI is a cute Hello Kitty-themed study companion that uploads PDF handouts, extracts text, generates AI-powered summaries, and provides an interactive chat interface for learning.</p>
                         </div>
                     </a>
-
-
-
 
                     <a href="https://printportal.hstn.me/" target="_blank" class="glass-card project-card">
                         <img src="projectimages/printportal.png" alt="Print Portal" class="project-image">
@@ -2033,7 +2158,7 @@
                         </div>
                         <div class="project-content">
                             <h3>TechnoBytes Photobooth</h3>
-                            <p>A photobooth developed for different organizations for the foundation week of STI College Bacoor</p>
+                            <p>A photobooth developed for different organizations for the foundation week of STI College Bacoor.</p>
                         </div>
                     </a>
 
@@ -2802,44 +2927,202 @@
                 requestAnimationFrame(step);
                 
 
-                // Mobile Touch Controls (only for projects marquee to allow swipe overrides)
-                if (!marquee.classList.contains('certs-marquee')) {
-                    let startX = 0;
-                    let startY = 0;
-                    
-                    marquee.addEventListener('touchstart', (e) => {
-                        startX = e.touches[0].clientX;
-                        startY = e.touches[0].clientY;
-                        if (resumeTimeout) clearTimeout(resumeTimeout);
-                    }, { passive: true });
-                    
-                    marquee.addEventListener('touchmove', (e) => {
-                        const moveX = e.touches[0].clientX;
-                        const moveY = e.touches[0].clientY;
-                        const diffX = Math.abs(moveX - startX);
-                        const diffY = Math.abs(moveY - startY);
-                        
-                        // Only pause auto-scroll if the swipe is primarily horizontal
-                        if (diffX > 8 && diffX > diffY) {
-                            isInteracting = true;
+                // Touch & Mouse Drag Controls with Momentum / Inertia Physics
+                let isMouseDown = false;
+                let dragStartX = 0;
+                let scrollStart = 0;
+                let hasDragged = false;
+                let isHovered = false;
+
+                let lastX = 0;
+                let lastTime = 0;
+                let velocity = 0; // px per ms
+                let inertiaFrame = null;
+
+                function stopInertia() {
+                    if (inertiaFrame) {
+                        cancelAnimationFrame(inertiaFrame);
+                        inertiaFrame = null;
+                    }
+                }
+
+                function wrapScroll() {
+                    const maxScroll = group.offsetWidth;
+                    if (maxScroll > 0) {
+                        if (marquee.scrollLeft >= maxScroll) {
+                            marquee.scrollLeft -= maxScroll;
+                        } else if (marquee.scrollLeft <= 0) {
+                            marquee.scrollLeft += maxScroll;
                         }
-                    }, { passive: true });
-                    
-                    marquee.addEventListener('touchend', () => {
-                        scrollPos = marquee.scrollLeft;
+                    }
+                    scrollPos = marquee.scrollLeft;
+                }
+
+                function startInertia() {
+                    stopInertia();
+                    if (Math.abs(velocity) < 0.08) {
                         if (resumeTimeout) clearTimeout(resumeTimeout);
                         resumeTimeout = setTimeout(() => {
-                            isInteracting = false;
-                        }, 100); // Tiny delay to settle touch momentum
-                    }, { passive: true });
-                    
-                    marquee.addEventListener('scroll', () => {
-                        if (isInteracting) {
-                            scrollPos = marquee.scrollLeft;
+                            if (!isHovered && !isMouseDown) {
+                                isInteracting = false;
+                            }
+                        }, 1000);
+                        return;
+                    }
+
+                    // Convert px/ms to px/frame (~16ms per frame)
+                    let currentVelocity = velocity * 16;
+                    if (currentVelocity > 45) currentVelocity = 45;
+                    if (currentVelocity < -45) currentVelocity = -45;
+
+                    function stepInertia() {
+                        if (Math.abs(currentVelocity) > 0.2 && !isMouseDown) {
+                            marquee.scrollLeft -= currentVelocity;
+                            wrapScroll();
+                            currentVelocity *= 0.94; // Exponential momentum friction decay
+                            inertiaFrame = requestAnimationFrame(stepInertia);
+                        } else {
+                            stopInertia();
+                            if (resumeTimeout) clearTimeout(resumeTimeout);
+                            resumeTimeout = setTimeout(() => {
+                                if (!isHovered && !isMouseDown) {
+                                    isInteracting = false;
+                                }
+                            }, 1000);
                         }
-                    }, { passive: true });
+                    }
+                    inertiaFrame = requestAnimationFrame(stepInertia);
                 }
+
+                // Mouse / Touch Hover: Stop scrolling when hovering or clicking cards
+                marquee.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    isInteracting = true;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                });
+
+                marquee.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                    if (isMouseDown) return;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                    resumeTimeout = setTimeout(() => {
+                        if (!isHovered && !isMouseDown && !inertiaFrame) {
+                            isInteracting = false;
+                        }
+                    }, 1000);
+                });
+
+                // PC View: Drag and Hold to Swipe Horizontally
+                marquee.addEventListener('mousedown', (e) => {
+                    if (e.button !== 0) return; // Left mouse button only
+                    stopInertia();
+                    isMouseDown = true;
+                    hasDragged = false;
+                    dragStartX = e.pageX - marquee.offsetLeft;
+                    scrollStart = marquee.scrollLeft;
+                    lastX = e.pageX;
+                    lastTime = performance.now();
+                    velocity = 0;
+                    isInteracting = true;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                    marquee.style.cursor = 'grabbing';
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (!isMouseDown) return;
+                    const x = e.pageX - marquee.offsetLeft;
+                    const walk = (x - dragStartX);
+                    if (Math.abs(walk) > 5) {
+                        hasDragged = true;
+                    }
+                    marquee.scrollLeft = scrollStart - walk;
+                    wrapScroll();
+
+                    // Calculate drag velocity
+                    const now = performance.now();
+                    const dt = now - lastTime;
+                    if (dt > 0) {
+                        const dx = e.pageX - lastX;
+                        velocity = 0.6 * (dx / dt) + 0.4 * velocity;
+                    }
+                    lastX = e.pageX;
+                    lastTime = now;
+                });
+
+                window.addEventListener('mouseup', () => {
+                    if (!isMouseDown) return;
+                    isMouseDown = false;
+                    marquee.style.cursor = 'grab';
+                    startInertia();
+                });
+
+                // Prevent link navigation if the mouse gesture was a horizontal swipe drag
+                marquee.addEventListener('click', (e) => {
+                    if (hasDragged) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        hasDragged = false;
+                        return false;
+                    }
+                }, true);
+
+                // Mobile Touch Controls with Momentum
+                marquee.addEventListener('touchstart', (e) => {
+                    stopInertia();
+                    isInteracting = true;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                    lastX = e.touches[0].clientX;
+                    lastTime = performance.now();
+                    velocity = 0;
+                }, { passive: true });
+
+                marquee.addEventListener('touchmove', (e) => {
+                    isInteracting = true;
+                    if (resumeTimeout) clearTimeout(resumeTimeout);
+                    const now = performance.now();
+                    const dt = now - lastTime;
+                    if (dt > 0) {
+                        const dx = e.touches[0].clientX - lastX;
+                        velocity = 0.6 * (dx / dt) + 0.4 * velocity;
+                    }
+                    lastX = e.touches[0].clientX;
+                    lastTime = now;
+                    wrapScroll();
+                }, { passive: true });
+
+                marquee.addEventListener('touchend', () => {
+                    startInertia();
+                }, { passive: true });
+
+                marquee.addEventListener('scroll', () => {
+                    if (isInteracting || isMouseDown) {
+                        scrollPos = marquee.scrollLeft;
+                    }
+                }, { passive: true });
+
+                // Card-level hover & touch stop handlers & non-draggable setup
+                const cards = marquee.querySelectorAll('.project-card, .cert-card, .glass-card');
+                cards.forEach(card => {
+                    card.setAttribute('draggable', 'false');
+                    card.querySelectorAll('img, a, h3, p, div').forEach(el => el.setAttribute('draggable', 'false'));
+
+                    card.addEventListener('mouseenter', () => {
+                        isHovered = true;
+                        isInteracting = true;
+                    });
+                    card.addEventListener('touchstart', () => {
+                        isInteracting = true;
+                    }, { passive: true });
+                    card.addEventListener('click', () => {
+                        isInteracting = true;
+                    });
+                });
             });
+        });
+
+        // Global Drag Prevention
+        document.addEventListener('dragstart', (e) => {
+            e.preventDefault();
         });
 
         // Basic Security

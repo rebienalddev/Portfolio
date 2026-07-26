@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Rebienald Carpio</title>
     <link rel="icon" type="image/png" href="../images/logo.png">    
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,361 +13,235 @@
     
     <style>
         :root {
-            /* Ultra-Premium Light Theme */
             --bg-base: #FFFFFF;
             --bg-elevated: #FAFAFA;
-            
             --accent: #FF7A00;
-            --accent-glow: rgba(255, 122, 0, 0.05);
             --accent-hover: #E06B00;
-            
             --text-primary: #111111;
             --text-secondary: #4B5563;
             --text-tertiary: #9CA3AF;
-            
-            --glass-bg: #FFFFFF;
             --glass-border: #E5E7EB;
-            --glass-border-hover: #D1D5DB;
-            --glass-highlight: transparent;
-            
-            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow-glow: none;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Hide scrollbar but keep functionality */
-        ::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
-        }
-        html {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            scroll-behavior: smooth;
-            background: var(--bg-base);
-        }
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        html { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; background: var(--bg-base); }
         
         body {
             background-color: var(--bg-elevated);
             color: var(--text-secondary);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            position: relative;
-            display: flex; flex-direction: column; min-height: 100vh;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
         }
 
-        /* Ambient Lighting - Hidden for Minimalist Look */
-        .ambient-glow, .ambient-glow-2, .moving-orange-blob {
-            display: none !important;
-        }
+        .container { max-width: 95%; margin: 0 auto; padding: 0 2rem; width: 100%; }
 
-        /* Typography */
-        h1, h2, h3, h4, h5 { 
-            color: var(--text-primary); 
-            font-weight: 700; 
-            letter-spacing: -0.02em; 
-            line-height: 1.15; 
-        }
-        
-        .text-gradient {
-            color: var(--text-primary);
-        }
-        
-        .text-gradient-accent {
-            color: var(--accent);
-        }
-
-        .container {
-            max-width: 95%;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        /* Navigation */
+        /* Navigation - Single Line Always */
         nav {
             position: fixed;
-            top: 2rem;
+            top: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 4rem);
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid var(--glass-border);
+            max-width: 850px;
+            background: rgba(250, 250, 250, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 100px;
-            padding: 0.75rem 2rem;
+            padding: 0.6rem 1.8rem;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            flex-wrap: nowrap;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.02),
+                0 1px 3px rgba(0, 0, 0, 0.01);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         nav:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 
+                0 12px 30px rgba(0, 0, 0, 0.04),
+                0 1px 4px rgba(0, 0, 0, 0.01);
+            background: rgba(250, 250, 250, 0.85);
+            border-color: rgba(0, 0, 0, 0.08);
         }
 
-        .logo { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; text-decoration: none;}
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .logo { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            color: var(--text-primary); 
+            letter-spacing: -0.03em; 
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-links { display: flex; gap: 2.2rem; list-style: none; flex-wrap: nowrap; }
         .nav-links a { 
             color: var(--text-secondary); 
             font-size: 0.85rem; 
             font-weight: 500; 
-            letter-spacing: 0.01em;
             text-decoration: none; 
-            transition: color 0.3s;
+            white-space: nowrap;
+            transition: all 0.2s;
         }
         .nav-links a:hover { color: var(--text-primary); }
         
         .nav-cta {
-            background: transparent;
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            padding: 0.5rem 1.25rem;
+            background: var(--text-primary);
+            border: 1px solid var(--text-primary);
+            color: #FFFFFF;
+            padding: 0.45rem 1.25rem;
             border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.82rem;
+            font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
         .nav-cta:hover { 
-            background: #F3F4F6;
-            border-color: #D1D5DB;
-        }
-        
-        .hamburger { display: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; }
-
-        /* Main Content */
-        .main-content { padding-top: 12rem; padding-bottom: 6rem; flex-grow: 1; }
-        
-        .hero { text-align: center; margin-bottom: 5rem; }
-        .hero h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 1rem; font-weight: 700; letter-spacing: -0.05em; }
-        .hero p { color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin: 0 auto; line-height: 1.6; text-align: justify; }
-
-        /* Minimalist SaaS Card */
-        .glass-card {
-            background: #FFFFFF;
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 2.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--glass-border-hover);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-grid {
-            display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;
-        }
-
-        .glass-card h2 { font-size: 1.8rem; margin-bottom: 2rem; }
-
-        /* Contact Details */
-        .contact-details { list-style: none; }
-        .contact-details li { 
-            display: flex; align-items: center; gap: 1.2rem; 
-            margin-bottom: 1.8rem; padding-bottom: 1.8rem; 
-            border-bottom: 1px solid var(--glass-border); 
-        }
-        .contact-details li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .contact-icon {
-            width: 48px; height: 48px; border-radius: 50%; 
-            background: rgba(255, 122, 0, 0.05);
-            border: 1px solid rgba(255, 122, 0, 0.1);
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--accent); font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        .contact-details li:hover .contact-icon {
-            background: var(--accent); color: #FFFFFF; border-color: var(--accent);
-            transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 122, 0, 0.2);
-        }
-        .contact-text h3 { 
-            font-size: 0.8rem; text-transform: uppercase; 
-            letter-spacing: 0.05em; color: var(--text-tertiary); 
-            font-weight: 500; margin-bottom: 0.3rem; 
-        }
-        .contact-text a, .contact-text p { font-size: 1.05rem; color: var(--text-primary); text-decoration: none; transition: 0.3s; font-weight: 500;}
-        .contact-text a:hover { color: var(--accent); }
-
-        /* Form Fields */
-        .form-group { margin-bottom: 1.5rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .form-group label { 
-            display: block; margin-bottom: 0.6rem; font-size: 0.85rem; 
-            font-weight: 500; color: var(--text-secondary); 
-        }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 1rem 1.25rem;
-            background: #FFFFFF; 
-            border: 1px solid var(--glass-border); 
-            border-radius: 12px;
-            color: var(--text-primary); font-family: 'Inter', sans-serif; 
-            font-size: 1rem; transition: all 0.3s;
-            box-shadow: none;
-        }
-        .form-group input::placeholder, .form-group textarea::placeholder {
-            color: var(--text-tertiary);
-        }
-        .form-group input:focus, .form-group textarea:focus { 
-            outline: none; background: #FFFFFF; border-color: var(--accent);
-            box-shadow: 0 0 0 1px var(--accent); 
-        }
-        .form-group textarea { height: 160px; resize: vertical; }
-
-        .submit-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 100%; padding: 1.1rem; font-size: 1rem; font-weight: 600;
-            border-radius: 12px; transition: all 0.3s;
             background: var(--accent);
-            color: #FFFFFF; border: none; cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 122, 0, 0.15);
-            margin-top: 1rem;
-        }
-        .submit-btn:hover { 
-            transform: translateY(-2px); 
-            background: var(--accent-hover);
-            box-shadow: 0 6px 20px rgba(255, 122, 0, 0.25);
-        }
-
-        .back-home { margin-top: 4rem; text-align: center; }
-        .back-link { 
-            font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; 
-            letter-spacing: 0.02em; display: inline-flex; align-items: center; gap: 0.5rem;
-            text-decoration: none; transition: 0.3s;
-        }
-        .back-link:hover { color: var(--text-primary); transform: translateX(-4px); }
-
-        footer { text-align: center; padding: 2rem; color: var(--text-tertiary); font-size: 0.85rem; border-top: 1px solid var(--glass-border); }
-
-        /* Animations */
-        .reveal { opacity: 0; transform: translateY(30px); animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile */
-        @media (max-width: 768px) {
-            .container { padding: 0 1.5rem; }
-            nav { width: calc(100% - 3rem); padding: 1rem 1.5rem; }
-            .nav-links, .nav-cta { display: none; }
-            .hamburger { display: block; }
-            
-            .main-content { padding-top: 8rem; padding-bottom: 3rem; }
-            .hero { margin-bottom: 3rem; }
-            .hero h1 { font-size: 2.5rem !important; line-height: 1.1; margin-bottom: 1rem; }
-            .hero p { font-size: 1.05rem; }
-
-            .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .form-row { grid-template-columns: 1fr; gap: 1.5rem; }
-            
-            .glass-card { padding: 1.75rem; }
-            .glass-card h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
-            
-            .contact-details li { flex-direction: row; text-align: left; gap: 1rem; padding-bottom: 1.25rem; margin-bottom: 1.25rem; }
-            .contact-icon { margin: 0; width: 40px; height: 40px; font-size: 1rem; flex-shrink: 0; }
-            
-            .back-home { margin-top: 3rem; }
-        }
-
-        @media (max-width: 480px) {
-            .container { padding: 0 1rem; }
-            nav { width: calc(100% - 2rem); }
-            .hero h1 { font-size: 2.25rem !important; }
-            .glass-card { padding: 1.25rem; }
-            .contact-text a, .contact-text p { font-size: 0.95rem; }
+            border-color: var(--accent);
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(255, 122, 0, 0.2);
         }
         
-        /* Mobile Menu (Simplified) */
+        .hamburger { display: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; white-space: nowrap; }
+
+        /* Mobile Menu */
         .mobile-menu {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
-            z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.98); backdrop-filter: blur(20px);
+            z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .mobile-menu.active { opacity: 1; pointer-events: all; }
-        .mobile-menu a { color: var(--text-primary); font-size: 1.8rem; font-weight: 600; margin: 1.2rem 0; text-decoration: none; letter-spacing: -0.02em; }
+        .mobile-menu a { color: var(--text-primary); font-size: 1.8rem; font-weight: 600; margin: 1.2rem 0; text-decoration: none; letter-spacing: -0.02em; white-space: nowrap; }
         .mobile-menu .close-menu { position: absolute; top: 2rem; right: 2rem; font-size: 2rem; color: var(--text-secondary); cursor: pointer; }
 
-        /* Form Status Messages */
-        .status-message {
-            padding: 1rem 1.25rem;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
+        /* Main Content - Single Screen Zero Scroll */
+        .main-content {
+            padding-top: 6rem;
+            padding-bottom: 1rem;
+            flex-grow: 1;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
         }
-        .status-message.success {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            color: #10B981;
+
+        .glass-card {
+            background: #FFFFFF; border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 1.75rem; transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
-        .status-message.error {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #EF4444;
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 1.5rem; width: 100%; max-width: 1000px; margin: 0 auto; }
+
+        /* Headings - 1 Line Only Always */
+        h1, h2, h3, .glass-card h2 {
+            white-space: nowrap !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .glass-card h2 { font-size: clamp(1.15rem, 4vw, 1.4rem); margin-bottom: 1.25rem; color: var(--text-primary); }
+
+        .contact-details { list-style: none; }
+        .contact-details li { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--glass-border); }
+        .contact-details li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .contact-icon {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: rgba(255, 122, 0, 0.05); border: 1px solid rgba(255, 122, 0, 0.1);
+            display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.1rem; flex-shrink: 0;
+        }
+        .contact-text h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); font-weight: 500; margin-bottom: 0.2rem; }
+        .contact-text a, .contact-text p { font-size: 0.95rem; color: var(--text-primary); text-decoration: none; font-weight: 500;}
+
+        /* Form Fields */
+        .form-group { margin-bottom: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); white-space: nowrap; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.75rem 1rem; background: #FFFFFF;
+            border: 1px solid var(--glass-border); border-radius: 10px;
+            color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+        .form-group textarea { height: 110px; resize: vertical; }
+
+        .submit-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 100%; padding: 0.85rem; font-size: 0.95rem; font-weight: 600;
+            border-radius: 10px; background: var(--accent); color: #FFFFFF; border: none; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 122, 0, 0.15); transition: all 0.3s; margin-top: 0.5rem;
+            white-space: nowrap;
+        }
+        .submit-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+        .status-message {
+            padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .status-message.success { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: #10B981; }
+        .status-message.error { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); color: #EF4444; }
+
+        .back-home { margin-top: 0.75rem; text-align: center; }
+        .back-link { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+
+        footer { text-align: center; padding: 1rem; color: var(--text-tertiary); font-size: 0.8rem; border-top: 1px solid var(--glass-border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* STRICT MOBILE VIEW RULES: SINGLE LINE HEADERS & NAVBAR */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            nav { width: calc(100% - 1.5rem); top: 0.75rem; padding: 0.5rem 1rem; flex-wrap: nowrap; }
+            .logo { font-size: 0.95rem; }
+            .nav-cta { padding: 0.35rem 0.85rem; font-size: 0.75rem; }
+            .nav-links { display: none; }
+            .hamburger { display: block; font-size: 1.1rem; }
+            .main-content { padding-top: 4.5rem; align-items: flex-start; }
+            .contact-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .glass-card { padding: 1.1rem; }
+            .glass-card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+            .contact-details li { margin-bottom: 0.75rem; padding-bottom: 0.75rem; }
+            .contact-icon { width: 36px; height: 36px; font-size: 0.95rem; }
+            .contact-text a, .contact-text p { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
-    <div class="ambient-glow-2"></div>
-    <div class="moving-orange-blob"></div>
-
     <nav>
         <a href="../index.html" class="logo">Reb.Dev</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="../index.html#services">Services</a></li>
-            <li><a href="../index.html#work">Work</a></li>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Projects</a></li>
             <li><a href="../index.html#expertise">Expertise</a></li>
             <li><a href="../index.html#about">About</a></li>
             <li><a href="../index.html#certifications">Certificates</a></li>
         </ul>
-        <a href="contact.html" class="nav-cta">Let's Talk</a>
+        <a href="contact.html" class="nav-cta">Let's Talk <span class="nav-cta-arrow">↗</span></a>
         <div class="hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></div>
     </nav>
     
     <div class="mobile-menu" id="mobileMenu">
         <div class="close-menu" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></div>
-        <a href="../index.html#services" onclick="toggleMobileMenu()">Services</a>
-        <a href="../index.html#work" onclick="toggleMobileMenu()">Work</a>
+        <a href="../index.html#work" onclick="toggleMobileMenu()">Projects</a>
         <a href="../index.html#expertise" onclick="toggleMobileMenu()">Expertise</a>
         <a href="../index.html#about" onclick="toggleMobileMenu()">About</a>
         <a href="../index.html#certifications" onclick="toggleMobileMenu()">Certificates</a>
-        <a href="contact.html" onclick="toggleMobileMenu()" style="color: var(--accent)">Let's Talk</a>
+        <a href="contact.html" onclick="toggleMobileMenu()" style="color: var(--accent)">Let's Talk ↗</a>
     </div>
 
     <main class="main-content">
         <div class="container">
-            <section class="hero reveal">
-                <h1 class="text-gradient">Let's Build Something.</h1>
-                <p>Feel free to reach out for collaborations, project inquiries, or just to say hello. I'm always open to discussing new opportunities.</p>
-            </section>
-
             <div class="contact-grid">
                 
-                <div class="glass-card reveal delay-1">
+                <div class="glass-card">
                     <h2>Contact Info</h2>
                     <ul class="contact-details">
                         <li>
@@ -403,9 +275,9 @@
                     </ul>
                 </div>
 
-                <div class="glass-card reveal delay-2">
+                <div class="glass-card">
                     <h2>Send a Message</h2>
-                    <div id="formStatus" style="margin-bottom: 1rem;"></div>
+                    <div id="formStatus" style="margin-bottom: 0.5rem;"></div>
                     <form id="contactForm">
                         <div class="form-row">
                             <div class="form-group">
@@ -432,7 +304,7 @@
                 </div>
             </div>
 
-            <div class="back-home reveal delay-2">
+            <div class="back-home">
                 <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
             </div>
         </div>
@@ -444,23 +316,11 @@
         </div>
     </footer>
 
+    <script src="contacts.js"></script>
     <script>
-        // Security logic
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-        }
-
-        // Mobile Menu logic
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('active');
         }
     </script>
-    <script src="contacts.js"></script>
-
 </body>
 </html>

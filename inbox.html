@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages Inbox | Rebienald Carpio</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ABSOLUTE ZERO BORDER RADIUS - EVERYTHING SHARP & CLEAN */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-radius: 0 !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-main: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-card: #FFFFFF;
+            --border-color: #E5E7EB;
+            --border-dark: #111827;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --text-light: #9CA3AF;
+            --accent-orange: #FF7A00;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.2rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #F3F4F6;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.2rem 0.6rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-sharp {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.6rem 1.25rem;
+            background: #FFFFFF;
+            color: var(--text-main);
+            border: 1px solid var(--border-dark);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s ease;
+        }
+
+        .btn-sharp:hover {
+            background: #111827;
+            color: #FFFFFF;
+        }
+
+        .btn-danger-sharp {
+            border-color: #DC2626;
+            color: #DC2626;
+            background: #FFFFFF;
+        }
+
+        .btn-danger-sharp:hover {
+            background: #DC2626;
+            color: #FFFFFF;
+        }
+
+        /* MAIN WRAPPER */
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .stat-box .val {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-box .lbl {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* TOOLBAR */
+        .toolbar {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 0 1rem;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .search-box i {
+            color: var(--text-muted);
+            margin-right: 0.75rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 0;
+            border: none;
+            outline: none;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.6rem 1rem;
+            background: #FFFFFF;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .filter-btn.active {
+            background: #111827;
+            color: #FFFFFF;
+            border-color: #111827;
+        }
+
+        /* MESSAGES LIST */
+        .messages-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .msg-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.15s ease;
+        }
+
+        .msg-card:hover {
+            border-color: var(--border-dark);
+        }
+
+        .msg-card.unread {
+            border-left: 4px solid var(--accent-orange);
+            background: #FFFFFF;
+        }
+
+        .msg-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #F3F4F6;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .msg-sender h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .msg-sender a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .msg-sender a:hover {
+            color: var(--accent-orange);
+        }
+
+        .msg-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .msg-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-family: var(--font-mono);
+        }
+
+        .badge-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            text-transform: uppercase;
+            border: 1px solid var(--border-color);
+        }
+
+        .badge-status.unread {
+            background: #FFF7ED;
+            border-color: #FFEDD5;
+            color: var(--accent-orange);
+        }
+
+        .badge-status.read {
+            background: #F3F4F6;
+            color: var(--text-muted);
+        }
+
+        .msg-subject {
+            padding: 0.85rem 1.5rem;
+            background: #F9FAFB;
+            border-bottom: 1px solid #F3F4F6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .msg-body {
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .msg-actions {
+            padding: 1rem 1.5rem;
+            background: #F9FAFB;
+            border-top: 1px solid #F3F4F6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .empty-box {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem; }
+            .nav-container { flex-direction: column; align-items: stretch; }
+            .nav-right { justify-content: space-between; width: 100%; }
+            .main-wrapper { padding: 1.5rem 1rem; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .search-box { width: 100%; }
+            .filter-buttons { width: 100%; justify-content: space-between; }
+            .filter-btn { flex: 1; text-align: center; }
+            .msg-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .msg-meta { width: 100%; justify-content: space-between; }
+            .msg-actions { flex-direction: column; }
+            .msg-actions .btn-sharp { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                Reb.Dev <span class="brand-badge">INBOX</span>
+            </div>
+            <div class="nav-right">
+                <a href="index.html" class="btn-sharp"><i class="fas fa-home"></i> Portfolio</a>
+                <a href="contacts/contact.html" class="btn-sharp"><i class="fas fa-paper-plane"></i> Contact Form</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-wrapper" id="mainContainer">
+        <!-- RENDERED DIRECTLY BY JAVASCRIPT -->
+    </main>
+
+    <script>
+        let currentFilter = 'all';
+
+        function renderApp() {
+            const main = document.getElementById('mainContainer');
+            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            const totalCount = messages.length;
+            const unreadCount = messages.filter(m => m.is_read == 0).length;
+
+            main.innerHTML = `
+                <div class="stats-bar">
+                    <div class="stat-box">
+                        <div class="val">${totalCount}</div>
+                        <div class="lbl">Total Messages</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" style="color: var(--accent-orange);">${unreadCount}</div>
+                        <div class="lbl">Unread Messages</div>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search by name, email, or subject..." oninput="filterMessages()">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">All (${totalCount})</button>
+                        <button class="filter-btn ${currentFilter === 'unread' ? 'active' : ''}" onclick="setFilter('unread')">Unread (${unreadCount})</button>
+                        <button class="filter-btn ${currentFilter === 'read' ? 'active' : ''}" onclick="setFilter('read')">Read</button>
+                    </div>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    ${renderMessagesList(messages)}
+                </div>
+            `;
+        }
+
+        function renderMessagesList(messages) {
+            const query = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+            let filtered = messages.filter(msg => {
+                if (currentFilter === 'unread' && msg.is_read == 1) return false;
+                if (currentFilter === 'read' && msg.is_read == 0) return false;
+
+                if (query) {
+                    const haystack = (msg.name + ' ' + msg.email + ' ' + msg.subject + ' ' + msg.message).toLowerCase();
+                    return haystack.includes(query);
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                return `
+                    <div class="empty-box">
+                        <i class="fas fa-inbox" style="font-size: 2.5rem; margin-bottom: 1rem; color: #D1D5DB;"></i>
+                        <div style="font-weight: 600;">No messages found</div>
+                    </div>
+                `;
+            }
+
+            return filtered.map(msg => `
+                <div class="msg-card ${msg.is_read == 0 ? 'unread' : ''}">
+                    <div class="msg-header">
+                        <div class="msg-sender">
+                            <h3>${escapeHtml(msg.name)}</h3>
+                            <a href="mailto:${escapeHtml(msg.email)}"><i class="fas fa-envelope"></i> ${escapeHtml(msg.email)}</a>
+                        </div>
+                        <div class="msg-meta">
+                            <span class="msg-time"><i class="far fa-clock"></i> ${escapeHtml(msg.created_at)}</span>
+                            <span class="badge-status ${msg.is_read == 0 ? 'unread' : 'read'}">
+                                ${msg.is_read == 0 ? 'Unread' : 'Read'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="msg-subject">
+                        <strong style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-right: 0.5rem;">Subject:</strong> 
+                        ${escapeHtml(msg.subject)}
+                    </div>
+
+                    <div class="msg-body">${escapeHtml(msg.message)}</div>
+
+                    <div class="msg-actions">
+                        <button class="btn-sharp" onclick="toggleRead(${msg.id})">
+                            <i class="fas ${msg.is_read == 0 ? 'fa-check' : 'fa-undo'}"></i> 
+                            ${msg.is_read == 0 ? 'Mark Read' : 'Mark Unread'}
+                        </button>
+                        <button class="btn-sharp btn-danger-sharp" onclick="deleteMessage(${msg.id})">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            renderApp();
+        }
+
+        function filterMessages() {
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            container.innerHTML = renderMessagesList(messages);
+        }
+
+        function toggleRead(id) {
+            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            const msg = messages.find(m => m.id == id);
+            if (msg) {
+                msg.is_read = msg.is_read == 1 ? 0 : 1;
+                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+                renderApp();
+            }
+        }
+
+        function deleteMessage(id) {
+            if (!confirm('Are you sure you want to delete this message?')) return;
+            let messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            messages = messages.filter(m => m.id != id);
+            localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+            renderApp();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        document.addEventListener('DOMContentLoaded', renderApp);
+    </script>
+</body>
+</html>
