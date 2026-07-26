@@ -1,4 +1,6 @@
-// --- CONTACT FORM WITH RATE LIMITING & COOLDOWN PROTECTION ---
+// --- CONTACT FORM & REAL-TIME CLOUD DATABASE SYNCHRONIZATION ---
+
+const CLOUD_DB_ENDPOINT = "https://portfolio-db-sync.rebienald.workers.dev/messages";
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -12,7 +14,7 @@ if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Check Rate Limit (Timestamp validation)
+        // Rate Limit Check
         const lastSubmitTime = parseInt(localStorage.getItem('last_submit_timestamp') || '0', 10);
         const now = Date.now();
         const timePassed = now - lastSubmitTime;
@@ -33,7 +35,6 @@ if (contactForm) {
         const messageVal = document.getElementById('message').value.trim();
 
         if (nameVal && emailVal && subjectVal && messageVal) {
-            // Record rate limit timestamp
             localStorage.setItem('last_submit_timestamp', now.toString());
 
             const newMsg = {
@@ -46,7 +47,7 @@ if (contactForm) {
                 is_read: 0
             };
 
-            // 1. Send Direct Email Notification to Rebienaldev@gmail.com
+            // 1. Direct Email Delivery to Rebienaldev@gmail.com
             try {
                 fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
@@ -62,10 +63,18 @@ if (contactForm) {
                 }).catch(() => {});
             } catch (err) {}
 
-            // 2. Save to Synchronized Database
+            // 2. Cloud DB Push & Local Cache Update
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+
+            try {
+                fetch(CLOUD_DB_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newMsg)
+                }).catch(() => {});
+            } catch (e) {}
 
             formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! I will reply to your email shortly.</div>`;
             contactForm.reset();
@@ -80,12 +89,15 @@ if (contactForm) {
 }
 
 // Render Inbox Function
-function renderInbox() {
+async function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
     if (!content) return;
 
-    let msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    let msgs = [];
+    try {
+        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    } catch(e) {}
 
     if (msgs.length === 0) {
         msgs = [
