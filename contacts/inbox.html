@@ -377,14 +377,51 @@
         <!-- RENDERED DIRECTLY BY JAVASCRIPT -->
     </main>
 
+    <!-- Firebase Google Cloud Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script>
-        let currentFilter = 'all';
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_DemoPortfolioFirebaseKey2026",
+            authDomain: "rebienald-portfolio.firebaseapp.com",
+            databaseURL: "https://rebienald-portfolio-default-rtdb.firebaseio.com",
+            projectId: "rebienald-portfolio",
+            storageBucket: "rebienald-portfolio.appspot.com",
+            messagingSenderId: "987654321012",
+            appId: "1:987654321012:web:1a2b3c4d5e6f7g8h9i0j"
+        };
+        let db = null;
+        if (typeof firebase !== 'undefined') {
+            try {
+                if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+            } catch (e) {}
+        }
 
-        function renderApp() {
+        let currentFilter = 'all';
+        let allMessages = [];
+
+        async function renderApp() {
             const main = document.getElementById('mainContainer');
-            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            const totalCount = messages.length;
-            const unreadCount = messages.filter(m => m.is_read == 0).length;
+            if (!main) return;
+
+            let isCloud = false;
+            if (db) {
+                try {
+                    const snap = await db.ref('messages').once('value');
+                    if (snap.exists()) {
+                        allMessages = Object.values(snap.val()).sort((a, b) => b.id - a.id);
+                        isCloud = true;
+                    }
+                } catch (e) {}
+            }
+
+            if (!isCloud || allMessages.length === 0) {
+                allMessages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            }
+
+            const totalCount = allMessages.length;
+            const unreadCount = allMessages.filter(m => m.is_read == 0).length;
 
             main.innerHTML = `
                 <div class="stats-bar">
@@ -482,25 +519,36 @@
         function filterMessages() {
             const container = document.getElementById('messagesContainer');
             if (!container) return;
-            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            container.innerHTML = renderMessagesList(messages);
+            container.innerHTML = renderMessagesList(allMessages);
         }
 
-        function toggleRead(id) {
-            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            const msg = messages.find(m => m.id == id);
+        async function toggleRead(id) {
+            const msg = allMessages.find(m => m.id == id);
             if (msg) {
-                msg.is_read = msg.is_read == 1 ? 0 : 1;
-                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+                const newStatus = msg.is_read == 1 ? 0 : 1;
+                msg.is_read = newStatus;
+                if (db) {
+                    try { await db.ref('messages/' + id + '/is_read').set(newStatus); } catch (e) {}
+                }
+                const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+                const lMsg = localMsgs.find(m => m.id == id);
+                if (lMsg) {
+                    lMsg.is_read = newStatus;
+                    localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+                }
                 renderApp();
             }
         }
 
-        function deleteMessage(id) {
-            if (!confirm('Are you sure you want to delete this message?')) return;
-            let messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            messages = messages.filter(m => m.id != id);
-            localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+        async function deleteMessage(id) {
+            if (!confirm('[CONFIRM] Delete this message permanently from Google Cloud Database?')) return;
+            if (db) {
+                try { await db.ref('messages/' + id).remove(); } catch (e) {}
+            }
+            allMessages = allMessages.filter(m => m.id != id);
+            let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            localMsgs = localMsgs.filter(m => m.id != id);
+            localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
             renderApp();
         }
 

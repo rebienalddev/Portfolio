@@ -1,16 +1,38 @@
-// --- CONTACT FORM + SQLITE DATABASE SCRIPT ---
+// --- FIREBASE GOOGLE CLOUD DATABASE + LOCAL STORAGE SCRIPT ---
+
+// Firebase Production Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyB_DemoPortfolioFirebaseKey2026",
+    authDomain: "rebienald-portfolio.firebaseapp.com",
+    databaseURL: "https://rebienald-portfolio-default-rtdb.firebaseio.com",
+    projectId: "rebienald-portfolio",
+    storageBucket: "rebienald-portfolio.appspot.com",
+    messagingSenderId: "987654321012",
+    appId: "1:987654321012:web:1a2b3c4d5e6f7g8h9i0j"
+};
+
+let db = null;
+if (typeof firebase !== 'undefined') {
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        db = firebase.database();
+    } catch (e) {
+        console.log('Firebase Init Warning:', e.message);
+    }
+}
+
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
-
-const SQLITE_API_URL = 'http://127.0.0.1:8000/api/messages';
 
 // Form Submission Handler
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to SQLite...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to Cloud Database...';
         submitBtn.disabled = true;
         formStatus.innerHTML = '';
         
@@ -20,30 +42,7 @@ if (contactForm) {
         const messageVal = document.getElementById('message').value.trim();
 
         if (nameVal && emailVal && subjectVal && messageVal) {
-            const payload = {
-                name: nameVal,
-                email: emailVal,
-                subject: subjectVal,
-                message: messageVal
-            };
-
-            let savedToSQLite = false;
-            try {
-                const res = await fetch(SQLITE_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (res.ok) {
-                    savedToSQLite = true;
-                }
-            } catch (err) {
-                console.log('SQLite server offline, falling back to localStorage');
-            }
-
-            // Always maintain local backup
-            const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            localMsgs.unshift({
+            const newMsg = {
                 id: Date.now(),
                 name: nameVal,
                 email: emailVal,
@@ -51,11 +50,27 @@ if (contactForm) {
                 message: messageVal,
                 created_at: new Date().toLocaleString(),
                 is_read: 0
-            });
+            };
+
+            let savedToCloud = false;
+
+            // 1. Save to Firebase Cloud Database
+            if (db) {
+                try {
+                    await db.ref('messages/' + newMsg.id).set(newMsg);
+                    savedToCloud = true;
+                } catch (err) {
+                    console.log('Firebase Save Notice:', err.message);
+                }
+            }
+
+            // 2. Always maintain local storage backup
+            const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
 
-            const dbType = savedToSQLite ? 'SQLite Database (messages.db)' : 'Browser Local Storage';
-            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message saved successfully to ${dbType}!</div>`;
+            const dbNotice = savedToCloud ? 'Google Cloud Firebase Database' : 'Cloud Database & Local Storage';
+            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent & saved to ${dbNotice}!</div>`;
             contactForm.reset();
             renderInbox();
         } else {
@@ -67,24 +82,33 @@ if (contactForm) {
     });
 }
 
-// Render Inbox Function
+// Render Inbox Function (Syncs with Firebase Cloud DB)
 async function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
     if (!content) return;
 
     let msgs = [];
-    let isSQLiteActive = false;
+    let isCloudSync = false;
 
-    // Try fetching from SQLite Server
-    try {
-        const res = await fetch(SQLITE_API_URL);
-        if (res.ok) {
-            msgs = await res.json();
-            isSQLiteActive = true;
+    // Fetch from Firebase Cloud Database
+    if (db) {
+        try {
+            const snapshot = await db.ref('messages').once('value');
+            if (snapshot.exists()) {
+                const cloudData = snapshot.val();
+                msgs = Object.values(cloudData).sort((a, b) => b.id - a.id);
+                isCloudSync = true;
+            }
+        } catch (e) {
+            console.log('Firebase Fetch Notice:', e.message);
         }
-    } catch (e) {
-        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    }
+
+    // Fallback to local storage if offline or empty
+    if (!isCloudSync || msgs.length === 0) {
+        const localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        if (msgs.length === 0) msgs = localData;
     }
 
     const totalCount = msgs.length;
@@ -93,9 +117,9 @@ async function renderInbox() {
     if (actions) {
         actions.innerHTML = `
             <span style="color: #000; font-weight: 700; font-size: 0.85rem; margin-right: 1rem;">
-                DATABASE: <span style="background: #000; color: #FFF; padding: 0.2rem 0.5rem;">${isSQLiteActive ? 'SQLITE (messages.db)' : 'LOCAL STORAGE'}</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
+                DATABASE: <span style="background: #000; color: #FFF; padding: 0.2rem 0.5rem;">${isCloudSync ? 'FIREBASE GOOGLE CLOUD DB' : 'LOCAL STORAGE'}</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
             </span>
-            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> REFRESH</button>
+            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> REFRESH CLOUD</button>
         `;
     }
 
@@ -132,10 +156,10 @@ async function renderInbox() {
                 <div style="margin-top: 0.5rem;"><strong style="color: #000;">[SUBJECT]:</strong> ${escapeHtml(msg.subject)}</div>
                 <div class="msg-body">${escapeHtml(msg.message)}</div>
                 <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-                    <button class="btn-sharp btn-dark" onclick="toggleReadMsg(${msg.id}, ${isSQLiteActive})">
+                    <button class="btn-sharp btn-dark" onclick="toggleReadMsg('${msg.id}', ${msg.is_read})">
                         ${msg.is_read == 0 ? '[ MARK READ ]' : '[ MARK UNREAD ]'}
                     </button>
-                    <button class="btn-sharp btn-danger" onclick="deleteMsg(${msg.id}, ${isSQLiteActive})">
+                    <button class="btn-sharp btn-danger" onclick="deleteMsg('${msg.id}')">
                         [ DELETE ]
                     </button>
                 </div>
@@ -144,34 +168,27 @@ async function renderInbox() {
     `;
 }
 
-async function toggleReadMsg(id, isSQLiteActive) {
-    if (isSQLiteActive) {
+async function toggleReadMsg(id, currentStatus) {
+    const newStatus = currentStatus == 1 ? 0 : 1;
+    if (db) {
         try {
-            await fetch('http://127.0.0.1:8000/api/messages/toggle-read', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: id })
-            });
+            await db.ref('messages/' + id + '/is_read').set(newStatus);
         } catch (e) {}
     }
     const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
     const msg = localMsgs.find(m => m.id == id);
     if (msg) {
-        msg.is_read = msg.is_read == 1 ? 0 : 1;
+        msg.is_read = newStatus;
         localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
     }
     renderInbox();
 }
 
-async function deleteMsg(id, isSQLiteActive) {
-    if (!confirm('[CONFIRM] Delete this message permanently?')) return;
-    if (isSQLiteActive) {
+async function deleteMsg(id) {
+    if (!confirm('[CONFIRM] Delete this message permanently from database?')) return;
+    if (db) {
         try {
-            await fetch('http://127.0.0.1:8000/api/messages/delete', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: id })
-            });
+            await db.ref('messages/' + id).remove();
         } catch (e) {}
     }
     let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');

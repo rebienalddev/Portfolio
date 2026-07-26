@@ -3,88 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages Inbox | Rebienald Carpio</title>
+    <title>Inbox Dashboard | Rebienald Carpio</title>
     <link rel="icon" type="image/png" href="images/logo.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
-        /* ABSOLUTE ZERO BORDER RADIUS - EVERYTHING SHARP & CLEAN */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            border-radius: 0 !important;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         :root {
-            --bg-main: #FFFFFF;
-            --bg-secondary: #F9FAFB;
+            --bg-body: #F9FAFB;
             --bg-card: #FFFFFF;
             --border-color: #E5E7EB;
             --border-dark: #111827;
             --text-main: #111827;
-            --text-muted: #6B7280;
-            --text-light: #9CA3AF;
+            --text-muted: #4B5563;
             --accent-orange: #FF7A00;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: var(--bg-secondary);
+            background-color: var(--bg-body);
             color: var(--text-main);
             font-family: var(--font-sans);
             line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* NAVBAR */
         .navbar {
             background: #FFFFFF;
             border-bottom: 1px solid var(--border-color);
-            padding: 1.2rem 2.5rem;
+            padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
         }
 
         .brand {
-            font-size: 1.15rem;
+            font-family: var(--font-mono);
             font-weight: 700;
+            font-size: 1.1rem;
             color: var(--text-main);
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .brand-badge {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
+            background: var(--text-main);
+            color: #FFFFFF;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
             font-weight: 600;
-            background: #F3F4F6;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 0.2rem 0.6rem;
+            letter-spacing: 0.05em;
         }
 
         .nav-right {
@@ -94,78 +80,94 @@
         }
 
         .btn-sharp {
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.6rem 1.25rem;
-            background: #FFFFFF;
-            color: var(--text-main);
-            border: 1px solid var(--border-dark);
-            cursor: pointer;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-main);
+            background: #FFFFFF;
+            border: 1px solid var(--border-dark);
+            cursor: pointer;
             transition: all 0.15s ease;
+            border-radius: 0;
         }
 
         .btn-sharp:hover {
-            background: #111827;
+            background: var(--text-main);
             color: #FFFFFF;
         }
 
-        .btn-danger-sharp {
+        .btn-danger {
             border-color: #DC2626;
             color: #DC2626;
-            background: #FFFFFF;
         }
 
-        .btn-danger-sharp:hover {
+        .btn-danger:hover {
             background: #DC2626;
             color: #FFFFFF;
         }
 
-        /* MAIN WRAPPER */
         .main-wrapper {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 2.5rem 2rem;
             width: 100%;
             flex: 1;
         }
 
-        /* STATS BAR */
+        .page-header {
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-dark);
+            padding-bottom: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
         .stats-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
         .stat-box {
             background: #FFFFFF;
             border: 1px solid var(--border-color);
-            padding: 1.5rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--border-dark);
         }
 
         .stat-box .val {
-            font-size: 2.25rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.03em;
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
             line-height: 1;
-            margin-bottom: 0.4rem;
         }
 
         .stat-box .lbl {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin-top: 0.5rem;
         }
 
-        /* TOOLBAR */
         .toolbar {
             background: #FFFFFF;
             border: 1px solid var(--border-color);
@@ -227,7 +229,6 @@
             border-color: #111827;
         }
 
-        /* MESSAGES LIST */
         .messages-container {
             display: flex;
             flex-direction: column;
@@ -250,13 +251,12 @@
         }
 
         .msg-header {
-            padding: 1.25rem 1.5rem;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 1px solid #F3F4F6;
-            gap: 1rem;
-            flex-wrap: wrap;
+            align-items: center;
+            background: #F9FAFB;
         }
 
         .msg-sender h3 {
@@ -266,10 +266,10 @@
         }
 
         .msg-sender a {
-            font-size: 0.85rem;
             color: var(--text-muted);
+            font-size: 0.85rem;
             text-decoration: none;
-            font-weight: 500;
+            font-family: var(--font-mono);
         }
 
         .msg-sender a:hover {
@@ -284,7 +284,7 @@
 
         .msg-time {
             font-size: 0.8rem;
-            color: var(--text-light);
+            color: var(--text-muted);
             font-family: var(--font-mono);
         }
 
@@ -293,74 +293,58 @@
             font-weight: 700;
             padding: 0.2rem 0.6rem;
             text-transform: uppercase;
-            border: 1px solid var(--border-color);
+            letter-spacing: 0.05em;
         }
 
         .badge-status.unread {
-            background: #FFF7ED;
-            border-color: #FFEDD5;
-            color: var(--accent-orange);
+            background: #FEF3C7;
+            color: #D97706;
+            border: 1px solid #FCD34D;
         }
 
         .badge-status.read {
-            background: #F3F4F6;
-            color: var(--text-muted);
+            background: #E5E7EB;
+            color: #374151;
+        }
+
+        .msg-body-wrapper {
+            padding: 1.25rem;
         }
 
         .msg-subject {
-            padding: 0.85rem 1.5rem;
-            background: #F9FAFB;
-            border-bottom: 1px solid #F3F4F6;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
             color: var(--text-main);
         }
 
-        .msg-body {
-            padding: 1.5rem;
-            font-size: 0.9rem;
+        .msg-content {
+            font-size: 0.95rem;
             color: #374151;
-            line-height: 1.6;
             white-space: pre-wrap;
-            word-break: break-word;
+            line-height: 1.6;
         }
 
         .msg-actions {
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.25rem;
             background: #F9FAFB;
-            border-top: 1px solid #F3F4F6;
+            border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: flex-end;
             gap: 0.75rem;
         }
 
         .empty-box {
-            text-align: center;
-            padding: 5rem 2rem;
             background: #FFFFFF;
-            border: 1px solid var(--border-color);
+            border: 1px dashed var(--border-color);
+            padding: 4rem 2rem;
+            text-align: center;
             color: var(--text-muted);
-        }
-
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem; }
-            .nav-container { flex-direction: column; align-items: stretch; }
-            .nav-right { justify-content: space-between; width: 100%; }
-            .main-wrapper { padding: 1.5rem 1rem; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .search-box { width: 100%; }
-            .filter-buttons { width: 100%; justify-content: space-between; }
-            .filter-btn { flex: 1; text-align: center; }
-            .msg-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-            .msg-meta { width: 100%; justify-content: space-between; }
-            .msg-actions { flex-direction: column; }
-            .msg-actions .btn-sharp { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="brand">
@@ -373,18 +357,62 @@
         </div>
     </nav>
 
-    <main class="main-wrapper" id="mainContainer">
-        <!-- RENDERED DIRECTLY BY JAVASCRIPT -->
+    <main class="main-wrapper">
+        <div class="page-header">
+            <h1>Message Center</h1>
+            <p>Google Cloud Firebase Database Submissions</p>
+        </div>
+
+        <div id="mainContainer">
+            <!-- Rendered dynamically -->
+        </div>
     </main>
 
+    <!-- Firebase Google Cloud Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script>
-        let currentFilter = 'all';
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_DemoPortfolioFirebaseKey2026",
+            authDomain: "rebienald-portfolio.firebaseapp.com",
+            databaseURL: "https://rebienald-portfolio-default-rtdb.firebaseio.com",
+            projectId: "rebienald-portfolio",
+            storageBucket: "rebienald-portfolio.appspot.com",
+            messagingSenderId: "987654321012",
+            appId: "1:987654321012:web:1a2b3c4d5e6f7g8h9i0j"
+        };
+        let db = null;
+        if (typeof firebase !== 'undefined') {
+            try {
+                if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+            } catch (e) {}
+        }
 
-        function renderApp() {
+        let currentFilter = 'all';
+        let allMessages = [];
+
+        async function renderApp() {
             const main = document.getElementById('mainContainer');
-            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            const totalCount = messages.length;
-            const unreadCount = messages.filter(m => m.is_read == 0).length;
+            if (!main) return;
+
+            let isCloud = false;
+            if (db) {
+                try {
+                    const snap = await db.ref('messages').once('value');
+                    if (snap.exists()) {
+                        allMessages = Object.values(snap.val()).sort((a, b) => b.id - a.id);
+                        isCloud = true;
+                    }
+                } catch (e) {}
+            }
+
+            if (!isCloud || allMessages.length === 0) {
+                allMessages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            }
+
+            const totalCount = allMessages.length;
+            const unreadCount = allMessages.filter(m => m.is_read == 0).length;
 
             main.innerHTML = `
                 <div class="stats-bar">
@@ -411,7 +439,7 @@
                 </div>
 
                 <div class="messages-container" id="messagesContainer">
-                    ${renderMessagesList(messages)}
+                    ${renderMessagesList(allMessages)}
                 </div>
             `;
         }
@@ -434,7 +462,7 @@
                 return `
                     <div class="empty-box">
                         <i class="fas fa-inbox" style="font-size: 2.5rem; margin-bottom: 1rem; color: #D1D5DB;"></i>
-                        <div style="font-weight: 600;">No messages found</div>
+                        <div style="font-weight: 600;">No messages found in database</div>
                     </div>
                 `;
             }
@@ -454,20 +482,21 @@
                         </div>
                     </div>
 
-                    <div class="msg-subject">
-                        <strong style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-right: 0.5rem;">Subject:</strong> 
-                        ${escapeHtml(msg.subject)}
+                    <div class="msg-body-wrapper">
+                        <div class="msg-subject">
+                            <strong style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-right: 0.5rem;">Subject:</strong> 
+                            ${escapeHtml(msg.subject)}
+                        </div>
+                        <div class="msg-content">${escapeHtml(msg.message)}</div>
                     </div>
 
-                    <div class="msg-body">${escapeHtml(msg.message)}</div>
-
                     <div class="msg-actions">
-                        <button class="btn-sharp" onclick="toggleRead(${msg.id})">
-                            <i class="fas ${msg.is_read == 0 ? 'fa-check' : 'fa-undo'}"></i> 
+                        <button class="btn-sharp" onclick="toggleRead('${msg.id}')">
+                            <i class="fas ${msg.is_read == 0 ? 'fa-check' : 'fa-envelope-open'}"></i>
                             ${msg.is_read == 0 ? 'Mark Read' : 'Mark Unread'}
                         </button>
-                        <button class="btn-sharp btn-danger-sharp" onclick="deleteMessage(${msg.id})">
-                            <i class="fas fa-trash-alt"></i> Delete
+                        <button class="btn-sharp btn-danger" onclick="deleteMessage('${msg.id}')">
+                            <i class="fas fa-trash"></i> Delete
                         </button>
                     </div>
                 </div>
@@ -482,25 +511,36 @@
         function filterMessages() {
             const container = document.getElementById('messagesContainer');
             if (!container) return;
-            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            container.innerHTML = renderMessagesList(messages);
+            container.innerHTML = renderMessagesList(allMessages);
         }
 
-        function toggleRead(id) {
-            const messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            const msg = messages.find(m => m.id == id);
+        async function toggleRead(id) {
+            const msg = allMessages.find(m => m.id == id);
             if (msg) {
-                msg.is_read = msg.is_read == 1 ? 0 : 1;
-                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+                const newStatus = msg.is_read == 1 ? 0 : 1;
+                msg.is_read = newStatus;
+                if (db) {
+                    try { await db.ref('messages/' + id + '/is_read').set(newStatus); } catch (e) {}
+                }
+                const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+                const lMsg = localMsgs.find(m => m.id == id);
+                if (lMsg) {
+                    lMsg.is_read = newStatus;
+                    localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+                }
                 renderApp();
             }
         }
 
-        function deleteMessage(id) {
-            if (!confirm('Are you sure you want to delete this message?')) return;
-            let messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            messages = messages.filter(m => m.id != id);
-            localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+        async function deleteMessage(id) {
+            if (!confirm('[CONFIRM] Delete this message permanently from Google Cloud Database?')) return;
+            if (db) {
+                try { await db.ref('messages/' + id).remove(); } catch (e) {}
+            }
+            allMessages = allMessages.filter(m => m.id != id);
+            let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+            localMsgs = localMsgs.filter(m => m.id != id);
+            localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
             renderApp();
         }
 
