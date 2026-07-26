@@ -665,20 +665,24 @@
             100% { transform: translate(-50%, -50%) rotate(-360deg) translateX(330px) rotate(360deg); }
         }
         @keyframes orbit-java {
-            0% { transform: translate(-50%, -50%) rotate(72deg) translateX(330px) rotate(-72deg); }
-            100% { transform: translate(-50%, -50%) rotate(-288deg) translateX(330px) rotate(288deg); }
+            0% { transform: translate(-50%, -50%) rotate(60deg) translateX(330px) rotate(-60deg); }
+            100% { transform: translate(-50%, -50%) rotate(-300deg) translateX(330px) rotate(300deg); }
         }
         @keyframes orbit-netbeans {
-            0% { transform: translate(-50%, -50%) rotate(144deg) translateX(330px) rotate(-144deg); }
-            100% { transform: translate(-50%, -50%) rotate(-216deg) translateX(330px) rotate(216deg); }
+            0% { transform: translate(-50%, -50%) rotate(120deg) translateX(330px) rotate(-120deg); }
+            100% { transform: translate(-50%, -50%) rotate(-240deg) translateX(330px) rotate(240deg); }
         }
         @keyframes orbit-mongodb {
-            0% { transform: translate(-50%, -50%) rotate(216deg) translateX(330px) rotate(-216deg); }
-            100% { transform: translate(-50%, -50%) rotate(-144deg) translateX(330px) rotate(144deg); }
+            0% { transform: translate(-50%, -50%) rotate(180deg) translateX(330px) rotate(-180deg); }
+            100% { transform: translate(-50%, -50%) rotate(-180deg) translateX(330px) rotate(180deg); }
+        }
+        @keyframes orbit-supabase {
+            0% { transform: translate(-50%, -50%) rotate(240deg) translateX(330px) rotate(-240deg); }
+            100% { transform: translate(-50%, -50%) rotate(-120deg) translateX(330px) rotate(120deg); }
         }
         @keyframes orbit-zorin {
-            0% { transform: translate(-50%, -50%) rotate(288deg) translateX(330px) rotate(-288deg); }
-            100% { transform: translate(-50%, -50%) rotate(-72deg) translateX(330px) rotate(72deg); }
+            0% { transform: translate(-50%, -50%) rotate(300deg) translateX(330px) rotate(-300deg); }
+            100% { transform: translate(-50%, -50%) rotate(-60deg) translateX(330px) rotate(60deg); }
         }
         @keyframes orbit-bootstrap {
             0% { transform: translate(-50%, -50%) rotate(90deg) translateX(270px) rotate(-90deg); }
@@ -763,6 +767,13 @@
             left: 50%; 
             transform: translate(-50%, -50%);
             animation: orbit-mongodb 20s linear infinite; 
+        }
+        .supabase-card { 
+            top: 50%; 
+            right: auto;
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            animation: orbit-supabase 20s linear infinite; 
         }
         .zorin-card { 
             top: 50%; 
