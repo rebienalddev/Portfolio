@@ -1,14 +1,16 @@
-// --- CONTACT FORM + CLIENT INBOX DATABASE SCRIPT (PURE HTML + JS) ---
+// --- CONTACT FORM + SQLITE DATABASE SCRIPT ---
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
 
+const SQLITE_API_URL = 'http://127.0.0.1:8000/api/messages';
+
 // Form Submission Handler
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to SQLite...';
         submitBtn.disabled = true;
         formStatus.innerHTML = '';
         
@@ -18,6 +20,28 @@ if (contactForm) {
         const messageVal = document.getElementById('message').value.trim();
 
         if (nameVal && emailVal && subjectVal && messageVal) {
+            const payload = {
+                name: nameVal,
+                email: emailVal,
+                subject: subjectVal,
+                message: messageVal
+            };
+
+            let savedToSQLite = false;
+            try {
+                const res = await fetch(SQLITE_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    savedToSQLite = true;
+                }
+            } catch (err) {
+                console.log('SQLite server offline, falling back to localStorage');
+            }
+
+            // Always maintain local backup
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift({
                 id: Date.now(),
@@ -30,7 +54,8 @@ if (contactForm) {
             });
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
 
-            formStatus.innerHTML = '<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! Saved to database inbox.</div>';
+            const dbType = savedToSQLite ? 'SQLite Database (messages.db)' : 'Browser Local Storage';
+            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message saved successfully to ${dbType}!</div>`;
             contactForm.reset();
             renderInbox();
         } else {
@@ -43,39 +68,39 @@ if (contactForm) {
 }
 
 // Render Inbox Function
-let isAdminUnlocked = sessionStorage.getItem('admin_unlocked') === 'true';
-
-function renderInbox() {
+async function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
     if (!content) return;
 
-    if (!isAdminUnlocked) {
-        actions.innerHTML = '';
-        content.innerHTML = `
-            <div class="login-box">
-                <div style="font-size: 1.3rem; color: #00FFF0; margin-bottom: 0.5rem;"><i class="fas fa-lock"></i> ADMIN ACCESS</div>
-                <p style="font-size: 0.8rem; color: #8F9BB3; margin-bottom: 1rem;">Enter access key (default: admin123) to view stored messages.</p>
-                <form onsubmit="handleAdminLogin(event)">
-                    <input type="password" id="adminPassInput" placeholder="ENTER ACCESS KEY" required autofocus>
-                    <button type="submit" class="btn-sharp btn-cyan" style="width: 100%; justify-content: center; margin-top: 0.5rem;">[ UNLOCK INBOX ]</button>
-                </form>
-            </div>
-        `;
-        return;
+    let msgs = [];
+    let isSQLiteActive = false;
+
+    // Try fetching from SQLite Server
+    try {
+        const res = await fetch(SQLITE_API_URL);
+        if (res.ok) {
+            msgs = await res.json();
+            isSQLiteActive = true;
+        }
+    } catch (e) {
+        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
     }
 
-    const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-    const totalCount = localMsgs.length;
-    const unreadCount = localMsgs.filter(m => m.is_read == 0).length;
+    const totalCount = msgs.length;
+    const unreadCount = msgs.filter(m => m.is_read == 0).length;
 
-    actions.innerHTML = `
-        <span style="color: #00FFF0; margin-right: 1rem;">TOTAL: ${totalCount} | UNREAD: ${unreadCount}</span>
-        <button class="btn-sharp btn-danger" onclick="lockAdmin()"><i class="fas fa-power-off"></i> LOGOUT</button>
-    `;
+    if (actions) {
+        actions.innerHTML = `
+            <span style="color: #000; font-weight: 700; font-size: 0.85rem; margin-right: 1rem;">
+                DATABASE: <span style="background: #000; color: #FFF; padding: 0.2rem 0.5rem;">${isSQLiteActive ? 'SQLITE (messages.db)' : 'LOCAL STORAGE'}</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
+            </span>
+            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> REFRESH</button>
+        `;
+    }
 
-    if (localMsgs.length === 0) {
-        content.innerHTML = `<div style="text-align: center; padding: 3rem; color: #8F9BB3;">// NO MESSAGES STORED IN DATABASE</div>`;
+    if (msgs.length === 0) {
+        content.innerHTML = `<div style="text-align: center; padding: 3rem; color: #666; font-weight: 600;">// NO MESSAGES STORED IN DATABASE</div>`;
         return;
     }
 
@@ -86,31 +111,31 @@ function renderInbox() {
                 <div class="lbl">TOTAL SUBMISSIONS</div>
             </div>
             <div class="stat-box">
-                <div class="val" style="color: #FF7A00;">${unreadCount}</div>
+                <div class="val" style="color: #000;">${unreadCount}</div>
                 <div class="lbl">UNREAD MESSAGES</div>
             </div>
         </div>
-        ${localMsgs.map(msg => `
+        ${msgs.map(msg => `
             <div class="msg-card ${msg.is_read == 0 ? 'unread' : ''}">
                 <div class="msg-head">
                     <div>
-                        <strong style="color: #FFF; font-size: 1rem;">${escapeHtml(msg.name)}</strong> 
-                        &lt;<a href="mailto:${escapeHtml(msg.email)}" style="color: #00FFF0; text-decoration: none;">${escapeHtml(msg.email)}</a>&gt;
+                        <strong style="color: #000; font-size: 1rem;">${escapeHtml(msg.name)}</strong> 
+                        &lt;<a href="mailto:${escapeHtml(msg.email)}" style="color: #000; font-weight: 600;">${escapeHtml(msg.email)}</a>&gt;
                     </div>
                     <div>
                         <span>${escapeHtml(msg.created_at)}</span>
-                        <span style="margin-left: 0.5rem; padding: 0.2rem 0.5rem; border: 1px solid #262B3D; color: ${msg.is_read == 0 ? '#00FFF0' : '#8F9BB3'};">
+                        <span style="margin-left: 0.5rem; padding: 0.2rem 0.5rem; border: 1px solid #000; font-weight: 700; background: ${msg.is_read == 0 ? '#000' : '#FFF'}; color: ${msg.is_read == 0 ? '#FFF' : '#000'};">
                             ${msg.is_read == 0 ? 'UNREAD' : 'READ'}
                         </span>
                     </div>
                 </div>
-                <div><strong style="color: #FF7A00;">[SUBJECT]:</strong> ${escapeHtml(msg.subject)}</div>
+                <div style="margin-top: 0.5rem;"><strong style="color: #000;">[SUBJECT]:</strong> ${escapeHtml(msg.subject)}</div>
                 <div class="msg-body">${escapeHtml(msg.message)}</div>
-                <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                    <button class="btn-sharp btn-cyan" onclick="toggleReadMsg(${msg.id})">
+                <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
+                    <button class="btn-sharp btn-dark" onclick="toggleReadMsg(${msg.id}, ${isSQLiteActive})">
                         ${msg.is_read == 0 ? '[ MARK READ ]' : '[ MARK UNREAD ]'}
                     </button>
-                    <button class="btn-sharp btn-danger" onclick="deleteLocalMsg(${msg.id})">
+                    <button class="btn-sharp btn-danger" onclick="deleteMsg(${msg.id}, ${isSQLiteActive})">
                         [ DELETE ]
                     </button>
                 </div>
@@ -119,36 +144,36 @@ function renderInbox() {
     `;
 }
 
-function handleAdminLogin(e) {
-    e.preventDefault();
-    const pass = document.getElementById('adminPassInput').value;
-    if (pass === 'admin123') {
-        sessionStorage.setItem('admin_unlocked', 'true');
-        isAdminUnlocked = true;
-        renderInbox();
-    } else {
-        alert('Invalid access key!');
+async function toggleReadMsg(id, isSQLiteActive) {
+    if (isSQLiteActive) {
+        try {
+            await fetch('http://127.0.0.1:8000/api/messages/toggle-read', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            });
+        } catch (e) {}
     }
-}
-
-function lockAdmin() {
-    sessionStorage.removeItem('admin_unlocked');
-    isAdminUnlocked = false;
-    renderInbox();
-}
-
-function toggleReadMsg(id) {
     const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
     const msg = localMsgs.find(m => m.id == id);
     if (msg) {
         msg.is_read = msg.is_read == 1 ? 0 : 1;
         localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
-        renderInbox();
     }
+    renderInbox();
 }
 
-function deleteLocalMsg(id) {
+async function deleteMsg(id, isSQLiteActive) {
     if (!confirm('[CONFIRM] Delete this message permanently?')) return;
+    if (isSQLiteActive) {
+        try {
+            await fetch('http://127.0.0.1:8000/api/messages/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            });
+        } catch (e) {}
+    }
     let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
     localMsgs = localMsgs.filter(m => m.id != id);
     localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
