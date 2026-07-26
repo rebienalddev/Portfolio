@@ -1,7 +1,4 @@
-// --- REAL-TIME SHARED CLOUD DATABASE ENGINE (SHARED BETWEEN LOCALHOST & VERCEL) ---
-
-const CLOUD_DB_URL = "https://api.restful-api.dev/objects";
-const MSG_TAG = "REBIENALD_PORTFOLIO_MSG";
+// --- CONTACT FORM & DIRECT EMAIL NOTIFICATION ENGINE ---
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -48,7 +45,7 @@ if (contactForm) {
                 is_read: 0
             };
 
-            // 1. Direct Email Delivery to Rebienaldev@gmail.com
+            // 1. Direct Email Delivery to Rebienaldev@gmail.com (via Web3Forms)
             try {
                 fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
@@ -64,19 +61,7 @@ if (contactForm) {
                 }).catch(() => {});
             } catch (err) {}
 
-            // 2. Shared Cloud Database Push (Syncs Localhost <-> Vercel)
-            try {
-                await fetch(CLOUD_DB_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: MSG_TAG,
-                        data: newMsg
-                    })
-                });
-            } catch (e) {}
-
-            // 3. Local Cache Update
+            // 2. Save Message to Inbox Database
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
@@ -93,59 +78,31 @@ if (contactForm) {
     });
 }
 
-// Render Inbox Function (Fetches Shared Cloud DB)
-async function renderInbox() {
+// Render Inbox Function
+function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
     if (!content) return;
 
-    let msgs = [];
-
-    // Try fetching from Shared Cloud Database
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-        const res = await fetch(CLOUD_DB_URL, { signal: controller.signal });
-        clearTimeout(timeoutId);
-
-        if (res.ok) {
-            const rawList = await res.json();
-            if (Array.isArray(rawList)) {
-                const cloudMsgs = rawList
-                    .filter(obj => obj && obj.name === MSG_TAG && obj.data)
-                    .map(obj => obj.data)
-                    .sort((a, b) => b.id - a.id);
-
-                if (cloudMsgs.length > 0) {
-                    msgs = cloudMsgs;
-                    localStorage.setItem('portfolio_messages', JSON.stringify(cloudMsgs));
-                }
-            }
-        }
-    } catch(e) {}
-
-    // Fallback to local storage if offline or waiting
-    if (msgs.length === 0) {
-        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-    }
+    let msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
 
     if (msgs.length === 0) {
         msgs = [
             {
-                id: 1787654600000,
-                name: "Cloud Sync Verification",
-                email: "sync.verifier@global.org",
-                subject: "Cross-Domain Sync Working!",
-                message: "Hello Rebienald! This message was posted from Localhost and synced live to Vercel via Shared Cloud Database.",
-                created_at: new Date().toLocaleString(),
-                is_read: 0
-            },
-            {
-                id: 1787654455000,
+                id: 1787654700000,
                 name: "Alex Mercer",
                 email: "alex.mercer@innovate.tech",
                 subject: "Senior Full-Stack Engineer Role",
                 message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project.",
+                created_at: new Date().toLocaleString(),
+                is_read: 0
+            },
+            {
+                id: 1787654388000,
+                name: "Sarah Connor",
+                email: "sarah.connor@cyberdyne.io",
+                subject: "Project Collaboration Inquiry",
+                message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project.",
                 created_at: new Date().toLocaleString(),
                 is_read: 0
             }
@@ -161,7 +118,7 @@ async function renderInbox() {
             <span style="color: #111; font-weight: 700; font-size: 0.85rem; margin-right: 1rem;">
                 MESSAGES: ${totalCount} | UNREAD: ${unreadCount}
             </span>
-            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> Refresh Cloud</button>
+            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> Refresh</button>
         `;
     }
 
