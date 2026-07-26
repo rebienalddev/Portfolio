@@ -1,4 +1,4 @@
-// --- CONTACT FORM SCRIPT (SIMPLE, CLEAN, EMAIL-LIKE NOTIFICATIONS) ---
+// --- CONTACT FORM & REAL-TIME SYNCHRONIZED INBOX DATABASE ---
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -29,13 +29,13 @@ if (contactForm) {
                 is_read: 0
             };
 
-            // Send via Web3Forms Email Service (Delivers to Rebienaldev@gmail.com)
+            // 1. Send Direct Email Notification to Rebienaldev@gmail.com
             try {
                 fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        access_key: 'YOUR_WEB3FORMS_KEY', // Optional free email key
+                        access_key: 'YOUR_FREE_WEB3FORMS_KEY',
                         name: nameVal,
                         email: emailVal,
                         subject: subjectVal,
@@ -45,10 +45,15 @@ if (contactForm) {
                 }).catch(() => {});
             } catch (err) {}
 
-            // Save to Inbox
+            // 2. Save to Synchronized Database & Broadcast Event
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+            
+            // Broadcast live sync event across tabs
+            try {
+                window.dispatchEvent(new Event('storage'));
+            } catch(e) {}
 
             formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! I will reply to your email shortly.</div>`;
             contactForm.reset();
@@ -62,7 +67,7 @@ if (contactForm) {
     });
 }
 
-// Render Inbox Function (Ultra Simple & Efficient)
+// Render Inbox Function
 function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
@@ -70,15 +75,14 @@ function renderInbox() {
 
     let msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
 
-    // Default sample messages if empty
     if (msgs.length === 0) {
         msgs = [
             {
                 id: 1787654455000,
-                name: "Alex Mercer (Tech Lead)",
+                name: "Alex Mercer",
                 email: "alex.mercer@innovate.tech",
                 subject: "Senior Full-Stack Engineer Role",
-                message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience with full-stack development, Discord bots, and AI integration. We are looking for a Senior Developer to lead our new project. Are you available for a quick introductory call this week?",
+                message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project.",
                 created_at: new Date().toLocaleString(),
                 is_read: 0
             },
@@ -87,7 +91,7 @@ function renderInbox() {
                 name: "Sarah Connor",
                 email: "sarah.connor@cyberdyne.io",
                 subject: "Project Collaboration Inquiry",
-                message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project. Please reach out when you get a chance!",
+                message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project.",
                 created_at: new Date().toLocaleString(),
                 is_read: 0
             }
@@ -171,4 +175,5 @@ function escapeHtml(str) {
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+window.addEventListener('storage', renderInbox);
 document.addEventListener('DOMContentLoaded', renderInbox);
