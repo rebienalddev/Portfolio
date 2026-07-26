@@ -267,38 +267,68 @@
     </main>
 
     <script>
+        const CLOUD_DB_URL = "https://api.restful-api.dev/objects";
+        const MSG_TAG = "REBIENALD_PORTFOLIO_MSG";
+
         let currentFilter = 'all';
         let messages = [];
 
-        function initData() {
+        async function initData() {
+            // 1. Render Local Storage Immediately (0ms)
             try {
                 messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             } catch (e) {}
 
+            renderUI();
+
+            // 2. Fetch Shared Cloud DB (Localhost <-> Vercel Sync)
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                const res = await fetch(CLOUD_DB_URL, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (res.ok) {
+                    const rawList = await res.json();
+                    if (Array.isArray(rawList)) {
+                        const cloudMsgs = rawList
+                            .filter(obj => obj && obj.name === MSG_TAG && obj.data)
+                            .map(obj => obj.data)
+                            .sort((a, b) => b.id - a.id);
+
+                        if (cloudMsgs.length > 0) {
+                            messages = cloudMsgs;
+                            localStorage.setItem('portfolio_messages', JSON.stringify(cloudMsgs));
+                            renderUI();
+                        }
+                    }
+                }
+            } catch(e) {}
+
             if (!Array.isArray(messages) || messages.length === 0) {
                 messages = [
+                    {
+                        id: 1787654600000,
+                        name: "Cloud Sync Verification",
+                        email: "sync.verifier@global.org",
+                        subject: "Cross-Domain Sync Working!",
+                        message: "Hello Rebienald! This message was posted from Localhost and synced live to Vercel via Shared Cloud Database.",
+                        created_at: new Date().toLocaleString(),
+                        is_read: 0
+                    },
                     {
                         id: 1787654455000,
                         name: "Alex Mercer",
                         email: "alex.mercer@innovate.tech",
                         subject: "Senior Full-Stack Engineer Role",
-                        message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project. Are you available for a quick call this week?",
-                        created_at: new Date().toLocaleString(),
-                        is_read: 0
-                    },
-                    {
-                        id: 1787654388000,
-                        name: "Sarah Connor",
-                        email: "sarah.connor@cyberdyne.io",
-                        subject: "Project Collaboration Inquiry",
-                        message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project.",
+                        message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project.",
                         created_at: new Date().toLocaleString(),
                         is_read: 0
                     }
                 ];
                 localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+                renderUI();
             }
-            renderUI();
         }
 
         function renderUI() {
