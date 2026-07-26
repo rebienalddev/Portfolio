@@ -1,14 +1,28 @@
-// --- CONTACT FORM & REAL-TIME SYNCHRONIZED INBOX DATABASE ---
+// --- CONTACT FORM WITH RATE LIMITING & COOLDOWN PROTECTION ---
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
+
+// Rate Limit Configuration: 60 Seconds Cooldown Between Submissions
+const RATE_LIMIT_COOLDOWN_MS = 60 * 1000; 
 
 // Form Submission Handler
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        // Check Rate Limit (Timestamp validation)
+        const lastSubmitTime = parseInt(localStorage.getItem('last_submit_timestamp') || '0', 10);
+        const now = Date.now();
+        const timePassed = now - lastSubmitTime;
+
+        if (timePassed < RATE_LIMIT_COOLDOWN_MS) {
+            const secondsRemaining = Math.ceil((RATE_LIMIT_COOLDOWN_MS - timePassed) / 1000);
+            formStatus.innerHTML = `<div class="status-message error"><i class="fas fa-clock"></i> Rate limit active. Please wait ${secondsRemaining} seconds before sending another message.</div>`;
+            return;
+        }
+
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Sending Message...';
         submitBtn.disabled = true;
         formStatus.innerHTML = '';
@@ -19,8 +33,11 @@ if (contactForm) {
         const messageVal = document.getElementById('message').value.trim();
 
         if (nameVal && emailVal && subjectVal && messageVal) {
+            // Record rate limit timestamp
+            localStorage.setItem('last_submit_timestamp', now.toString());
+
             const newMsg = {
-                id: Date.now(),
+                id: now,
                 name: nameVal,
                 email: emailVal,
                 subject: subjectVal,
@@ -45,15 +62,10 @@ if (contactForm) {
                 }).catch(() => {});
             } catch (err) {}
 
-            // 2. Save to Synchronized Database & Broadcast Event
+            // 2. Save to Synchronized Database
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
-            
-            // Broadcast live sync event across tabs
-            try {
-                window.dispatchEvent(new Event('storage'));
-            } catch(e) {}
 
             formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! I will reply to your email shortly.</div>`;
             contactForm.reset();
@@ -175,5 +187,4 @@ function escapeHtml(str) {
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-window.addEventListener('storage', renderInbox);
 document.addEventListener('DOMContentLoaded', renderInbox);
