@@ -408,9 +408,13 @@
             }
 
             if (!isCloud || allMessages.length === 0) {
-                const localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-                if (localData.length === 0 && allMessages.length === 0) {
-                    const sampleMsg = [
+                let localData = [];
+                try {
+                    localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+                } catch(e) {}
+
+                if (!Array.isArray(localData) || localData.length === 0) {
+                    localData = [
                         {
                             id: 1787654388000,
                             name: "Sarah Connor",
@@ -430,11 +434,9 @@
                             is_read: 0
                         }
                     ];
-                    localStorage.setItem('portfolio_messages', JSON.stringify(sampleMsg));
-                    allMessages = sampleMsg;
-                } else if (allMessages.length === 0) {
-                    allMessages = localData;
+                    localStorage.setItem('portfolio_messages', JSON.stringify(localData));
                 }
+                allMessages = localData;
             }
 
             const totalCount = allMessages.length;

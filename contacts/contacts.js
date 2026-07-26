@@ -107,9 +107,13 @@ async function renderInbox() {
 
     // Fallback to local storage if offline or empty
     if (!isCloudSync || msgs.length === 0) {
-        const localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-        if (localData.length === 0 && msgs.length === 0) {
-            const sampleMsg = [
+        let localData = [];
+        try {
+            localData = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        } catch(e) {}
+
+        if (!Array.isArray(localData) || localData.length === 0) {
+            localData = [
                 {
                     id: 1787654388000,
                     name: "Sarah Connor",
@@ -129,11 +133,9 @@ async function renderInbox() {
                     is_read: 0
                 }
             ];
-            localStorage.setItem('portfolio_messages', JSON.stringify(sampleMsg));
-            msgs = sampleMsg;
-        } else if (msgs.length === 0) {
-            msgs = localData;
+            localStorage.setItem('portfolio_messages', JSON.stringify(localData));
         }
+        msgs = localData;
     }
 
     const totalCount = msgs.length;
