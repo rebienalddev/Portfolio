@@ -267,68 +267,42 @@
     </main>
 
     <script>
-        const CLOUD_DB_URL = "https://api.restful-api.dev/objects";
-        const MSG_TAG = "REBIENALD_PORTFOLIO_MSG";
+        const SUPABASE_URL = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1/messages";
+        const SUPABASE_KEY = "sb_publishable_a5_YHH1N5U0goK4rRks_OA_Lr-JBSjH";
 
         let currentFilter = 'all';
         let messages = [];
 
         async function initData() {
-            // 1. Render Local Storage Immediately (0ms)
+            // 1. Render Local Cache Immediately (0ms)
             try {
                 messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             } catch (e) {}
 
             renderUI();
 
-            // 2. Fetch Shared Cloud DB (Localhost <-> Vercel Sync)
+            // 2. Fetch Live from Supabase Online Database (24/7 Global Sync)
             try {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 2000);
-                const res = await fetch(CLOUD_DB_URL, { signal: controller.signal });
+                const res = await fetch(`${SUPABASE_URL}?select=*&order=id.desc`, {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    },
+                    signal: controller.signal
+                });
                 clearTimeout(timeoutId);
 
                 if (res.ok) {
-                    const rawList = await res.json();
-                    if (Array.isArray(rawList)) {
-                        const cloudMsgs = rawList
-                            .filter(obj => obj && obj.name === MSG_TAG && obj.data)
-                            .map(obj => obj.data)
-                            .sort((a, b) => b.id - a.id);
-
-                        if (cloudMsgs.length > 0) {
-                            messages = cloudMsgs;
-                            localStorage.setItem('portfolio_messages', JSON.stringify(cloudMsgs));
-                            renderUI();
-                        }
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        messages = data;
+                        localStorage.setItem('portfolio_messages', JSON.stringify(data));
+                        renderUI();
                     }
                 }
             } catch(e) {}
-
-            if (!Array.isArray(messages) || messages.length === 0) {
-                messages = [
-                    {
-                        id: 1787654600000,
-                        name: "Cloud Sync Verification",
-                        email: "sync.verifier@global.org",
-                        subject: "Cross-Domain Sync Working!",
-                        message: "Hello Rebienald! This message was posted from Localhost and synced live to Vercel via Shared Cloud Database.",
-                        created_at: new Date().toLocaleString(),
-                        is_read: 0
-                    },
-                    {
-                        id: 1787654455000,
-                        name: "Alex Mercer",
-                        email: "alex.mercer@innovate.tech",
-                        subject: "Senior Full-Stack Engineer Role",
-                        message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project.",
-                        created_at: new Date().toLocaleString(),
-                        is_read: 0
-                    }
-                ];
-                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
-                renderUI();
-            }
         }
 
         function renderUI() {

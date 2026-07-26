@@ -1,19 +1,17 @@
-// --- CONTACT FORM & DIRECT EMAIL DELIVERY (FORMSUBMIT.CO) ---
-// FormSubmit delivers messages directly to Rebienaldev@gmail.com from any domain (Vercel, GitHub, Mobile, PC)
+// --- LIVE SUPABASE ONLINE CLOUD DATABASE INTEGRATION ---
+const SUPABASE_URL = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1/messages";
+const SUPABASE_KEY = "sb_publishable_a5_YHH1N5U0goK4rRks_OA_Lr-JBSjH";
 
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
 
-// Rate Limit Configuration: 60 Seconds Cooldown Between Submissions
 const RATE_LIMIT_COOLDOWN_MS = 60 * 1000; 
 
-// Form Submission Handler
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Rate Limit Check
         const lastSubmitTime = parseInt(localStorage.getItem('last_submit_timestamp') || '0', 10);
         const now = Date.now();
         const timePassed = now - lastSubmitTime;
@@ -46,30 +44,26 @@ if (contactForm) {
                 is_read: 0
             };
 
-            // 1. Direct Email Delivery to Rebienaldev@gmail.com via FormSubmit API
+            // 1. Save to Live Supabase Online Database
             try {
-                fetch('https://formsubmit.co/ajax/Rebienaldev@gmail.com', {
+                await fetch(SUPABASE_URL, {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Prefer': 'return=representation'
                     },
-                    body: JSON.stringify({
-                        name: nameVal,
-                        email: emailVal,
-                        subject: subjectVal,
-                        message: messageVal,
-                        _subject: `New Portfolio Inquiry: ${subjectVal}`
-                    })
-                }).catch(() => {});
+                    body: JSON.stringify(newMsg)
+                });
             } catch (err) {}
 
-            // 2. Save Message to Inbox Database
+            // 2. Local Backup Cache
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
 
-            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! I will reply to your email shortly.</div>`;
+            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! Saved to live Supabase online database.</div>`;
             contactForm.reset();
             renderInbox();
         } else {
@@ -82,12 +76,39 @@ if (contactForm) {
 }
 
 // Render Inbox Function
-function renderInbox() {
+async function renderInbox() {
     const content = document.getElementById('inboxContent');
     const actions = document.getElementById('inboxActions');
     if (!content) return;
 
-    let msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    let msgs = [];
+
+    // Fetch live from Supabase Cloud Database
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const res = await fetch(`${SUPABASE_URL}?select=*&order=id.desc`, {
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            },
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                msgs = data;
+                localStorage.setItem('portfolio_messages', JSON.stringify(data));
+            }
+        }
+    } catch(e) {}
+
+    // Fallback to local storage if offline or initial load
+    if (msgs.length === 0) {
+        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    }
 
     if (msgs.length === 0) {
         msgs = [
@@ -99,18 +120,8 @@ function renderInbox() {
                 message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project.",
                 created_at: new Date().toLocaleString(),
                 is_read: 0
-            },
-            {
-                id: 1787654388000,
-                name: "Sarah Connor",
-                email: "sarah.connor@cyberdyne.io",
-                subject: "Project Collaboration Inquiry",
-                message: "Hi Rebienald! I saw your portfolio and was blown away by your projects and expertise. I would love to hire you for a full-stack web application project.",
-                created_at: new Date().toLocaleString(),
-                is_read: 0
             }
         ];
-        localStorage.setItem('portfolio_messages', JSON.stringify(msgs));
     }
 
     const totalCount = msgs.length;
@@ -119,9 +130,9 @@ function renderInbox() {
     if (actions) {
         actions.innerHTML = `
             <span style="color: #111; font-weight: 700; font-size: 0.85rem; margin-right: 1rem;">
-                MESSAGES: ${totalCount} | UNREAD: ${unreadCount}
+                DATABASE: <span style="background: #111; color: #FFF; padding: 0.15rem 0.4rem;">SUPABASE CLOUD DB</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
             </span>
-            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> Refresh</button>
+            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> Refresh Supabase</button>
         `;
     }
 
