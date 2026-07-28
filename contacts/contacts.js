@@ -6,72 +6,64 @@ const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
 
-const RATE_LIMIT_COOLDOWN_MS = 60 * 1000; 
-
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        const lastSubmitTime = parseInt(localStorage.getItem('last_submit_timestamp') || '0', 10);
-        const now = Date.now();
-        const timePassed = now - lastSubmitTime;
-
-        if (timePassed < RATE_LIMIT_COOLDOWN_MS) {
-            const secondsRemaining = Math.ceil((RATE_LIMIT_COOLDOWN_MS - timePassed) / 1000);
-            formStatus.innerHTML = `<div class="status-message error"><i class="fas fa-clock"></i> Rate limit active. Please wait ${secondsRemaining} seconds before sending another message.</div>`;
-            return;
-        }
-
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Sending Message...';
-        submitBtn.disabled = true;
-        formStatus.innerHTML = '';
         
         const nameVal = document.getElementById('name').value.trim();
         const emailVal = document.getElementById('email').value.trim();
         const subjectVal = document.getElementById('subject').value.trim();
         const messageVal = document.getElementById('message').value.trim();
 
-        if (nameVal && emailVal && subjectVal && messageVal) {
-            localStorage.setItem('last_submit_timestamp', now.toString());
+        if (!nameVal || !emailVal || !subjectVal || !messageVal) {
+            formStatus.innerHTML = '<div class="status-message error"><i class="fas fa-exclamation-circle"></i> Please fill out all fields.</div>';
+            return;
+        }
 
-            const newMsg = {
-                id: now,
-                name: nameVal,
-                email: emailVal,
-                subject: subjectVal,
-                message: messageVal,
-                created_at: new Date().toLocaleString(),
-                is_read: 0
-            };
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Sending Message...';
+        submitBtn.disabled = true;
+        formStatus.innerHTML = '';
 
-            // 1. Save to Live Supabase Online Database
-            try {
-                await fetch(SUPABASE_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
-                        'Prefer': 'return=representation'
-                    },
-                    body: JSON.stringify(newMsg)
-                });
-            } catch (err) {}
+        const newMsg = {
+            id: Date.now(),
+            name: nameVal,
+            email: emailVal,
+            subject: subjectVal,
+            message: messageVal,
+            created_at: new Date().toLocaleString(),
+            is_read: 0
+        };
 
-            // 2. Local Backup Cache
+        // 1. Save to Local Storage immediately
+        try {
             const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             localMsgs.unshift(newMsg);
             localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+        } catch (e) {}
 
-            formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully! </div>`;
-            contactForm.reset();
-            renderInbox();
-        } else {
-            formStatus.innerHTML = '<div class="status-message error"><i class="fas fa-exclamation-circle"></i> Please fill out all fields.</div>';
+        // 2. Post to Supabase Cloud Database
+        try {
+            await fetch(SUPABASE_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(newMsg)
+            });
+        } catch (err) {
+            console.error("Supabase POST error:", err);
         }
 
+        formStatus.innerHTML = `<div class="status-message success"><i class="fas fa-check-circle"></i> Message sent successfully!</div>`;
+        contactForm.reset();
         submitBtn.innerHTML = 'Send Message';
         submitBtn.disabled = false;
+
+        if (typeof renderInbox === 'function') renderInbox();
+        if (typeof renderUI === 'function') renderUI();
     });
 }
 
@@ -85,43 +77,28 @@ async function renderInbox() {
 
     // Fetch live from Supabase Cloud Database
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
         const res = await fetch(`${SUPABASE_URL}?select=*&order=id.desc`, {
             headers: {
                 'apikey': SUPABASE_KEY,
                 'Authorization': `Bearer ${SUPABASE_KEY}`
-            },
-            signal: controller.signal
+            }
         });
-        clearTimeout(timeoutId);
 
         if (res.ok) {
             const data = await res.json();
-            if (Array.isArray(data) && data.length > 0) {
+            if (Array.isArray(data)) {
                 msgs = data;
                 localStorage.setItem('portfolio_messages', JSON.stringify(data));
             }
         }
-    } catch(e) {}
-
-    // Fallback to local storage if offline or initial load
-    if (msgs.length === 0) {
-        msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+    } catch(e) {
+        console.error("Supabase GET error:", e);
     }
 
     if (msgs.length === 0) {
-        msgs = [
-            {
-                id: 1787654700000,
-                name: "Alex Mercer",
-                email: "alex.mercer@innovate.tech",
-                subject: "Senior Full-Stack Engineer Role",
-                message: "Hi Rebienald, I stumbled upon your portfolio website and was extremely impressed by your experience. We are looking for a Senior Developer to lead our new project.",
-                created_at: new Date().toLocaleString(),
-                is_read: 0
-            }
-        ];
+        try {
+            msgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        } catch (e) {}
     }
 
     const totalCount = msgs.length;
@@ -132,24 +109,29 @@ async function renderInbox() {
             <span style="color: #111; font-weight: 700; font-size: 0.85rem; margin-right: 1rem;">
                 DATABASE: <span style="background: #111; color: #FFF; padding: 0.15rem 0.4rem;">SUPABASE CLOUD DB</span> | TOTAL: ${totalCount} | UNREAD: ${unreadCount}
             </span>
-            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> Refresh Supabase</button>
+            <button class="btn-sharp btn-dark" onclick="renderInbox()"><i class="fas fa-sync"></i> Refresh Messages</button>
         `;
     }
 
+    if (msgs.length === 0) {
+        content.innerHTML = `<div class="empty-state" style="background:#FFF; border:1px dashed #E5E7EB; padding:3rem; text-align:center; color:#6B7280; font-weight:600;">No messages in inbox</div>`;
+        return;
+    }
+
     content.innerHTML = `
-        <div class="stats-grid">
-            <div class="stat-box">
-                <div class="val">${totalCount}</div>
-                <div class="lbl">TOTAL MESSAGES</div>
+        <div class="stats-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
+            <div class="stat-box" style="background:#FFF; border:2px solid #111; padding:1rem; border-left:5px solid #111;">
+                <div class="val" style="font-size:1.8rem; font-weight:800; color:#111;">${totalCount}</div>
+                <div class="lbl" style="font-size:0.75rem; font-weight:700; color:#666; text-transform:uppercase;">TOTAL MESSAGES</div>
             </div>
-            <div class="stat-box">
-                <div class="val" style="color: #FF7A00;">${unreadCount}</div>
-                <div class="lbl">UNREAD MESSAGES</div>
+            <div class="stat-box" style="background:#FFF; border:2px solid #111; padding:1rem; border-left:5px solid #FF7A00;">
+                <div class="val" style="font-size:1.8rem; font-weight:800; color:#FF7A00;">${unreadCount}</div>
+                <div class="lbl" style="font-size:0.75rem; font-weight:700; color:#666; text-transform:uppercase;">UNREAD MESSAGES</div>
             </div>
         </div>
         ${msgs.map(msg => `
-            <div class="msg-card ${msg.is_read == 0 ? 'unread' : ''}">
-                <div class="msg-head">
+            <div class="msg-card ${msg.is_read == 0 ? 'unread' : ''}" style="background:#FFF; border:1px solid #E5E7EB; padding:1.25rem; margin-bottom:1rem;">
+                <div class="msg-head" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
                     <div>
                         <strong style="color: #111; font-size: 1rem;">${escapeHtml(msg.name)}</strong> 
                         &lt;<a href="mailto:${escapeHtml(msg.email)}" style="color: #111; font-weight: 600;">${escapeHtml(msg.email)}</a>&gt;
@@ -162,7 +144,7 @@ async function renderInbox() {
                     </div>
                 </div>
                 <div style="margin-top: 0.5rem;"><strong style="color: #111;">[SUBJECT]:</strong> ${escapeHtml(msg.subject)}</div>
-                <div class="msg-body">${escapeHtml(msg.message)}</div>
+                <div class="msg-body" style="font-size:0.9rem; color:#374151; white-space:pre-wrap; margin-top:0.5rem;">${escapeHtml(msg.message)}</div>
                 <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
                     <button class="btn-sharp btn-dark" onclick="toggleReadMsg('${msg.id}', ${msg.is_read})">
                         ${msg.is_read == 0 ? 'Mark Read' : 'Mark Unread'}
@@ -176,22 +158,60 @@ async function renderInbox() {
     `;
 }
 
-function toggleReadMsg(id, currentStatus) {
+async function toggleReadMsg(id, currentStatus) {
     const newStatus = currentStatus == 1 ? 0 : 1;
-    const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-    const msg = localMsgs.find(m => m.id == id);
-    if (msg) {
-        msg.is_read = newStatus;
-        localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+
+    // 1. Update local storage
+    try {
+        const localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        const msg = localMsgs.find(m => String(m.id) === String(id));
+        if (msg) {
+            msg.is_read = newStatus;
+            localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+        }
+    } catch (e) {}
+
+    // 2. Update Supabase Cloud DB
+    try {
+        await fetch(`${SUPABASE_URL}?id=eq.${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            },
+            body: JSON.stringify({ is_read: newStatus })
+        });
+    } catch (e) {
+        console.error("Supabase PATCH error:", e);
     }
+
     renderInbox();
 }
 
-function deleteMsg(id) {
-    if (!confirm('Delete this message?')) return;
-    let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-    localMsgs = localMsgs.filter(m => m.id != id);
-    localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+async function deleteMsg(id) {
+    if (!confirm('Are you sure you want to delete this message?')) return;
+
+    // 1. Delete from local storage
+    try {
+        let localMsgs = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
+        localMsgs = localMsgs.filter(m => String(m.id) !== String(id));
+        localStorage.setItem('portfolio_messages', JSON.stringify(localMsgs));
+    } catch (e) {}
+
+    // 2. Delete from Supabase Cloud DB
+    try {
+        await fetch(`${SUPABASE_URL}?id=eq.${id}`, {
+            method: 'DELETE',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+        });
+    } catch (e) {
+        console.error("Supabase DELETE error:", e);
+    }
+
     renderInbox();
 }
 

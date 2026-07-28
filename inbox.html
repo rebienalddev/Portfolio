@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inbox & Analytics | Rebienald Carpio</title>
+    <title>Messages Inbox | Rebienald Carpio</title>
     <link rel="icon" type="image/png" href="images/logo.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,41 +119,11 @@
             color: var(--text);
         }
 
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .analytics-card {
-            background: #FFFFFF;
-            border: 2px solid #111827;
-            padding: 1rem 1.25rem;
-            border-left: 5px solid #111827;
-            box-shadow: 2px 2px 0px #111827;
-        }
-
-        .analytics-card .val {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #111827;
-        }
-
-        .analytics-card .lbl {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 0.4rem;
-        }
-
         .toolbar {
             display: flex;
             gap: 0.75rem;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .search-box {
@@ -163,6 +133,7 @@
             border: 1px solid var(--border);
             padding: 0 0.8rem;
             flex: 1;
+            min-width: 200px;
         }
 
         .search-box input {
@@ -268,7 +239,7 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <div class="brand">REBIENALD CARPIO / DASHBOARD</div>
+            <div class="brand">REBIENALD CARPIO / MESSAGES INBOX</div>
             <div class="nav-right">
                 <a href="index.html" class="btn-sharp"><i class="fas fa-arrow-left"></i> Portfolio</a>
                 <a href="contacts/contact.html" class="btn-sharp"><i class="fas fa-paper-plane"></i> Contact Form</a>
@@ -278,28 +249,8 @@
 
     <main class="main-wrapper">
         <div class="page-header">
-            <h1>Analytics & Inbox</h1>
+            <h1>Messages Inbox</h1>
             <div class="stats-summary" id="statsSummary">Total Messages: 0 | Unread: 0</div>
-        </div>
-
-        <!-- Live Unique Visitor Analytics Grid -->
-        <div class="analytics-grid">
-            <div class="analytics-card">
-                <div class="val" id="statUnique">1</div>
-                <div class="lbl">Unique Visitors</div>
-            </div>
-            <div class="analytics-card">
-                <div class="val" id="statVisits">1</div>
-                <div class="lbl">Total Visits</div>
-            </div>
-            <div class="analytics-card">
-                <div class="val" id="statDownloads">0</div>
-                <div class="lbl">CV Downloads</div>
-            </div>
-            <div class="analytics-card">
-                <div class="val" id="statMessages">0</div>
-                <div class="lbl">Total Messages</div>
-            </div>
         </div>
 
         <div class="toolbar">
@@ -310,6 +261,8 @@
             <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
             <button class="filter-btn" id="filterUnread" onclick="setFilter('unread')">Unread</button>
             <button class="filter-btn" id="filterRead" onclick="setFilter('read')">Read</button>
+            <button class="btn-sharp" onclick="initData()"><i class="fas fa-sync"></i> Refresh</button>
+            <button class="btn-sharp btn-danger" onclick="clearAllMessages()"><i class="fas fa-trash"></i> Clear All</button>
         </div>
 
         <div class="messages-list" id="messagesList">
@@ -317,41 +270,14 @@
         </div>
     </main>
 
-    <script src="analytics.js"></script>
     <script>
-        const SUPABASE_URL_BASE = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1";
         const SUPABASE_URL_MSGS = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1/messages";
         const SUPABASE_KEY = "sb_publishable_a5_YHH1N5U0goK4rRks_OA_Lr-JBSjH";
 
         let currentFilter = 'all';
         let messages = [];
 
-        async function fetchAnalyticsData() {
-            try {
-                const res = await fetch(`${SUPABASE_URL_BASE}/site_analytics?id=eq.1`, {
-                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        const row = data[0];
-                        document.getElementById('statUnique').innerText = row.unique_visitors || 1;
-                        document.getElementById('statVisits').innerText = row.total_visits || 1;
-                        document.getElementById('statDownloads').innerText = row.cv_downloads || 0;
-                        return;
-                    }
-                }
-            } catch(e) {}
-
-            let localStats = JSON.parse(localStorage.getItem('reb_site_analytics') || '{"unique_visitors":1,"total_visits":1,"cv_downloads":0}');
-            document.getElementById('statUnique').innerText = localStats.unique_visitors || 1;
-            document.getElementById('statVisits').innerText = localStats.total_visits || 1;
-            document.getElementById('statDownloads').innerText = localStats.cv_downloads || 0;
-        }
-
         async function initData() {
-            fetchAnalyticsData();
-
             try {
                 messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
             } catch (e) {}
@@ -359,26 +285,24 @@
             renderUI();
 
             try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 2000);
                 const res = await fetch(`${SUPABASE_URL_MSGS}?select=*&order=id.desc`, {
                     headers: {
                         'apikey': SUPABASE_KEY,
                         'Authorization': `Bearer ${SUPABASE_KEY}`
-                    },
-                    signal: controller.signal
+                    }
                 });
-                clearTimeout(timeoutId);
 
                 if (res.ok) {
                     const data = await res.json();
-                    if (Array.isArray(data) && data.length > 0) {
+                    if (Array.isArray(data)) {
                         messages = data;
                         localStorage.setItem('portfolio_messages', JSON.stringify(data));
                         renderUI();
                     }
                 }
-            } catch(e) {}
+            } catch(e) {
+                console.error("Fetch messages error:", e);
+            }
         }
 
         function renderUI() {
@@ -389,7 +313,6 @@
             const total = messages.length;
             const unread = messages.filter(m => m.is_read == 0).length;
             if (stats) stats.innerText = `Total Messages: ${total} | Unread: ${unread}`;
-            document.getElementById('statMessages').innerText = total;
 
             let filtered = messages.filter(msg => {
                 if (currentFilter === 'unread' && msg.is_read == 1) return false;
@@ -438,20 +361,70 @@
             renderUI();
         }
 
-        function toggleRead(id) {
-            const msg = messages.find(m => m.id == id);
+        async function toggleRead(id) {
+            const msg = messages.find(m => String(m.id) === String(id));
             if (msg) {
-                msg.is_read = msg.is_read == 1 ? 0 : 1;
+                const newStatus = msg.is_read == 1 ? 0 : 1;
+                msg.is_read = newStatus;
                 localStorage.setItem('portfolio_messages', JSON.stringify(messages));
                 renderUI();
+
+                try {
+                    await fetch(`${SUPABASE_URL_MSGS}?id=eq.${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`
+                        },
+                        body: JSON.stringify({ is_read: newStatus })
+                    });
+                } catch (e) {
+                    console.error("PATCH error:", e);
+                }
             }
         }
 
-        function deleteMessage(id) {
-            if (!confirm('Delete message?')) return;
-            messages = messages.filter(m => m.id != id);
+        async function deleteMessage(id) {
+            if (!confirm('Are you sure you want to delete this message?')) return;
+
+            // 1. Delete locally
+            messages = messages.filter(m => String(m.id) !== String(id));
             localStorage.setItem('portfolio_messages', JSON.stringify(messages));
             renderUI();
+
+            // 2. Delete from Supabase Cloud DB
+            try {
+                await fetch(`${SUPABASE_URL_MSGS}?id=eq.${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+            } catch (e) {
+                console.error("DELETE error:", e);
+            }
+        }
+
+        async function clearAllMessages() {
+            if (!confirm('Are you sure you want to clear ALL messages from your inbox and database?')) return;
+
+            messages = [];
+            localStorage.removeItem('portfolio_messages');
+            renderUI();
+
+            try {
+                await fetch(`${SUPABASE_URL_MSGS}?id=gt.0`, {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+            } catch (e) {
+                console.error("Clear all error:", e);
+            }
         }
 
         function escapeHtml(str) {
@@ -461,7 +434,5 @@
 
         document.addEventListener('DOMContentLoaded', initData);
     </script>
-    <!-- Vercel Web Analytics -->
-    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
