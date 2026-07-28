@@ -180,12 +180,21 @@ $isLoggedIn = !empty($_SESSION['admin_logged_in']);
         }
 
         .search-input {
-            padding: 0.6rem 1rem;
+            padding: 0.35rem 0.75rem;
             border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            width: 280px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            height: 30px;
+            width: 220px;
+            max-width: 100%;
             outline: none;
+        }
+
+        @media (max-width: 768px) {
+            .search-input {
+                width: 100%;
+                font-size: 0.75rem;
+            }
         }
 
         .search-input:focus {
@@ -441,7 +450,7 @@ $isLoggedIn = !empty($_SESSION['admin_logged_in']);
             </div>
 
             <div class="controls-bar">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search by name, email, subject..." oninput="filterMessages()">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search..." oninput="filterMessages()">
                 <div class="filter-group">
                     <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All Messages</button>
                     <button class="filter-btn" data-filter="unread" onclick="setFilter('unread')">Unread</button>
