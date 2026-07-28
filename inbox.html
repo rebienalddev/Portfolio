@@ -150,18 +150,18 @@
             align-items: center;
             background: #FFFFFF;
             border: 1px solid var(--border);
-            padding: 0 0.75rem;
-            flex: 1 1 240px;
+            padding: 0 0.6rem;
+            flex: 1 1 180px;
             border-radius: 4px;
-            min-height: 38px;
+            height: 36px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 0.5rem 0;
+            padding: 0.25rem 0;
             border: none;
             outline: none;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text);
             background: transparent;
         }
@@ -357,6 +357,13 @@
 
             .search-box {
                 width: 100%;
+                height: 34px;
+                padding: 0 0.5rem;
+            }
+
+            .search-box input {
+                font-size: 0.8rem;
+                padding: 0.2rem 0;
             }
 
             .filter-group {
@@ -419,7 +426,7 @@
         <div class="toolbar">
             <div class="search-box">
                 <i class="fas fa-search" style="color: var(--muted); margin-right: 0.5rem;"></i>
-                <input type="text" id="searchInput" placeholder="Search by name, email, or content..." oninput="renderUI()">
+                <input type="text" id="searchInput" placeholder="Search..." oninput="renderUI()">
             </div>
             
             <div class="filter-group">
