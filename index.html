@@ -539,17 +539,17 @@
             text-align: left;
         }
         
-        /* Orbiting Floating Cards (PC View: Just Large Logos) */
+        /* Orbiting Floating Cards (PC View: Just Logos, 25% smaller) */
         .tech-float-card {
             position: absolute;
             background: #FFFFFF;
             border: 1px solid rgba(0, 0, 0, 0.06);
             box-shadow: 
-                0 12px 32px rgba(0, 0, 0, 0.06), 
-                0 2px 6px rgba(0, 0, 0, 0.03);
-            border-radius: 20px;
-            width: 72px;
-            height: 72px;
+                0 10px 24px rgba(0, 0, 0, 0.05), 
+                0 2px 5px rgba(0, 0, 0, 0.02);
+            border-radius: 14px;
+            width: 54px;
+            height: 54px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -560,21 +560,21 @@
         }
         
         .tech-float-card:hover {
-            transform: scale(1.18);
+            transform: scale(1.15);
             border-color: rgba(255, 122, 0, 0.35);
             box-shadow: 
-                0 18px 42px rgba(255, 122, 0, 0.15);
+                0 14px 32px rgba(255, 122, 0, 0.14);
         }
         
         .tech-icon-wrapper {
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
+            width: 39px;
+            height: 39px;
+            border-radius: 10px;
             background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.75rem;
+            font-size: 2.0rem;
             color: var(--text-primary);
             transition: all 0.3s;
         }
@@ -582,9 +582,9 @@
         .tech-icon-wrapper i,
         .tech-icon-wrapper svg,
         .tech-icon-wrapper img {
-            font-size: 2.75rem;
-            width: 44px;
-            height: 44px;
+            font-size: 2.0rem;
+            width: 33px;
+            height: 33px;
             object-fit: contain;
             display: flex;
             align-items: center;
