@@ -19,6 +19,18 @@ const MIME_TYPES = {
 };
 
 http.createServer((req, res) => {
+    // Dynamically serve /env.js populated from Render's Environment Variables
+    if (req.url === '/env.js' || req.url === 'env.js') {
+        const envJsContent = `window.ENV = {
+    GROQ_API_KEY: ${JSON.stringify(process.env.GROQ_API_KEY || '')},
+    GEMINI_API_KEY: ${JSON.stringify(process.env.GEMINI_API_KEY || '')},
+    NEXT_PUBLIC_SUPABASE_URL: ${JSON.stringify(process.env.NEXT_PUBLIC_SUPABASE_URL || '')},
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${JSON.stringify(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '')}
+};`;
+        res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' });
+        return res.end(envJsContent);
+    }
+
     // Prevent directory traversal
     const safePath = path.normalize(req.url).replace(/^(\.\.[\/\\])+/, '');
     let filePath = path.join(__dirname, safePath === '/' ? 'index.html' : safePath);
