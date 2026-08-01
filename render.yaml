@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: portfolio-sqlite-app
-    env: python
-    buildCommand: ""
-    startCommand: python3 server.py
+    name: portfolio
+    env: node
+    buildCommand: npm run build
+    startCommand: npm start
     plan: free

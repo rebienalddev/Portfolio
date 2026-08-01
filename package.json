@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio Website with AI Chatbot",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Build step completed'"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
