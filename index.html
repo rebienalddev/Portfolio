@@ -539,52 +539,47 @@
             text-align: left;
         }
         
-        /* Orbiting Floating Cards (PC View: Just Logos, 25% smaller) */
+        /* Orbiting Floating Logos (Pure Logos Only - No White Box) */
         .tech-float-card {
             position: absolute;
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 
-                0 10px 24px rgba(0, 0, 0, 0.05), 
-                0 2px 5px rgba(0, 0, 0, 0.02);
-            border-radius: 14px;
-            width: 54px;
-            height: 54px;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            width: auto !important;
+            height: auto !important;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
             z-index: 10;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
         }
         
         .tech-float-card:hover {
-            transform: scale(1.15);
-            border-color: rgba(255, 122, 0, 0.35);
-            box-shadow: 
-                0 14px 32px rgba(255, 122, 0, 0.14);
+            transform: scale(1.25);
         }
         
         .tech-icon-wrapper {
-            width: 39px;
-            height: 39px;
-            border-radius: 10px;
-            background: transparent;
+            width: auto;
+            height: auto;
+            background: transparent !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.0rem;
+            font-size: 2.6rem;
             color: var(--text-primary);
             transition: all 0.3s;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
         }
         
         .tech-icon-wrapper i,
         .tech-icon-wrapper svg,
         .tech-icon-wrapper img {
-            font-size: 2.0rem;
-            width: 33px;
-            height: 33px;
+            font-size: 2.6rem;
+            width: 42px;
+            height: 42px;
             object-fit: contain;
             display: flex;
             align-items: center;
