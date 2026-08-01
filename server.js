@@ -64,16 +64,19 @@ Key Engagements & Awards:
 - 3rd Place Web Development & Design Competition (April 24, 2025) - STI College Bacoor (7-hour contest against college-level participants)
 - CodeFest Tagisan ng Talino (February 28, 2025) - STI College Bacoor (8-hour Mobile App Competition)
 
-Certifications:
-- Responsive Web Design (FreeCodeCamp)
-- JS Algorithms & Data Structures (FreeCodeCamp)
-- JAVA Certificate (HackerRank)
-- Legacy Responsive Web Design (FreeCodeCamp)
-- Web Development (Simplilearn)
-- Java Programming (Simplilearn)
-- CSS Fundamentals (Simplilearn)
-- Front End Dev - CSS (Great Learning)
-- Front End Dev - HTML (Great Learning)
+Certifications & Verified Credentials:
+- Responsive Web Design (freeCodeCamp - April 29, 2024): 300-hour Developer Certification covering HTML5, CSS3, Flexbox, CSS Grid, and responsive UI design.
+- JS Algorithms & Data Structures (freeCodeCamp - June 29, 2025): 300-hour Developer Certification covering ES6+, OOP, functional programming, data structures, and algorithms.
+- JAVA Certificate (HackerRank - August 2024): Verified technical skill certification covering core Java syntax, OOP principles, arrays, and problem-solving.
+- Legacy Responsive Web Design (freeCodeCamp - 2024): 300-hour Developer Certification in responsive web layout standards.
+- Web Development (Simplilearn - September 15, 2024): Course completion certificate covering full-stack web development principles.
+- Java Programming (Simplilearn - September 13, 2024): Course completion certificate in Java application development and object-oriented programming.
+- CSS Fundamentals (Simplilearn - September 7, 2024): Course completion certificate covering modern CSS styling, selectors, and box model architecture.
+- Front End Dev - CSS (Great Learning - July 2024): Certification in frontend development styling and layout techniques.
+- Front End Dev - HTML (Great Learning - July 2024): Certification in semantic HTML structure and web content layout.
+- TechTalk Episode Two Speaker Certificate (STI College Bacoor - October 25, 2025): Speaker recognition for leading workshop on Advanced Web Responsiveness & Deployment Pipelines.
+- TechTalk Episode One Speaker Certificate (STI College Bacoor - November 20, 2025): Speaker recognition for workshop on HTML/CSS Fundamentals & Semantic Structuring.
+- Web Design Competition 2025 (STI College Bacoor - April 24, 2025): Certificate of participation in the 7-hour web design competition.
 `;
 
 // Helper: Make HTTPS JSON POST Request
