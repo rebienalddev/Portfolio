@@ -262,8 +262,8 @@ Formatting & Style Rules:
         container.innerHTML = `
             <!-- Floating Trigger Button -->
             <button id="chatbotTrigger" class="chatbot-trigger" aria-label="Open Chatbot" title="Chat with Rebienald AI">
-                <i class="fa-solid fa-comment-dots trigger-icon-open"></i>
-                <i class="fa-solid fa-xmark trigger-icon-close"></i>
+                <svg class="trigger-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <svg class="trigger-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
 
             <!-- Chatbot Modal Window -->
@@ -271,7 +271,7 @@ Formatting & Style Rules:
                 <div class="chat-header">
                     <div class="chat-header-info">
                         <div class="chat-avatar">
-                            <i class="fa-solid fa-robot"></i>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8.01" y2="16"></line><line x1="16" y1="16" x2="16.01" y2="16"></line></svg>
                         </div>
                         <div class="chat-title-group">
                             <h4 id="chatHeaderTitle">Rebienald AI Assistant</h4>
@@ -282,7 +282,7 @@ Formatting & Style Rules:
                         </div>
                     </div>
                     <button id="chatCloseBtn" class="chat-close-btn" aria-label="Close Chat">
-                        <i class="fa-solid fa-xmark"></i>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
 
@@ -303,7 +303,7 @@ Formatting & Style Rules:
                 <form id="chatInputForm" class="chat-input-form">
                     <input type="text" id="chatInput" class="chat-input" placeholder="Type your question..." maxlength="300" autocomplete="off" required />
                     <button type="submit" id="chatSendBtn" class="chat-send-btn" aria-label="Send Message">
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </button>
                 </form>
             </div>

@@ -41,11 +41,11 @@ body.dark-mode {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.35rem;
     box-shadow: 0 6px 20px rgba(255, 122, 0, 0.35);
-    z-index: 9999;
+    z-index: 99999;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.2s ease;
     outline: none;
+    pointer-events: auto;
 }
 
 .chatbot-trigger:hover {
@@ -58,20 +58,25 @@ body.dark-mode {
     transform: scale(0.95);
 }
 
-.chatbot-trigger .trigger-icon-open,
-.chatbot-trigger .trigger-icon-close {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+.chatbot-trigger svg {
+    pointer-events: none;
     position: absolute;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.chatbot-trigger .trigger-icon-open {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
 }
 
 .chatbot-trigger .trigger-icon-close {
     opacity: 0;
-    transform: rotate(-90deg) scale(0.5);
+    transform: rotate(-90deg) scale(0.6);
 }
 
 .chatbot-trigger.active .trigger-icon-open {
     opacity: 0;
-    transform: rotate(90deg) scale(0.5);
+    transform: rotate(90deg) scale(0.6);
 }
 
 .chatbot-trigger.active .trigger-icon-close {
