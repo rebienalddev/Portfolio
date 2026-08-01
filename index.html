@@ -539,41 +539,56 @@
             text-align: left;
         }
         
-        /* Orbiting Floating Cards */
+        /* Orbiting Floating Cards (PC View: Just Large Logos) */
         .tech-float-card {
             position: absolute;
             background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.04), 
-                0 1px 3px rgba(0, 0, 0, 0.02);
-            border-radius: 16px;
-            padding: 0.65rem 0.95rem;
+                0 12px 32px rgba(0, 0, 0, 0.06), 
+                0 2px 6px rgba(0, 0, 0, 0.03);
+            border-radius: 20px;
+            width: 72px;
+            height: 72px;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
+            padding: 0;
             z-index: 10;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
         }
         
         .tech-float-card:hover {
-            border-color: rgba(255, 122, 0, 0.25);
+            transform: scale(1.18);
+            border-color: rgba(255, 122, 0, 0.35);
             box-shadow: 
-                0 15px 35px rgba(255, 122, 0, 0.08);
+                0 18px 42px rgba(255, 122, 0, 0.15);
         }
         
         .tech-icon-wrapper {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
             background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 2.75rem;
             color: var(--text-primary);
             transition: all 0.3s;
+        }
+        
+        .tech-icon-wrapper i,
+        .tech-icon-wrapper svg,
+        .tech-icon-wrapper img {
+            font-size: 2.75rem;
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .tech-float-card:hover .tech-icon-wrapper {
@@ -581,9 +596,7 @@
         }
         
         .tech-card-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            display: none !important;
         }
         
         .tech-name {
