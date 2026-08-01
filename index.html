@@ -539,59 +539,57 @@
             text-align: left;
         }
         
-        /* Orbiting Floating Logos (Pure Logos Only - No White Box) */
-        .tech-float-card {
-            position: absolute;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            width: auto !important;
-            height: auto !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            z-index: 10;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-        }
-        
-        .tech-float-card:hover {
-            transform: scale(1.25);
-        }
-        
-        .tech-icon-wrapper {
-            width: auto;
-            height: auto;
-            background: transparent !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.6rem;
-            color: var(--text-primary);
-            transition: all 0.3s;
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
-        }
-        
-        .tech-icon-wrapper i,
-        .tech-icon-wrapper svg,
-        .tech-icon-wrapper img {
-            font-size: 2.6rem;
-            width: 42px;
-            height: 42px;
-            object-fit: contain;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .tech-float-card:hover .tech-icon-wrapper {
-            background: transparent;
-        }
-        
-        .tech-card-info {
-            display: none !important;
+        /* Orbiting Floating Logos (PC View Only: @media min-width 1025px) */
+        @media (min-width: 1025px) {
+            .tech-float-card {
+                position: absolute;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                width: auto !important;
+                height: auto !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                z-index: 10;
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                cursor: pointer;
+            }
+            
+            .tech-float-card:hover {
+                transform: scale(1.25);
+            }
+            
+            .tech-icon-wrapper {
+                width: auto;
+                height: auto;
+                background: transparent !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2.6rem;
+                color: var(--text-primary);
+                transition: all 0.3s;
+                filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+            }
+            
+            .tech-icon-wrapper i,
+            .tech-icon-wrapper svg,
+            .tech-icon-wrapper img {
+                font-size: 2.6rem;
+                width: 42px;
+                height: 42px;
+                object-fit: contain;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .tech-card-info {
+                display: none !important;
+            }
         }
         
         .tech-name {
