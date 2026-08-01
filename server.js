@@ -15,42 +15,65 @@ Contact Information:
 - Email: rebkheicarpio@gmail.com
 - Phone: 09628489009
 - Portfolio: https://rebienald.vercel.app/
+- GitHub: https://github.com/rebienalddev/Portfolio
 
 Summary:
-IT student at Cavite State University with 5 years of experience building full-stack web applications, mobile applications, Discord bots, and AI-powered systems. Skilled in PHP, JavaScript, and modern web technologies with a focus on developing practical software that solves real-world problems.
+IT student at Cavite State University with 5 years of experience building full-stack web applications, mobile applications, Discord bots, and AI-powered systems. Skilled in Java, JavaScript, C#, PHP, and modern web frameworks with a focus on developing practical software that solves real-world problems.
 
 Projects:
-1. PrintHub (June 2026):
+1. PrintHub / Print Portal (June 2026):
    - Description: Web-based print management system featuring PDF submission, print customization, payment verification, and real-time queue tracking.
-   - Impact: Streamlined print requests and improved workflow efficiency.
+   - Technologies: PHP, MySQL, JavaScript, HTML, CSS.
 2. SamAI (February 2026):
    - Description: AI-powered document learning platform using Retrieval-Augmented Generation (RAG), intelligent load balancing, data caching, and multi-LLM processing.
    - Features: PDF-based tutoring, automated quiz generation, accurate document retrieval, and efficient AI inference.
 3. InfoWhiz (September 2025):
    - Description: AI-powered gamified learning platform integrating local and cloud LLMs.
    - Features: Real-time coding assistance, debugging support, simulation-based programming education, and interactive AI-driven feedback.
-4. Club Management System (April 2024):
+4. NAS.IO Bot:
+   - Description: Automated Discord membership verification bot that verifies subscriber emails in MongoDB and auto-kicks expired users.
+   - Technologies: Node.js, Discord.js, MongoDB.
+5. TechnoBytes Photobooth:
+   - Description: Custom photobooth application developed for student organizations during the STI College Bacoor Foundation Week.
+   - Technologies: C#, .NET WPF / Desktop.
+6. Cup Of Story:
+   - Description: Sophisticated digital storefront demonstrating modern frontend paradigms, micro-animations, and optimized asset delivery.
+   - Technologies: HTML5, CSS3, JavaScript.
+7. Club Management System / Club Hub (April 2024):
    - Description: PHP-based club management platform featuring role-based access control, event management, and announcements.
    - Impact: Improved coordination and simplified administration across multiple school clubs.
 
 Education:
-- Cavite State University - Imus: Bachelor of Science in Information Technology (2026 - Present)
-- STI College - Bacoor: ICT Major in Mobile App and Web Development (2024 - 2026). Awards: Graduated With Honors, Best in System, Best in Capstone.
+- Cavite State University - Imus: Bachelor of Science in Information Technology (2026 - Present) - Status: Active / Ongoing
+- STI College - Bacoor: TVL Track Major in Mobile App and Web Development (2024 - 2026) - Status: Completed. Awards: Graduated With Honors, Best in System Development, Best in Capstone Project.
+- Binakayan National High School (2020 - 2024): Computer System Servicing - Status: Completed.
 
 Technical Skills:
 - Programming Languages: Java, JavaScript, C#, PHP
-- Frontend: HTML, CSS, Bootstrap, Tailwind CSS
-- Databases: MySQL, MongoDB, SQLite, Supabase
-- Frameworks: ASP.NET, .NET MAUI, Node.js
-- Tools: Git, GitHub, VS Code, Cursor, Devin, Android Studio, Antigravity
+- Frontend: HTML5, CSS3, Bootstrap, Tailwind CSS, JavaScript (ES6+)
+- Back-End: PHP, C#, Java, Node.js, ASP.NET, .NET MAUI
+- Databases: MySQL, MongoDB, SQLite, Supabase (pgvector)
+- IDEs & OS: VS Code, Visual Studio, Cursor, Devin, Android Studio, NetBeans, Ubuntu Linux, Windows 11, Zorin OS
+- Infrastructure & Tools: Git, GitHub, Vercel, AWS, Netlify, Render, XAMPP, InfinityFree, AeonFree
 
-Achievements & Awards:
-- Best in Capstone Project, STI College Bacoor
-- Best in System Development, STI College Bacoor
-- Tagisan ng Talino CodeFest, STI College Bacoor
-- TechTalk Episode 2 Resource Speaker, STI College Bacoor
-- TechTalk Episode 1 Resource Speaker, STI College Bacoor
-- 3rd Place Web Development and Design Competition, STI College Bacoor
+Key Engagements & Awards:
+- Best in Capstone Project (June 29, 2026) - STI College Bacoor
+- Best in System Development (May 22, 2026) - STI College Bacoor
+- Resource Speaker: TechTalk Ep. 2 (October 20, 2025) - Advanced Web Responsiveness & Deployment Pipelines
+- Resource Speaker: TechTalk Ep. 1 (November 25, 2025) - HTML/CSS Fundamentals & Semantic Structuring
+- 3rd Place Web Development & Design Competition (April 24, 2025) - STI College Bacoor (7-hour contest against college-level participants)
+- CodeFest Tagisan ng Talino (February 28, 2025) - STI College Bacoor (8-hour Mobile App Competition)
+
+Certifications:
+- Responsive Web Design (FreeCodeCamp)
+- JS Algorithms & Data Structures (FreeCodeCamp)
+- JAVA Certificate (HackerRank)
+- Legacy Responsive Web Design (FreeCodeCamp)
+- Web Development (Simplilearn)
+- Java Programming (Simplilearn)
+- CSS Fundamentals (Simplilearn)
+- Front End Dev - CSS (Great Learning)
+- Front End Dev - HTML (Great Learning)
 `;
 
 // Helper: Make HTTPS JSON POST Request
