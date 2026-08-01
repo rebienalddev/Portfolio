@@ -1,0 +1,9 @@
+.env
+.env.local
+.env.*.local
+env.js
+__pycache__/
+*.pyc
+contacts/messages.db
+.DS_Store
+*.log
