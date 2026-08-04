@@ -1317,7 +1317,8 @@
                 font-size: 0.82rem;
                 line-height: 1.4;
                 text-align: left;
-                margin: 0;
+                margin: 0 0 0.85rem 0;
+                padding-bottom: 0.35rem;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
@@ -1480,7 +1481,7 @@
                 overflow-y: hidden;
                 width: 100%;
                 display: flex;
-                padding: 0.8rem 0;
+                padding: 2.2rem 0 3rem;
                 position: relative;
                 scrollbar-width: none;
                 -webkit-overflow-scrolling: touch;
@@ -1494,39 +1495,46 @@
             }
             .certs-marquee-group {
                 display: flex;
-                gap: 2.0rem;
-                padding-right: 2.0rem;
+                gap: 2.5rem;
+                padding-right: 2.5rem;
                 flex-shrink: 0;
             }
             .cert-card {
-                width: 320px;
-                height: 285px;
+                width: 340px;
+                height: 310px;
                 flex-shrink: 0;
-                padding: 1rem;
-                overflow: hidden;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                text-decoration: none;
+                padding: 0.9rem;
+                overflow: hidden;
                 background: var(--bg-base);
                 border: 1px solid rgba(255, 255, 255, 0.5);
-                border-radius: 22px;
+                border-radius: 20px;
                 box-shadow: var(--neo-extruded);
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                user-select: none;
+                -webkit-user-select: none;
+                -webkit-touch-callout: none;
+                -webkit-tap-highlight-color: transparent;
             }
-            .cert-card, .cert-card:hover, .cert-card *, .cert-card *:hover {
-                transform: none !important;
-                transition: none !important;
+            .cert-card:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--neo-extruded-hover);
             }
             .cert-img {
                 width: 100%;
-                height: 180px;
+                height: 170px;
                 object-fit: cover;
                 object-position: center;
                 border-radius: 14px;
                 box-shadow: var(--neo-inset);
                 border: 1px solid rgba(255, 255, 255, 0.4);
-                opacity: 1;
+                -webkit-user-drag: none;
+                user-drag: none;
+                pointer-events: none;
                 background: var(--bg-base);
-                padding: 0;
                 flex-shrink: 0;
             }
             .cert-info {
@@ -1611,7 +1619,20 @@
                 }
                 .logo { font-size: 1rem; white-space: nowrap !important; }
                 .nav-links, .nav-cta { display: none; }
-                .hamburger { display: block; font-size: 1.1rem; }
+                .hamburger {
+                    display: flex !important;
+                    width: 38px;
+                    height: 38px;
+                    border-radius: 50%;
+                    background: var(--bg-base);
+                    box-shadow: var(--neo-extruded-sm);
+                    border: 1px solid rgba(255, 255, 255, 0.6);
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--text-primary);
+                    font-size: 1rem;
+                    cursor: pointer;
+                }
                 section { padding: 3rem 0 !important; }
                 .section-header { text-align: center; margin-bottom: 1.75rem !important; }
                 .section-header h2, .edu-col-title, h2.text-gradient {
@@ -1751,7 +1772,7 @@
                     justify-content: center !important;
                     filter: drop-shadow(0 6px 14px rgba(150, 168, 196, 0.45));
                 }
-                .project-card, .cert-card, .service-card, .glass-card, .skills-category-section {
+                .project-card, .service-card, .glass-card, .skills-category-section {
                     border: 1px solid rgba(255, 255, 255, 0.45) !important;
                     box-shadow: 5px 5px 14px rgba(150, 168, 196, 0.38), -4px -4px 10px rgba(255, 255, 255, 0.6) !important;
                 }
@@ -1782,7 +1803,7 @@
                     border-radius: 20px !important;
                 }
                 .certs-marquee {
-                    padding: 0.5rem 0 !important;
+                    padding: 1.8rem 0 2.2rem !important;
                 }
                 .certs-marquee-group {
                     gap: 1.25rem !important;
@@ -1792,14 +1813,14 @@
                     margin-top: 1.25rem !important;
                 }
                 .certs-marquee-group .cert-card {
-                    width: min(270px, 75vw) !important;
-                    height: 250px !important;
-                    padding: 0.85rem !important;
-                    border-radius: 18px !important;
+                    width: min(290px, 80vw) !important;
+                    height: auto !important;
+                    padding: 0.9rem !important;
+                    border-radius: 20px !important;
                 }
                 .certs-marquee-group .cert-img {
-                    height: 145px !important;
-                    border-radius: 12px !important;
+                    height: 160px !important;
+                    border-radius: 14px !important;
                 }
                 .project-image { height: 160px !important; }
                 .project-content { padding: 1.15rem 1.15rem 1.25rem !important; }
@@ -1920,13 +1941,44 @@
             }
             .mobile-menu {
                 position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
-                z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+                background: var(--bg-base);
+                z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
                 opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+                gap: 1.25rem;
             }
             .mobile-menu.active { opacity: 1; pointer-events: all; }
-            .mobile-menu a { color: var(--text-primary); font-size: 1.8rem; font-weight: 600; margin: 1.2rem 0; text-decoration: none; letter-spacing: -0.02em; }
-            .mobile-menu .close-menu { position: absolute; top: 2rem; right: 2rem; font-size: 2rem; color: var(--text-secondary); cursor: pointer; }
+            .mobile-menu a {
+                color: var(--text-primary);
+                font-size: 1.2rem;
+                font-weight: 700;
+                padding: 0.85rem 2rem;
+                width: 82%;
+                max-width: 320px;
+                text-align: center;
+                border-radius: 100px;
+                background: var(--bg-base);
+                box-shadow: var(--neo-extruded);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+            .mobile-menu a:hover, .mobile-menu a:active {
+                box-shadow: var(--neo-inset);
+                color: var(--accent);
+            }
+            .mobile-menu .close-menu {
+                position: absolute; top: 2rem; right: 2rem;
+                width: 44px; height: 44px; border-radius: 50%;
+                background: var(--bg-base); box-shadow: var(--neo-extruded);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 1.2rem; color: var(--text-primary); cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .mobile-menu .close-menu:hover {
+                box-shadow: var(--neo-inset);
+                color: var(--accent);
+            }
         </style>
     </head>
     <body>
