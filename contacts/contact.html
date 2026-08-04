@@ -13,12 +13,12 @@
     
     <style>
         :root {
-            /* Rich Tactile Golden Ratio Neomorphism System */
-            --bg-base: #e5eaf2;
-            --bg-elevated: #e5eaf2;
+            /* True Soft Molded Neomorphism (Wide 24px Feathery Blur, Zero Sharp Lines) */
+            --bg-base: #e6ecf5;
+            --bg-elevated: #e6ecf5;
             
             --shadow-light: #ffffff;
-            --shadow-dark: rgba(150, 168, 196, 0.45);
+            --shadow-dark: rgba(150, 168, 196, 0.48);
             
             --accent: #FF7A00;
             --accent-hover: #E06B00;
@@ -26,15 +26,15 @@
             --text-primary: #1e293b;
             --text-secondary: #475569;
             --text-tertiary: #94a3b8;
-            --glass-border: #ffffff;
+            --glass-border: rgba(255, 255, 255, 0.25);
             
-            /* Rich Tactile 3D Extruded & Inset Tokens */
-            --neo-extruded: 7px 7px 16px rgba(150, 168, 196, 0.45), -7px -7px 16px #ffffff;
-            --neo-extruded-hover: 10px 10px 22px rgba(150, 168, 196, 0.55), -10px -10px 22px #ffffff;
-            --neo-extruded-sm: 4px 4px 10px rgba(150, 168, 196, 0.38), -4px -4px 10px #ffffff;
+            /* True 3D Soft Extruded & Inset Tokens (Wide 22px-28px Feather Blur, No Sharp Lines) */
+            --neo-extruded: 9px 9px 24px rgba(150, 168, 196, 0.48), -9px -9px 24px #ffffff;
+            --neo-extruded-hover: 12px 12px 30px rgba(150, 168, 196, 0.55), -12px -12px 30px #ffffff;
+            --neo-extruded-sm: 5px 5px 14px rgba(150, 168, 196, 0.42), -5px -5px 14px #ffffff;
             
-            --neo-inset: inset 4px 4px 8px rgba(150, 168, 196, 0.42), inset -4px -4px 8px #ffffff;
-            --neo-inset-deep: inset 6px 6px 12px rgba(150, 168, 196, 0.48), inset -6px -6px 12px #ffffff;
+            --neo-inset: inset 5px 5px 12px rgba(150, 168, 196, 0.45), inset -5px -5px 12px #ffffff;
+            --neo-inset-deep: inset 8px 8px 18px rgba(150, 168, 196, 0.52), inset -8px -8px 18px #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -223,20 +223,6 @@
 
         /* MOBILE VIEW RULES: UNIFORM HEADERS & JUSTIFIED UNCUT TEXT */
         @media (max-width: 768px) {
-            :root {
-                --shadow-light: rgba(255, 255, 255, 0.65);
-                --neo-extruded: 6px 6px 14px rgba(150, 168, 196, 0.42), -5px -5px 12px rgba(255, 255, 255, 0.62);
-                --neo-extruded-hover: 8px 8px 18px rgba(150, 168, 196, 0.48), -7px -7px 15px rgba(255, 255, 255, 0.7);
-                --neo-extruded-sm: 3px 3px 8px rgba(150, 168, 196, 0.38), -3px -3px 8px rgba(255, 255, 255, 0.6);
-                --neo-inset: inset 3px 3px 6px rgba(150, 168, 196, 0.38), inset -3px -3px 6px rgba(255, 255, 255, 0.62);
-                --glass-border: rgba(255, 255, 255, 0.4);
-            }
-
-            .glass-card, .form-input, nav, .btn-submit, .social-link {
-                border: 1px solid rgba(255, 255, 255, 0.42) !important;
-                box-shadow: 5px 5px 14px rgba(150, 168, 196, 0.42), -4px -4px 10px rgba(255, 255, 255, 0.6) !important;
-            }
-
             .container { padding: 0 1rem; }
             nav { width: calc(100% - 1.5rem); top: 0.75rem; padding: 0.5rem 1rem; flex-wrap: nowrap; z-index: 9999; }
             .logo { font-size: 0.95rem; white-space: nowrap !important; }

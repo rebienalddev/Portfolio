@@ -16,12 +16,12 @@
 
     <style>
         :root {
-            /* Rich Tactile Golden Ratio Neomorphism System */
-            --bg-base: #e5eaf2;
-            --bg-elevated: #e5eaf2;
+            /* True Soft Molded Neomorphism (Wide 24px Feathery Blur, Zero Sharp Lines) */
+            --bg-base: #e6ecf5;
+            --bg-elevated: #e6ecf5;
             
             --shadow-light: #ffffff;
-            --shadow-dark: rgba(150, 168, 196, 0.45);
+            --shadow-dark: rgba(150, 168, 196, 0.48);
             
             --accent: #FF7A00;
             --accent-glow: rgba(255, 122, 0, 0.35);
@@ -31,21 +31,21 @@
             --text-secondary: #475569;
             --text-tertiary: #94a3b8;
             
-            --glass-bg: #e5eaf2;
-            --glass-border: #ffffff;
-            --glass-border-hover: #ffffff;
+            --glass-bg: #e6ecf5;
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-border-hover: rgba(255, 255, 255, 0.4);
             --glass-highlight: transparent;
             
-            --shadow-subtle: 6px 6px 14px rgba(150, 168, 196, 0.42), -6px -6px 14px #ffffff;
+            --shadow-subtle: 8px 8px 20px rgba(150, 168, 196, 0.42), -8px -8px 20px #ffffff;
             --shadow-glow: 0 0 15px rgba(255, 122, 0, 0.35);
             
-            /* Rich Tactile 3D Extruded & Inset Tokens */
-            --neo-extruded: 7px 7px 16px rgba(150, 168, 196, 0.45), -7px -7px 16px #ffffff;
-            --neo-extruded-hover: 10px 10px 22px rgba(150, 168, 196, 0.55), -10px -10px 22px #ffffff;
-            --neo-extruded-sm: 4px 4px 10px rgba(150, 168, 196, 0.38), -4px -4px 10px #ffffff;
+            /* True 3D Soft Extruded & Inset Tokens (Wide 22px-28px Feather Blur, No Sharp Lines) */
+            --neo-extruded: 9px 9px 24px rgba(150, 168, 196, 0.48), -9px -9px 24px #ffffff;
+            --neo-extruded-hover: 12px 12px 30px rgba(150, 168, 196, 0.55), -12px -12px 30px #ffffff;
+            --neo-extruded-sm: 5px 5px 14px rgba(150, 168, 196, 0.42), -5px -5px 14px #ffffff;
             
-            --neo-inset: inset 4px 4px 8px rgba(150, 168, 196, 0.42), inset -4px -4px 8px #ffffff;
-            --neo-inset-deep: inset 6px 6px 12px rgba(150, 168, 196, 0.48), inset -6px -6px 12px #ffffff;
+            --neo-inset: inset 5px 5px 12px rgba(150, 168, 196, 0.45), inset -5px -5px 12px #ffffff;
+            --neo-inset-deep: inset 8px 8px 18px rgba(150, 168, 196, 0.52), inset -8px -8px 18px #ffffff;
         }
 
         *, *::before, *::after { 
@@ -1569,16 +1569,6 @@
         }
 
         @media (max-width: 768px) {
-            :root {
-                --shadow-light: rgba(255, 255, 255, 0.65);
-                --neo-extruded: 6px 6px 14px rgba(150, 168, 196, 0.42), -5px -5px 12px rgba(255, 255, 255, 0.62);
-                --neo-extruded-hover: 8px 8px 18px rgba(150, 168, 196, 0.48), -7px -7px 15px rgba(255, 255, 255, 0.7);
-                --neo-extruded-sm: 3px 3px 8px rgba(150, 168, 196, 0.38), -3px -3px 8px rgba(255, 255, 255, 0.6);
-                --neo-inset: inset 3px 3px 6px rgba(150, 168, 196, 0.38), inset -3px -3px 6px rgba(255, 255, 255, 0.62);
-                --neo-inset-deep: inset 5px 5px 10px rgba(150, 168, 196, 0.45), inset -5px -5px 10px rgba(255, 255, 255, 0.65);
-                --glass-border: rgba(255, 255, 255, 0.4);
-            }
-
             * {
                 -webkit-tap-highlight-color: transparent !important;
                 -webkit-touch-callout: none !important;
@@ -1586,18 +1576,6 @@
             body {
                 background: var(--bg-base);
                 background-image: none;
-            }
-            
-            /* UNIVERSAL MOBILE SOFTENING - FEATHERED SHADOWS & SUBTLE BORDERS (NO SHARP WHITE GLARE) */
-            .glass-card, .project-card, .cert-card, .service-card, .stat-card, 
-            .skills-category-section, .skill-logo-item, .tech-chip, .filter-btn, 
-            .edu-tab-btn, .neo-step-node, .social-link, nav, .btn-primary, .btn-secondary {
-                border: 1px solid rgba(255, 255, 255, 0.42) !important;
-                box-shadow: 5px 5px 14px rgba(150, 168, 196, 0.42), -4px -4px 10px rgba(255, 255, 255, 0.6) !important;
-            }
-
-            .active, .edu-tab-btn.active, .filter-btn.active {
-                box-shadow: inset 3px 3px 6px rgba(150, 168, 196, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.6) !important;
             }
             
             .container { padding: 0 1.25rem; }
@@ -1813,16 +1791,17 @@
                 line-height: 1.5 !important;
             }
 
-            /* Skills Mobile Filter Nav */
+            /* Skills Mobile Filter Nav (Top Cutoff Fixed & Softened Shadows) */
             .skills-filter-nav {
                 display: flex !important;
                 flex-wrap: nowrap !important;
-                gap: 0.5rem !important;
+                gap: 0.6rem !important;
                 margin-bottom: 1.5rem !important;
                 justify-content: flex-start !important;
                 overflow-x: auto !important;
+                overflow-y: visible !important;
                 white-space: nowrap !important;
-                padding-bottom: 0.5rem !important;
+                padding: 0.75rem 0.5rem !important; /* Generous top & bottom padding prevents cutoff */
                 -webkit-overflow-scrolling: touch !important;
             }
             .skills-filter-nav::-webkit-scrollbar { display: none; }
@@ -1838,7 +1817,18 @@
             .skills-grid { display: flex !important; flex-wrap: wrap !important; gap: 0.5rem !important; }
             .skill-logo-item { padding: 0.35rem 0.7rem !important; border-radius: 8px !important; }
             .skill-logo-name { font-size: 0.75rem !important; white-space: nowrap !important; }
-            .filter-btn { padding: 0.4rem 0.85rem !important; font-size: 0.75rem !important; flex-shrink: 0 !important; white-space: nowrap !important; }
+            .filter-btn { 
+                padding: 0.5rem 1rem !important; 
+                font-size: 0.78rem !important; 
+                flex-shrink: 0 !important; 
+                white-space: nowrap !important; 
+                border: 1px solid rgba(255, 255, 255, 0.4) !important; 
+                box-shadow: 4px 4px 10px rgba(150, 168, 196, 0.38), -3px -3px 8px rgba(255, 255, 255, 0.6) !important;
+            }
+            .filter-btn.active {
+                border-color: rgba(255, 255, 255, 0.3) !important;
+                box-shadow: inset 3px 3px 6px rgba(150, 168, 196, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.6) !important;
+            }
 
             /* Education Pathway Mobile Sizing & Full Justified Items */
             .edu-tab-bar { max-width: 100% !important; gap: 0.4rem !important; margin-bottom: 1.75rem !important; }
