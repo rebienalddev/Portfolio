@@ -11,11 +11,17 @@
     --color-accent-border: rgba(0, 255, 240, 0.25);
     --color-accent-border-hover: #00fff0;
 
-    --color-light-bg: #ffffff;
+    --color-light-bg: #e0e5ec;
     --color-light-text: #222222;
     --color-light-text-dim: #555;
     --color-light-border: rgba(0, 0, 0, 0.1);
     --color-light-border-hover: #000000;
+
+    /* Neumorphism tokens */
+    --neu-light-shadow: #ffffff;
+    --neu-dark-shadow: #a3b1c6;
+    --neu-shadow-raised: 8px 8px 16px var(--neu-dark-shadow), -8px -8px 16px var(--neu-light-shadow);
+    --neu-shadow-pressed: inset 6px 6px 12px var(--neu-dark-shadow), inset -6px -6px 12px var(--neu-light-shadow);
 }
 
 * {
