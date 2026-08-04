@@ -1,4 +1,3 @@
-// --- TS-PARTICLES CONFIG ---
 async function loadParticles(options) {
     await tsParticles.load("tsparticles", {
         "particles": {
@@ -29,24 +28,20 @@ async function loadParticles(options) {
 function toggleParticles() {
     const body = document.body;
     if (body.classList.contains('dark-mode')) {
-        // Load particles only if they haven't been loaded already (no child nodes)
         if (!document.getElementById('tsparticles').hasChildNodes()) {
             loadParticles();
         }
     } else {
         const particlesInstance = tsParticles.domItem(0);
         if (particlesInstance) {
-            // Destroy particles when switching to light mode
             particlesInstance.destroy();
         }
     }
 }
 
-// --- THEME TOGGLE SCRIPT ---
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Initialize theme based on sessionStorage
 if (sessionStorage.getItem('darkMode') === 'disabled') {
     body.classList.remove('dark-mode');
     themeToggle.textContent = '🌙';
@@ -54,7 +49,7 @@ if (sessionStorage.getItem('darkMode') === 'disabled') {
     body.classList.add('dark-mode');
     themeToggle.textContent = '☀️';
 }
-toggleParticles(); // Initialize particles based on current theme
+toggleParticles();
 
 themeToggle.addEventListener('click', () => {
     body.classList.toggle('dark-mode');
@@ -68,7 +63,6 @@ themeToggle.addEventListener('click', () => {
     toggleParticles();
 });
 
-// --- HAMBURGER & SCROLL SCRIPT ---
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
@@ -77,7 +71,6 @@ hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
 });
 
-// Close nav menu when a link is clicked
 navLinks.addEventListener('click', (e) => {
     if (e.target.tagName === 'A') {
         hamburger.classList.remove('active');
@@ -85,13 +78,11 @@ navLinks.addEventListener('click', (e) => {
     }
 });
 
-// --- MODAL SCRIPT ---
 const modal = document.getElementById("certModal");
 const modalImg = document.getElementById("modalImg");
 
 function openModal(imageSrc) {
-    // We assume the image filename is passed and we prepend the path:
-    modalImg.src = `../images/${imageSrc}`; 
+    modalImg.src = `../images/${imageSrc}`;
     modal.style.display = "block";
 }
 
@@ -99,14 +90,12 @@ function closeModal() {
     modal.style.display = "none";
 }
 
-// Close modal on outside click
 modal.addEventListener('click', (e) => {
     if (e.target === modal) {
         closeModal();
     }
 });
 
-// Close modal on Escape key press
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeModal();

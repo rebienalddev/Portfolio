@@ -1,629 +1,571 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages Inbox | Rebienald Carpio</title>
-    <link rel="icon" type="image/png" href="images/logo.png">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg: #FFFFFF;
-            --text: #111827;
-            --muted: #6B7280;
-            --border: #E5E7EB;
-            --orange: #FF7A00;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Messages Inbox | Rebienald Carpio</title>
+        <link rel="icon" type="image/png" href="images/logo.png" />
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background-color: #FAFAFA;
-            color: var(--text);
-            font-family: 'Inter', -apple-system, sans-serif;
-            line-height: 1.4;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            -webkit-font-smoothing: antialiased;
-        }
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        /* Compact Header Navigation */
-        .navbar {
-            background: #FFFFFF;
-            border-bottom: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .brand {
-            font-weight: 800;
-            font-size: 0.9rem;
-            color: var(--text);
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            white-space: nowrap;
-        }
-
-        .nav-right {
-            display: flex;
-            gap: 0.4rem;
-        }
-
-        .btn-sharp {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.3rem;
-            padding: 0.3rem 0.65rem;
-            font-size: 0.78rem;
-            font-weight: 600;
-            text-decoration: none;
-            color: var(--text);
-            background: #FFFFFF;
-            border: 1px solid #111827;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-            height: 28px;
-        }
-
-        .btn-sharp:hover {
-            background: #111827;
-            color: #FFFFFF;
-        }
-
-        .btn-danger {
-            border-color: #DC2626;
-            color: #DC2626;
-        }
-
-        .btn-danger:hover {
-            background: #DC2626;
-            color: #FFFFFF;
-        }
-
-        .main-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0.85rem 0.85rem;
-            width: 100%;
-            flex: 1;
-        }
-
-        /* Low-Profile Page Header */
-        .page-header {
-            margin-bottom: 0.65rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #111827;
-            padding-bottom: 0.4rem;
-            gap: 0.5rem;
-        }
-
-        .page-header h1 {
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .stats-summary {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text);
-            background: #E5E7EB;
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
-        /* Ultra-Compact Toolbar & Search */
-        .toolbar {
-            display: flex;
-            gap: 0.4rem;
-            margin-bottom: 0.75rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: #F3F4F6;
-            border: 1px solid #D1D5DB;
-            padding: 0 0.5rem;
-            flex: 1 1 150px;
-            border-radius: 16px;
-            height: 28px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0;
-            border: none;
-            outline: none;
-            font-size: 0.75rem;
-            color: var(--text);
-            background: transparent;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .filter-btn {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0 0.55rem;
-            height: 28px;
-            background: #FFFFFF;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .filter-btn.active {
-            background: #111827;
-            color: #FFFFFF;
-            border-color: #111827;
-        }
-
-        .action-group {
-            display: flex;
-            gap: 0.3rem;
-            margin-left: auto;
-        }
-
-        .action-group .btn-sharp {
-            border-radius: 16px;
-            height: 28px;
-            padding: 0 0.55rem;
-            font-size: 0.75rem;
-        }
-
-        /* Messages List & Card styling */
-        .messages-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.65rem;
-        }
-
-        .msg-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.75rem 0.85rem;
-            transition: all 0.15s ease;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-            word-break: break-word;
-            overflow-wrap: anywhere;
-        }
-
-        .msg-card.unread {
-            border-left: 4px solid var(--orange);
-            background: #FFFDFB;
-        }
-
-        .msg-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.4rem;
-            gap: 0.4rem;
-        }
-
-        .msg-sender-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
-        }
-
-        .msg-sender {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .msg-email {
-            font-size: 0.78rem;
-            color: var(--muted);
-            font-weight: 500;
-            text-decoration: none;
-            word-break: break-all;
-        }
-
-        .msg-meta-info {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .msg-time {
-            font-size: 0.72rem;
-            color: var(--muted);
-            white-space: nowrap;
-        }
-
-        .msg-badge {
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 0.1rem 0.4rem;
-            border-radius: 3px;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-        }
-
-        .msg-badge.badge-unread {
-            background: #111827;
-            color: #FFFFFF;
-        }
-
-        .msg-badge.badge-read {
-            background: #F3F4F6;
-            color: #4B5563;
-            border: 1px solid #D1D5DB;
-        }
-
-        .msg-subject {
-            font-size: 0.88rem;
-            font-weight: 700;
-            margin-bottom: 0.35rem;
-            color: var(--text);
-            word-break: break-word;
-        }
-
-        .msg-body {
-            font-size: 0.82rem;
-            color: #374151;
-            white-space: pre-wrap;
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-
-        .msg-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.35rem;
-            border-top: 1px solid #F3F4F6;
-            padding-top: 0.45rem;
-        }
-
-        .msg-footer .btn-sharp {
-            height: 26px;
-            font-size: 0.72rem;
-            padding: 0 0.5rem;
-        }
-
-        .empty-state {
-            background: #FFFFFF;
-            border: 1px dashed var(--border);
-            border-radius: 6px;
-            padding: 2.5rem 1rem;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        /* MOBILE OVERRIDES: LOW-PROFILE COMPACT FOOTPRINT */
-        @media (max-width: 640px) {
+        <style>
+            :root {
+                --bg: #ffffff;
+                --text: #111827;
+                --muted: #6b7280;
+                --border: #e5e7eb;
+                --orange: #ff7a00;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                background-color: #fafafa;
+                color: var(--text);
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
+                line-height: 1.4;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                -webkit-font-smoothing: antialiased;
+            }
             .navbar {
-                padding: 0.4rem 0.65rem;
+                background: #ffffff;
+                border-bottom: 1px solid var(--border);
+                padding: 0.5rem 1rem;
+                position: sticky;
+                top: 0;
+                z-index: 100;
             }
-
+            .nav-container {
+                max-width: 900px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.5rem;
+            }
             .brand {
-                font-size: 0.82rem;
+                font-weight: 800;
+                font-size: 0.9rem;
+                color: var(--text);
+                letter-spacing: -0.02em;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                white-space: nowrap;
             }
-
-            .nav-right .btn-sharp {
-                height: 26px;
-                padding: 0 0.45rem;
-                font-size: 0.72rem;
+            .nav-right {
+                display: flex;
+                gap: 0.4rem;
             }
-
-            .main-wrapper {
-                padding: 0.5rem 0.5rem;
-            }
-
-            .page-header {
-                margin-bottom: 0.5rem;
-                padding-bottom: 0.3rem;
-            }
-
-            .page-header h1 {
-                font-size: 1rem;
-            }
-
-            .toolbar {
-                margin-bottom: 0.5rem;
+            .btn-sharp {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
                 gap: 0.3rem;
-            }
-
-            .search-box {
-                flex: 1 1 100%;
+                padding: 0.3rem 0.65rem;
+                font-size: 0.78rem;
+                font-weight: 600;
+                text-decoration: none;
+                color: var(--text);
+                background: #ffffff;
+                border: 1px solid #111827;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: all 0.15s ease;
+                white-space: nowrap;
                 height: 28px;
             }
-
+            .btn-sharp:hover {
+                background: #111827;
+                color: #ffffff;
+            }
+            .btn-danger {
+                border-color: #dc2626;
+                color: #dc2626;
+            }
+            .btn-danger:hover {
+                background: #dc2626;
+                color: #ffffff;
+            }
+            .main-wrapper {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 0.85rem 0.85rem;
+                width: 100%;
+                flex: 1;
+            }
+            .page-header {
+                margin-bottom: 0.65rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #111827;
+                padding-bottom: 0.4rem;
+                gap: 0.5rem;
+            }
+            .page-header h1 {
+                font-size: 1.15rem;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+            }
+            .stats-summary {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--text);
+                background: #e5e7eb;
+                padding: 0.15rem 0.5rem;
+                border-radius: 4px;
+                white-space: nowrap;
+            }
+            .toolbar {
+                display: flex;
+                gap: 0.4rem;
+                margin-bottom: 0.75rem;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .search-box {
+                display: flex;
+                align-items: center;
+                background: #f3f4f6;
+                border: 1px solid #d1d5db;
+                padding: 0 0.5rem;
+                flex: 1 1 150px;
+                border-radius: 16px;
+                height: 28px;
+            }
+            .search-box input {
+                width: 100%;
+                padding: 0;
+                border: none;
+                outline: none;
+                font-size: 0.75rem;
+                color: var(--text);
+                background: transparent;
+            }
             .filter-group {
-                flex: 1;
+                display: flex;
+                gap: 0.25rem;
             }
-
             .filter-btn {
-                flex: 1;
-                text-align: center;
-                height: 26px;
-                font-size: 0.7rem;
-                padding: 0 0.25rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                padding: 0 0.55rem;
+                height: 28px;
+                background: #ffffff;
+                color: var(--muted);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                cursor: pointer;
+                transition: all 0.15s ease;
+                white-space: nowrap;
             }
-
+            .filter-btn.active {
+                background: #111827;
+                color: #ffffff;
+                border-color: #111827;
+            }
             .action-group {
-                margin-left: 0;
+                display: flex;
+                gap: 0.3rem;
+                margin-left: auto;
             }
-
             .action-group .btn-sharp {
-                height: 26px;
-                font-size: 0.7rem;
-                padding: 0 0.4rem;
+                border-radius: 16px;
+                height: 28px;
+                padding: 0 0.55rem;
+                font-size: 0.75rem;
             }
-
-            .msg-card {
-                padding: 0.65rem 0.75rem;
-            }
-
-            .msg-header {
+            .messages-list {
+                display: flex;
                 flex-direction: column;
-                gap: 0.2rem;
+                gap: 0.65rem;
             }
-
+            .msg-card {
+                background: #ffffff;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 0.75rem 0.85rem;
+                transition: all 0.15s ease;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+            .msg-card.unread {
+                border-left: 4px solid var(--orange);
+                background: #fffdfb;
+            }
+            .msg-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 0.4rem;
+                gap: 0.4rem;
+            }
+            .msg-sender-info {
+                display: flex;
+                flex-direction: column;
+                gap: 0.1rem;
+            }
+            .msg-sender {
+                font-size: 0.88rem;
+                font-weight: 700;
+                color: var(--text);
+            }
+            .msg-email {
+                font-size: 0.78rem;
+                color: var(--muted);
+                font-weight: 500;
+                text-decoration: none;
+                word-break: break-all;
+            }
             .msg-meta-info {
-                align-self: flex-start;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
             }
-
+            .msg-time {
+                font-size: 0.72rem;
+                color: var(--muted);
+                white-space: nowrap;
+            }
+            .msg-badge {
+                font-size: 0.65rem;
+                font-weight: 800;
+                padding: 0.1rem 0.4rem;
+                border-radius: 3px;
+                letter-spacing: 0.03em;
+                text-transform: uppercase;
+            }
+            .msg-badge.badge-unread {
+                background: #111827;
+                color: #ffffff;
+            }
+            .msg-badge.badge-read {
+                background: #f3f4f6;
+                color: #4b5563;
+                border: 1px solid #d1d5db;
+            }
+            .msg-subject {
+                font-size: 0.88rem;
+                font-weight: 700;
+                margin-bottom: 0.35rem;
+                color: var(--text);
+                word-break: break-word;
+            }
+            .msg-body {
+                font-size: 0.82rem;
+                color: #374151;
+                white-space: pre-wrap;
+                margin-bottom: 0.5rem;
+                line-height: 1.5;
+                word-break: break-word;
+            }
             .msg-footer {
+                display: flex;
                 justify-content: flex-end;
+                gap: 0.35rem;
+                border-top: 1px solid #f3f4f6;
+                padding-top: 0.45rem;
             }
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="brand">
-                <i class="fas fa-inbox"></i> REB.DEV INBOX
-            </div>
-            <div class="nav-right">
-                <a href="index.html" class="btn-sharp"><i class="fas fa-arrow-left"></i> Home</a>
-                <a href="contacts/contact.html" class="btn-sharp"><i class="fas fa-paper-plane"></i> Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="main-wrapper">
-        <div class="page-header">
-            <h1>Inbox</h1>
-            <div class="stats-summary" id="statsSummary">Total: 0 | Unread: 0</div>
-        </div>
-
-        <div class="toolbar">
-            <div class="search-box">
-                <i class="fas fa-search" style="color: var(--muted); margin-right: 0.4rem; font-size: 0.75rem;"></i>
-                <input type="text" id="searchInput" placeholder="Search..." oninput="renderUI()">
-            </div>
-            
-            <div class="filter-group">
-                <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
-                <button class="filter-btn" id="filterUnread" onclick="setFilter('unread')">Unread</button>
-                <button class="filter-btn" id="filterRead" onclick="setFilter('read')">Read</button>
-            </div>
-
-            <div class="action-group">
-                <button class="btn-sharp" onclick="initData()"><i class="fas fa-sync"></i> Refresh</button>
-                <button class="btn-sharp btn-danger" onclick="clearAllMessages()"><i class="fas fa-trash"></i> Clear</button>
-            </div>
-        </div>
-
-        <div class="messages-list" id="messagesList">
-            <!-- Messages rendered dynamically -->
-        </div>
-    </main>
-
-    <script>
-        const SUPABASE_URL_MSGS = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1/messages";
-        const SUPABASE_KEY = "sb_publishable_a5_YHH1N5U0goK4rRks_OA_Lr-JBSjH";
-
-        let currentFilter = 'all';
-        let messages = [];
-
-        async function initData() {
-            try {
-                messages = JSON.parse(localStorage.getItem('portfolio_messages') || '[]');
-            } catch (e) {}
-
-            renderUI();
-
-            try {
-                const res = await fetch(`${SUPABASE_URL_MSGS}?select=*&order=id.desc`, {
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`
-                    }
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data)) {
-                        messages = data;
-                        localStorage.setItem('portfolio_messages', JSON.stringify(data));
-                        renderUI();
-                    }
+            .msg-footer .btn-sharp {
+                height: 26px;
+                font-size: 0.72rem;
+                padding: 0 0.5rem;
+            }
+            .empty-state {
+                background: #ffffff;
+                border: 1px dashed var(--border);
+                border-radius: 6px;
+                padding: 2.5rem 1rem;
+                text-align: center;
+                color: var(--muted);
+                font-size: 0.85rem;
+                font-weight: 600;
+            }
+            @media (max-width: 640px) {
+                .navbar {
+                    padding: 0.4rem 0.65rem;
                 }
-            } catch(e) {
-                console.error("Fetch messages error:", e);
-            }
-        }
-
-        function renderUI() {
-            const container = document.getElementById('messagesList');
-            const stats = document.getElementById('statsSummary');
-            const query = (document.getElementById('searchInput')?.value || '').toLowerCase();
-
-            const total = messages.length;
-            const unread = messages.filter(m => m.is_read == 0).length;
-            if (stats) stats.innerText = `Total: ${total} | Unread: ${unread}`;
-
-            let filtered = messages.filter(msg => {
-                if (currentFilter === 'unread' && msg.is_read == 1) return false;
-                if (currentFilter === 'read' && msg.is_read == 0) return false;
-                if (query) {
-                    const haystack = (msg.name + ' ' + msg.email + ' ' + msg.subject + ' ' + msg.message).toLowerCase();
-                    return haystack.includes(query);
+                .brand {
+                    font-size: 0.82rem;
                 }
-                return true;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox" style="font-size:1.5rem; margin-bottom:0.5rem; color:#9CA3AF;"></i>
-                        <div>No messages found</div>
-                    </div>`;
-                return;
+                .nav-right .btn-sharp {
+                    height: 26px;
+                    padding: 0 0.45rem;
+                    font-size: 0.72rem;
+                }
+                .main-wrapper {
+                    padding: 0.5rem 0.5rem;
+                }
+                .page-header {
+                    margin-bottom: 0.5rem;
+                    padding-bottom: 0.3rem;
+                }
+                .page-header h1 {
+                    font-size: 1rem;
+                }
+                .toolbar {
+                    margin-bottom: 0.5rem;
+                    gap: 0.3rem;
+                }
+                .search-box {
+                    flex: 1 1 100%;
+                    height: 28px;
+                }
+                .filter-group {
+                    flex: 1;
+                }
+                .filter-btn {
+                    flex: 1;
+                    text-align: center;
+                    height: 26px;
+                    font-size: 0.7rem;
+                    padding: 0 0.25rem;
+                }
+                .action-group {
+                    margin-left: 0;
+                }
+                .action-group .btn-sharp {
+                    height: 26px;
+                    font-size: 0.7rem;
+                    padding: 0 0.4rem;
+                }
+                .msg-card {
+                    padding: 0.65rem 0.75rem;
+                }
+                .msg-header {
+                    flex-direction: column;
+                    gap: 0.2rem;
+                }
+                .msg-meta-info {
+                    align-self: flex-start;
+                }
+                .msg-footer {
+                    justify-content: flex-end;
+                }
             }
-
-            container.innerHTML = filtered.map(msg => `
-                <div class="msg-card ${msg.is_read == 0 ? 'unread' : ''}">
-                    <div class="msg-header">
-                        <div class="msg-sender-info">
-                            <span class="msg-sender">${escapeHtml(msg.name)}</span>
-                            <a href="mailto:${escapeHtml(msg.email)}" class="msg-email">&lt;${escapeHtml(msg.email)}&gt;</a>
-                        </div>
-                        <div class="msg-meta-info">
-                            <span class="msg-time">${escapeHtml(msg.created_at)}</span>
-                            <span class="msg-badge ${msg.is_read == 0 ? 'badge-unread' : 'badge-read'}">
-                                ${msg.is_read == 0 ? 'UNREAD' : 'READ'}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="msg-subject"><strong style="color:#6B7280;">Subject:</strong> ${escapeHtml(msg.subject)}</div>
-                    <div class="msg-body">${escapeHtml(msg.message)}</div>
-                    <div class="msg-footer">
-                        <button class="btn-sharp" onclick="toggleRead('${msg.id}')">
-                            <i class="fas ${msg.is_read == 0 ? 'fa-check' : 'fa-envelope'}"></i>
-                            ${msg.is_read == 0 ? 'Read' : 'Unread'}
-                        </button>
-                        <button class="btn-sharp btn-danger" onclick="deleteMessage('${msg.id}')">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </button>
-                    </div>
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="brand"><i class="fas fa-inbox"></i> REB.DEV INBOX</div>
+                <div class="nav-right">
+                    <a href="index.html" class="btn-sharp"><i class="fas fa-arrow-left"></i> Home</a>
+                    <a href="contacts/contact.html" class="btn-sharp"><i class="fas fa-paper-plane"></i> Contact</a>
                 </div>
-            `).join('');
-        }
+            </div>
+        </nav>
 
-        function setFilter(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            if (filter === 'all') document.getElementById('filterAll').classList.add('active');
-            if (filter === 'unread') document.getElementById('filterUnread').classList.add('active');
-            if (filter === 'read') document.getElementById('filterRead').classList.add('active');
-            renderUI();
-        }
+        <main class="main-wrapper">
+            <div class="page-header">
+                <h1>Inbox</h1>
+                <div class="stats-summary" id="statsSummary">Total: 0 | Unread: 0</div>
+            </div>
 
-        async function toggleRead(id) {
-            const msg = messages.find(m => String(m.id) === String(id));
-            if (msg) {
-                const newStatus = msg.is_read == 1 ? 0 : 1;
-                msg.is_read = newStatus;
-                localStorage.setItem('portfolio_messages', JSON.stringify(messages));
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fas fa-search" style="color: var(--muted); margin-right: 0.4rem; font-size: 0.75rem"></i>
+                    <input type="text" id="searchInput" placeholder="Search..." oninput="renderUI()" />
+                </div>
+
+                <div class="filter-group">
+                    <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
+                    <button class="filter-btn" id="filterUnread" onclick="setFilter('unread')">Unread</button>
+                    <button class="filter-btn" id="filterRead" onclick="setFilter('read')">Read</button>
+                </div>
+
+                <div class="action-group">
+                    <button class="btn-sharp" onclick="initData()"><i class="fas fa-sync"></i> Refresh</button>
+                    <button class="btn-sharp btn-danger" onclick="clearAllMessages()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="messages-list" id="messagesList"></div>
+        </main>
+
+        <script>
+            const SUPABASE_URL_MSGS = "https://uwboeqkiwncdtarqvxbo.supabase.co/rest/v1/messages";
+            const SUPABASE_KEY = "sb_publishable_a5_YHH1N5U0goK4rRks_OA_Lr-JBSjH";
+            let currentFilter = "all";
+            let messages = [];
+            async function initData() {
+                try {
+                    messages = JSON.parse(localStorage.getItem("portfolio_messages") || "[]");
+                } catch (e) {}
                 renderUI();
-
+                try {
+                    const res = await fetch(`${SUPABASE_URL_MSGS}?select=*&order=id.desc`, {
+                        headers: {
+                            apikey: SUPABASE_KEY,
+                            Authorization: `Bearer ${SUPABASE_KEY}`,
+                        },
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (Array.isArray(data)) {
+                            messages = data;
+                            localStorage.setItem("portfolio_messages", JSON.stringify(data));
+                            renderUI();
+                        }
+                    }
+                } catch (e) {
+                    console.error("Fetch messages error:", e);
+                }
+            }
+            function renderUI() {
+                const container = document.getElementById("messagesList");
+                const stats = document.getElementById("statsSummary");
+                const query = (document.getElementById("searchInput")?.value || "").toLowerCase();
+                const total = messages.length;
+                const unread = messages.filter((m) => m.is_read == 0).length;
+                if (stats) stats.innerText = `Total: ${total} | Unread: ${unread}`;
+                let filtered = messages.filter((msg) => {
+                    if (currentFilter === "unread" && msg.is_read == 1) return false;
+                    if (currentFilter === "read" && msg.is_read == 0) return false;
+                    if (query) {
+                        const haystack = (
+                            msg.name +
+                            " " +
+                            msg.email +
+                            " " +
+                            msg.subject +
+                            " " +
+                            msg.message
+                        ).toLowerCase();
+                        return haystack.includes(query);
+                    }
+                    return true;
+                });
+                if (filtered.length === 0) {
+                    container.innerHTML = `
+                    <div class="empty-state">
+                    <i class="fas fa-inbox" style="font-size:1.5rem; margin-bottom:0.5rem; color:#9CA3AF;"></i>
+                    <div>No messages found</div>
+                    </div>`;
+                    return;
+                }
+                container.innerHTML = filtered
+                    .map(
+                        (msg) => `
+                <div class="msg-card ${msg.is_read == 0 ? "unread" : ""}">
+                <div class="msg-header">
+                <div class="msg-sender-info">
+                <span class="msg-sender">${escapeHtml(msg.name)}</span>
+                <a href="mailto:${escapeHtml(msg.email)}" class="msg-email">&lt;${escapeHtml(msg.email)}&gt;</a>
+                </div>
+                <div class="msg-meta-info">
+                <span class="msg-time">${escapeHtml(msg.created_at)}</span>
+                <span class="msg-badge ${msg.is_read == 0 ? "badge-unread" : "badge-read"}">
+                ${msg.is_read == 0 ? "UNREAD" : "READ"}
+                </span>
+                </div>
+                </div>
+                <div class="msg-subject"><strong style="color:#6B7280;">Subject:</strong> ${escapeHtml(msg.subject)}</div>
+                <div class="msg-body">${escapeHtml(msg.message)}</div>
+                <div class="msg-footer">
+                <button class="btn-sharp" onclick="toggleRead('${msg.id}')">
+                <i class="fas ${msg.is_read == 0 ? "fa-check" : "fa-envelope"}"></i>
+                ${msg.is_read == 0 ? "Read" : "Unread"}
+                </button>
+                <button class="btn-sharp btn-danger" onclick="deleteMessage('${msg.id}')">
+                <i class="fas fa-trash-alt"></i> Delete
+                </button>
+                </div>
+                </div>
+                `
+                    )
+                    .join("");
+            }
+            function setFilter(filter) {
+                currentFilter = filter;
+                document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active"));
+                if (filter === "all") document.getElementById("filterAll").classList.add("active");
+                if (filter === "unread") document.getElementById("filterUnread").classList.add("active");
+                if (filter === "read") document.getElementById("filterRead").classList.add("active");
+                renderUI();
+            }
+            async function toggleRead(id) {
+                const msg = messages.find((m) => String(m.id) === String(id));
+                if (msg) {
+                    const newStatus = msg.is_read == 1 ? 0 : 1;
+                    msg.is_read = newStatus;
+                    localStorage.setItem("portfolio_messages", JSON.stringify(messages));
+                    renderUI();
+                    try {
+                        await fetch(`${SUPABASE_URL_MSGS}?id=eq.${id}`, {
+                            method: "PATCH",
+                            headers: {
+                                "Content-Type": "application/json",
+                                apikey: SUPABASE_KEY,
+                                Authorization: `Bearer ${SUPABASE_KEY}`,
+                            },
+                            body: JSON.stringify({ is_read: newStatus }),
+                        });
+                    } catch (e) {
+                        console.error("PATCH error:", e);
+                    }
+                }
+            }
+            async function deleteMessage(id) {
+                if (!confirm("Delete message?")) return;
+                messages = messages.filter((m) => String(m.id) !== String(id));
+                localStorage.setItem("portfolio_messages", JSON.stringify(messages));
+                renderUI();
                 try {
                     await fetch(`${SUPABASE_URL_MSGS}?id=eq.${id}`, {
-                        method: 'PATCH',
+                        method: "DELETE",
                         headers: {
-                            'Content-Type': 'application/json',
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': `Bearer ${SUPABASE_KEY}`
+                            apikey: SUPABASE_KEY,
+                            Authorization: `Bearer ${SUPABASE_KEY}`,
                         },
-                        body: JSON.stringify({ is_read: newStatus })
                     });
                 } catch (e) {
-                    console.error("PATCH error:", e);
+                    console.error("DELETE error:", e);
                 }
             }
-        }
-
-        async function deleteMessage(id) {
-            if (!confirm('Delete message?')) return;
-
-            messages = messages.filter(m => String(m.id) !== String(id));
-            localStorage.setItem('portfolio_messages', JSON.stringify(messages));
-            renderUI();
-
-            try {
-                await fetch(`${SUPABASE_URL_MSGS}?id=eq.${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`
-                    }
-                });
-            } catch (e) {
-                console.error("DELETE error:", e);
+            async function clearAllMessages() {
+                if (!confirm("Clear ALL messages?")) return;
+                messages = [];
+                localStorage.removeItem("portfolio_messages");
+                renderUI();
+                try {
+                    await fetch(`${SUPABASE_URL_MSGS}?id=gt.0`, {
+                        method: "DELETE",
+                        headers: {
+                            apikey: SUPABASE_KEY,
+                            Authorization: `Bearer ${SUPABASE_KEY}`,
+                        },
+                    });
+                } catch (e) {
+                    console.error("Clear all error:", e);
+                }
             }
-        }
-
-        async function clearAllMessages() {
-            if (!confirm('Clear ALL messages?')) return;
-
-            messages = [];
-            localStorage.removeItem('portfolio_messages');
-            renderUI();
-
-            try {
-                await fetch(`${SUPABASE_URL_MSGS}?id=gt.0`, {
-                    method: 'DELETE',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`
-                    }
-                });
-            } catch (e) {
-                console.error("Clear all error:", e);
+            function escapeHtml(str) {
+                if (!str) return "";
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
             }
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-        }
-
-        document.addEventListener('DOMContentLoaded', initData);
-    </script>
-</body>
+            document.addEventListener("DOMContentLoaded", initData);
+        </script>
+    </body>
 </html>
