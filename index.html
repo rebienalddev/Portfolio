@@ -1216,7 +1216,7 @@
 
         .project-card { 
             width: 380px;
-            height: 440px;
+            height: 484px;
             flex-shrink: 0;
             display: flex; 
             flex-direction: column; 
@@ -1240,7 +1240,7 @@
         }
         .project-image {
             width: 100%;
-            height: 220px;
+            height: 230px;
             object-fit: cover;
             object-position: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -1257,7 +1257,7 @@
             padding: 1rem 1.5rem 0; 
         }
         .project-content { 
-            padding: 0 1.5rem 1.5rem; 
+            padding: 1.25rem 1.5rem 1.5rem; 
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -1270,22 +1270,23 @@
             border: none;
             color: var(--text-primary); font-weight: 600; letter-spacing: 0.02em;
         }
-        .project-icon {
-            width: 44px; height: 44px; border-radius: 50%;
-            background: var(--bg-base); border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: var(--neo-extruded-sm);
-            display: flex; align-items: center; justify-content: center;
-            color: var(--accent); transition: all 0.2s ease;
+        .project-title-icon {
+            font-size: 0.72rem;
+            margin-left: 6px;
+            color: var(--accent);
+            opacity: 0.6;
+            transition: all 0.2s ease;
+            display: inline-block;
         }
-        .project-card:hover .project-icon {
-            box-shadow: var(--neo-inset);
-            color: var(--accent-hover);
-            transform: rotate(-45deg);
+        .project-card:hover .project-title-icon {
+            opacity: 1;
+            transform: translate(2px, -2px);
         }
         .project-content h3 { 
             font-size: 1.15rem; 
             font-weight: 700;
-            margin-bottom: 0.5rem; 
+            padding-top: 0.4rem;
+            margin-bottom: 0.6rem; 
             color: var(--text-primary); 
             line-height: 1.3;
             text-align: left;
@@ -1568,6 +1569,16 @@
         }
 
         @media (max-width: 768px) {
+            :root {
+                --shadow-light: rgba(255, 255, 255, 0.65);
+                --neo-extruded: 6px 6px 14px rgba(150, 168, 196, 0.42), -5px -5px 12px rgba(255, 255, 255, 0.62);
+                --neo-extruded-hover: 8px 8px 18px rgba(150, 168, 196, 0.48), -7px -7px 15px rgba(255, 255, 255, 0.7);
+                --neo-extruded-sm: 3px 3px 8px rgba(150, 168, 196, 0.38), -3px -3px 8px rgba(255, 255, 255, 0.6);
+                --neo-inset: inset 3px 3px 6px rgba(150, 168, 196, 0.38), inset -3px -3px 6px rgba(255, 255, 255, 0.62);
+                --neo-inset-deep: inset 5px 5px 10px rgba(150, 168, 196, 0.45), inset -5px -5px 10px rgba(255, 255, 255, 0.65);
+                --glass-border: rgba(255, 255, 255, 0.4);
+            }
+
             * {
                 -webkit-tap-highlight-color: transparent !important;
                 -webkit-touch-callout: none !important;
@@ -1575,6 +1586,18 @@
             body {
                 background: var(--bg-base);
                 background-image: none;
+            }
+            
+            /* UNIVERSAL MOBILE SOFTENING - FEATHERED SHADOWS & SUBTLE BORDERS (NO SHARP WHITE GLARE) */
+            .glass-card, .project-card, .cert-card, .service-card, .stat-card, 
+            .skills-category-section, .skill-logo-item, .tech-chip, .filter-btn, 
+            .edu-tab-btn, .neo-step-node, .social-link, nav, .btn-primary, .btn-secondary {
+                border: 1px solid rgba(255, 255, 255, 0.42) !important;
+                box-shadow: 5px 5px 14px rgba(150, 168, 196, 0.42), -4px -4px 10px rgba(255, 255, 255, 0.6) !important;
+            }
+
+            .active, .edu-tab-btn.active, .filter-btn.active {
+                box-shadow: inset 3px 3px 6px rgba(150, 168, 196, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.6) !important;
             }
             
             .container { padding: 0 1.25rem; }
@@ -1779,9 +1802,9 @@
                 height: auto !important;
                 border-radius: 16px !important;
             }
-            .project-image { height: 150px !important; }
-            .project-content { padding: 0 1rem 1rem !important; }
-            .project-content h3 { font-size: 1.02rem !important; white-space: normal !important; }
+            .project-image { height: 160px !important; }
+            .project-content { padding: 1.15rem 1.15rem 1.25rem !important; }
+            .project-content h3 { font-size: 1.02rem !important; white-space: normal !important; padding-top: 0.35rem !important; margin-bottom: 0.5rem !important; }
             .project-content p { 
                 font-size: 0.82rem !important; 
                 text-align: justify !important; 
@@ -2119,77 +2142,56 @@
                 <div class="projects-marquee-group">
                     <a href="https://infowhiz.hstn.me/Pages/index" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/infowhiz.png" alt="InfoWhiz" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>InfoWhiz</h3>
+                            <h3>InfoWhiz <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
                             <p>An educational gaming system utilizing AI integrations to provide tailored assistance for students studying computer programming.</p>
                         </div>
                     </a>
 
                     <a href="https://rebienalddev.github.io/NasIoPing/" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/NASIO.png" alt="NAS.IO Bot" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>NAS.IO Bot</h3>
+                            <h3>NAS.IO Bot <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
                             <p>Nas IO Bot is an automated Discord membership bot that verifies subscriber emails in MongoDB and auto-kicks expired users to enforce server access.</p>
                         </div>
                     </a>
                     
                     <a href="https://samai.hstn.me/SamAI/" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/samai.png" alt="SamAI" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>SamAI</h3>
-                            <p>SamAI is a cute Hello Kitty-themed study companion that uploads PDF handouts, extracts text, generates AI-powered summaries, and provides an interactive chat interface for learning.</p>
+                            <h3>SamAI <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
+                            <p>A Hello Kitty-themed AI study companion that extracts text from PDF handouts, generates smart summaries, and provides interactive learning chat.</p>
                         </div>
                     </a>
 
                     <a href="https://printportal.hstn.me/" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/printportal.png" alt="Print Portal" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>Print Portal</h3>
+                            <h3>Print Portal <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
                             <p>A web-based printing portal with user and admin panels for print job submission, queue management, and status tracking.</p>
                         </div>
                     </a>
 
                     <a href="https://rebienalddev.github.io/TechnoPhotobooth/" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/photobooth1.png" alt="TechnoBytes Photobooth" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>TechnoBytes Photobooth</h3>
+                            <h3>TechnoBytes Photobooth <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
                             <p>A photobooth developed for different organizations for the foundation week of STI College Bacoor.</p>
                         </div>
                     </a>
 
                     <a href="https://axionbytee.github.io/cupofstory/" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/cupofstory.png" alt="Cup Of Story" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>Cup Of Story</h3>
+                            <h3>Cup Of Story <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
                             <p>A sophisticated digital storefront demonstrating modern frontend paradigms, elegant interactions, and optimized asset delivery.</p>
                         </div>
                     </a>
 
                     <a href="https://spi-announcement-hub.free.nf/" target="_blank" class="glass-card project-card">
                         <img loading="lazy" decoding="async" src="projectimages/clubhub.png" alt="Club Hub" class="project-image">
-                        <div class="project-meta">
-                            <div class="project-icon"><i class="fas fa-arrow-right"></i></div>
-                        </div>
                         <div class="project-content">
-                            <h3>Club Hub</h3>
+                            <h3>Club Hub <i class="fas fa-arrow-up-right-from-square project-title-icon"></i></h3>
                             <p>A comprehensive administrative solution for managing organizational members, secure internal data, and broad announcements.</p>
                         </div>
                     </a>
@@ -2535,8 +2537,7 @@
                             <span class="neo-step-date">2026 – PRESENT</span>
                             <h3 class="neo-step-institution">Cavite State University</h3>
                             <div class="neo-step-details">
-                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> <strong>Course:</strong> Bachelor of Science in Information Technology</div>
-                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> <strong>Status:</strong> Active / Ongoing</div>
+                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> Bachelor of Science in Information Technology</div>
                             </div>
                         </div>
 
@@ -2545,8 +2546,7 @@
                             <span class="neo-step-date">2024 – 2026</span>
                             <h3 class="neo-step-institution">STI College</h3>
                             <div class="neo-step-details">
-                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> <strong>Track:</strong> TVL Track - Major in Mobile App & Web Development</div>
-                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> <strong>Status:</strong> Completed</div>
+                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> TVL Track - Major in Mobile App & Web Development</div>
                             </div>
                         </div>
 
@@ -2555,8 +2555,7 @@
                             <span class="neo-step-date">2020 – 2024</span>
                             <h3 class="neo-step-institution">Binakayan National High School</h3>
                             <div class="neo-step-details">
-                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> <strong>Major:</strong> Computer System Servicing</div>
-                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> <strong>Status:</strong> Completed</div>
+                                <div class="neo-step-detail-item"><span class="neo-step-bullet"></span> Computer System Servicing</div>
                             </div>
                         </div>
                     </div>
