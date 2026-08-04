@@ -219,9 +219,9 @@
         .back-home { margin-top: 0.75rem; text-align: center; }
         .back-link { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
 
-        footer { text-align: center; padding: 1rem; color: var(--text-tertiary); font-size: 0.8rem; border-top: 1px solid var(--glass-border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        footer { text-align: center; padding: 1rem; color: var(--text-tertiary); font-size: 0.8rem; border-top: 1px solid var(--glass-border); white-space: normal; }
 
-        /* STRICT MOBILE VIEW RULES: SINGLE LINE HEADERS & JUSTIFIED TEXT */
+        /* MOBILE VIEW RULES: UNIFORM HEADERS & JUSTIFIED UNCUT TEXT */
         @media (max-width: 768px) {
             .container { padding: 0 1rem; }
             nav { width: calc(100% - 1.5rem); top: 0.75rem; padding: 0.5rem 1rem; flex-wrap: nowrap; z-index: 9999; }
@@ -233,10 +233,10 @@
             .contact-grid { grid-template-columns: 1fr; gap: 0.75rem; }
             .form-row { grid-template-columns: 1fr; }
             .glass-card { padding: 1.1rem; }
-            .glass-card h2, .contact-text h3 { font-size: 1.1rem; margin-bottom: 0.75rem; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            .glass-card h2, .contact-text h3 { font-size: 1.2rem; margin-bottom: 0.75rem; white-space: normal !important; overflow: visible !important; }
             .contact-details li { margin-bottom: 0.75rem; padding-bottom: 0.75rem; }
             .contact-icon { width: 36px; height: 36px; font-size: 0.95rem; }
-            .contact-text a, .contact-text p { font-size: 0.85rem; text-align: justify !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            .contact-text a, .contact-text p { font-size: 0.85rem; text-align: justify !important; white-space: normal !important; overflow: visible !important; }
         }
     </style>
 </head>
